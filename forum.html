@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>海城大学校园论坛</title>
+<link rel="icon" href="assets/favicon.png">
+<!-- R75：分享卡片 -->
+<meta name="description" content="一位教授坠崖身亡，夜色里只剩下他没删干净的博客。翻遍他的日记、追问那个自称目击者的画室学生——你查到的每一条线索，都可能是真相的最后一块拼图。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="木客诡事">
+<meta property="og:title" content="木客诡事 · 一桩坠崖案的网页调查">
+<meta property="og:description" content="翻遍教授没删干净的博客、拼好他遗落在宾馆的手账——你查到的每一条线索，都可能是真相的最后一块拼图。">
+<meta property="og:image" content="https://04a5ce49d9494323bddae7862ca6df25.app.workbuddy.host/assets/og-cover.png">
+<meta property="og:url" content="https://04a5ce49d9494323bddae7862ca6df25.app.workbuddy.host/forum.html">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:linear-gradient(180deg,#e6eefb 0%,#eef3fa 240px,#f4f7fc 100%);
+  font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;color:#2b3442;padding:0 0 40px}
+
+/* ===== 现代化通用按钮 ===== */
+.btn{display:inline-block;font-family:inherit;font-size:13px;color:#3a4657;padding:7px 16px;cursor:pointer;white-space:nowrap;
+  background:#fff;border:1px solid #d5dde8;border-radius:8px;transition:.15s;line-height:1.4}
+.btn:hover{border-color:#a9c4ee;color:#2f6fe0;background:#f5f9ff}
+.btn:active{transform:translateY(1px)}
+.btn.sm{padding:4px 12px;font-size:12px}
+.btn.primary{background:linear-gradient(180deg,#4a8bf0,#2f6fe0);border-color:#2f6fe0;color:#fff;font-weight:600;
+  box-shadow:0 2px 8px rgba(47,111,224,.28)}
+.btn.primary:hover{background:linear-gradient(180deg,#5b98f5,#3a7bee);color:#fff;border-color:#3a7bee}
+
+/* ===== 页面容器 ===== */
+#win{max-width:1280px;margin:0 auto;padding:0 16px}
+.win-inner{padding:0}
+
+/* IE 标题栏：现代 UI 中隐藏 */
+#titlebar{display:none}
+
+/* ===== 顶栏（logo / 导航 / 搜索 / 用户） ===== */
+#fm-head{display:flex;align-items:center;gap:18px;padding:16px 6px 12px;flex-wrap:wrap}
+.fm-title h1{font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:21px;color:#1d2b45;letter-spacing:1px;font-weight:800}
+.fm-title p{display:none}
+#fm-nav{display:flex;align-items:center;gap:4px;margin-left:8px;flex-wrap:wrap}
+.nav-btn{min-width:0;font-family:inherit;font-size:14px;color:#4a5568;padding:7px 14px;cursor:pointer;
+  background:none;border:0;border-radius:8px;transition:.15s;position:relative}
+.nav-btn:hover{color:#2f6fe0;background:#eaf1fd}
+.nav-btn.on{color:#2f6fe0;font-weight:700;background:#eaf1fd}
+.nav-btn.on::after{content:'';position:absolute;left:14px;right:14px;bottom:1px;height:2.5px;border-radius:2px;background:#2f6fe0}
+#fm-search{margin-left:auto;display:flex;align-items:center;background:#fff;border:1px solid #dbe3ee;border-radius:999px;
+  padding:5px 16px;transition:.2s;min-width:200px}
+#fm-search:focus-within{border-color:#a9c4ee;box-shadow:0 0 0 3px rgba(47,111,224,.12)}
+#fm-search input{flex:1;border:0;background:none;outline:none;font-family:inherit;font-size:13px;color:#333;min-width:0}
+.fm-auth{margin-left:0;display:flex;align-items:center;gap:10px}
+.fm-user{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e3e9f2;border-radius:999px;
+  padding:4px 14px 4px 4px;box-shadow:0 2px 6px rgba(30,50,90,.06)}
+.fm-user .uava{width:32px;height:32px;border-radius:50%;overflow:hidden;background:#e6edf7;flex:none;display:flex;align-items:center;justify-content:center}
+.fm-user .uava img{width:100%;height:100%;object-fit:cover;display:block}
+.fm-user .un{font-size:13.5px;color:#1d2b45;font-weight:700}
+.fm-user .lv{display:none}
+#fab-post{display:inline-block;font-family:inherit;font-size:13.5px;font-weight:700;letter-spacing:1px;color:#fff;
+  background:linear-gradient(180deg,#4a8bf0,#2f6fe0);border:0;border-radius:999px;padding:9px 20px;cursor:pointer;
+  box-shadow:0 4px 14px rgba(47,111,224,.35);transition:.15s}
+#fab-post:hover{filter:brightness(1.07);transform:translateY(-1px)}
+#fab-post:active{transform:translateY(0)}
+
+.view{display:none;padding-top:6px}
+.view.on{display:block}
+
+/* ===== 三栏布局 ===== */
+.layout{display:flex;gap:16px;align-items:flex-start}
+.side{width:216px;flex:none;position:sticky;top:12px}
+.side-right{width:250px;flex:none;position:sticky;top:12px}
+
+/* ===== 侧栏白卡 ===== */
+.panel{margin-bottom:14px;background:#fff;border:1px solid #e6ebf3;border-radius:14px;overflow:hidden;
+  box-shadow:0 2px 10px rgba(30,50,90,.05)}
+.panel-hd{padding:12px 16px 10px;font-size:14px;font-weight:800;color:#1d2b45;letter-spacing:1px;
+  border-bottom:1px solid #eef2f8;display:flex;align-items:center;gap:7px}
+.panel-hd .ph-more{margin-left:auto;font-size:12px;color:#8a94a6;font-weight:400;cursor:pointer}
+.panel-hd .ph-more:hover{color:#2f6fe0}
+.panel-bd{padding:10px 12px;font-size:13px;color:#4a5568;line-height:1.9}
+.panel-bd .btnrow{display:flex;gap:8px;margin-top:8px}
+.panel-bd .btnrow .btn{flex:1;text-align:center}
+
+/* 侧栏版块导航 */
+.bd-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:.15s;
+  font-size:13.5px;color:#3a4657}
+.bd-item:hover{background:#f2f7ff;color:#2f6fe0}
+.bd-item.on{background:linear-gradient(120deg,#e8f1fe,#dcebfd);color:#1d5fd0;font-weight:700}
+.bd-item .bn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd-item .bc{font-size:11px;color:#9aa5b8;font-weight:400}
+.bd-sep{padding:10px 12px 4px;font-size:11px;color:#9aa5b8;letter-spacing:2px}
+
+/* 在线人数卡 */
+.online-card{margin-bottom:14px;background:linear-gradient(150deg,#3a7bf0,#2f6fe0);border-radius:14px;padding:16px;
+  color:#fff;box-shadow:0 6px 18px rgba(47,111,224,.28);position:relative;overflow:hidden}
+.online-card::after{content:'';position:absolute;right:-24px;top:-24px;width:96px;height:96px;border-radius:50%;
+  background:rgba(255,255,255,.12)}
+.online-card .oc-t{font-size:12px;opacity:.85;letter-spacing:1px}
+.online-card .oc-n{font-size:30px;font-weight:800;line-height:1.2;margin:2px 0}
+.online-card .oc-s{font-size:11.5px;opacity:.85;line-height:1.8}
+.online-card .oc-s b{font-weight:700}
+
+/* 最新帖子列表 */
+#latest-list{list-style:none}
+#latest-list li{padding:8px 4px;border-bottom:1px solid #f2f5f9;cursor:pointer;font-size:12.5px;color:#3a4657;line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;transition:.15s}
+#latest-list li:last-child{border-bottom:0}
+#latest-list li:hover{color:#2f6fe0}
+#latest-list li small{display:block;color:#a4adc0;font-size:11px;margin-top:2px}
+
+/* 论坛统计 */
+#stat-panel{font-size:12.5px;line-height:2.1;color:#4a5568}
+#stat-panel b{color:#1d2b45}
+
+.maincol{flex:1;min-width:0}
+
+/* ===== 欢迎条 ===== */
+.welcome{display:flex;gap:10px;align-items:center;background:linear-gradient(120deg,#e8f1fe,#f2f8ff);border:1px solid #d8e6fb;
+  padding:12px 16px;font-size:13px;color:#33507e;line-height:1.8;margin-bottom:14px;border-radius:12px}
+
+/* ===== 帖子卡流（首页） ===== */
+.post-card{display:flex;gap:14px;background:#fff;border:1px solid #e6ebf3;border-radius:14px;padding:16px;
+  margin-bottom:12px;cursor:pointer;transition:.18s;box-shadow:0 2px 8px rgba(30,50,90,.04)}
+.post-card:hover{box-shadow:0 8px 24px rgba(30,50,90,.10);transform:translateY(-2px);border-color:#d8e4f5}
+.post-card .pc-thumb{width:96px;height:96px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:34px;position:relative;overflow:hidden}
+.post-card .pc-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(0,0,0,.06))}
+.post-card .pc-main{flex:1;min-width:0;display:flex;flex-direction:column}
+.pc-tags{display:flex;gap:6px;align-items:center;margin-bottom:7px;flex-wrap:wrap}
+.pc-board{font-size:11px;color:#fff;border-radius:5px;padding:2px 8px;font-weight:600;letter-spacing:.5px}
+.pc-flag{font-size:11px;border-radius:5px;padding:2px 8px;font-weight:600}
+.pc-flag.top{color:#d63a1e;background:#fdeee7;border:1px solid #f6cfbe}
+.pc-flag.reward{color:#fff;background:linear-gradient(180deg,#f0532f,#d63a1e)}
+.pc-flag.hot{color:#c05f10;background:#fdf3dc;border:1px solid #f0dcae}
+.pc-title{font-size:16px;font-weight:700;color:#1d2b45;line-height:1.5;margin-bottom:5px;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.post-card:hover .pc-title{color:#2f6fe0}
+.pc-desc{font-size:12.5px;color:#7a8496;line-height:1.7;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pc-foot{margin-top:auto;padding-top:9px;display:flex;align-items:center;gap:14px;font-size:12px;color:#9aa5b8}
+.pc-foot .pc-author{color:#5a6a80}
+.pc-foot .ava{width:20px;height:20px;border-radius:50%;overflow:hidden;background:#eef3fb;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px}
+.pc-foot .ava img{width:100%;height:100%;object-fit:cover;display:block}
+.pc-foot .pc-it{display:flex;align-items:center;gap:4px}
+.pc-foot .pc-it b{color:#5a6a80;font-weight:600}
+.pc-empty{padding:36px;text-align:center;color:#9aa5b8;font-size:13px;background:#fff;border:1px dashed #dbe3ee;border-radius:14px}
+
+/* ===== 板块帖子列表 ===== */
+#board-crumb{font-size:13px;color:#7a8496;padding:4px 2px 12px;display:flex;align-items:center;gap:6px}
+#board-crumb a{color:#2f6fe0;text-decoration:none;cursor:pointer;font-weight:600}
+#board-crumb a:hover{text-decoration:underline}
+.toolrow{display:flex;gap:10px;padding:0 0 12px;align-items:center}
+.toolrow .right{margin-left:auto}
+.thread-list{background:#fff;border:1px solid #e6ebf3;border-radius:14px;overflow:hidden}
+.thread-row{display:flex;align-items:center;gap:12px;padding:13px 16px;background:#fff;border-bottom:1px solid #f2f5f9;cursor:pointer;transition:.15s}
+.thread-row:last-child{border-bottom:0}
+.thread-row:hover{background:#f7faff}
+.thread-row .tico{width:34px;height:34px;flex:none;border-radius:10px;background:#eef3fb;display:flex;align-items:center;justify-content:center;font-size:16px}
+.thread-row .tmain{flex:1;min-width:0}
+.thread-row .tname{font-size:14.5px;color:#1d2b45;font-weight:600}
+.thread-row .tname .fm-top{color:#d63a1e;border:1px solid #f6cfbe;background:#fdeee7;font-size:11px;padding:1px 6px;margin-right:6px;font-weight:600;border-radius:4px}
+.thread-row .tname .fm-reward{color:#fff;background:linear-gradient(180deg,#f0532f,#d63a1e);font-size:11px;padding:1px 6px;margin-right:6px;font-weight:600;border-radius:4px}
+.thread-row:hover .tname{color:#2f6fe0}
+.thread-row .tstat{width:170px;flex:none;text-align:right;font-size:12px;color:#9aa5b8;line-height:1.6}
+
+/* ===== 帖子详情（现代整页覆盖） ===== */
+#post-page{position:fixed;inset:0;background:rgba(20,30,50,.45);backdrop-filter:blur(3px);z-index:100;display:none;
+  overflow:auto;padding:20px 14px 50px}
+#post-page.active{display:block}
+#post-win{max-width:1080px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 16px 48px rgba(10,20,40,.28);
+  position:relative;overflow:hidden;display:flex;flex-direction:column}
+#post-crumb{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#7a8496;padding:14px 20px;border-bottom:1px solid #eef2f8;background:#fbfcfe}
+#post-crumb a{color:#2f6fe0;text-decoration:none;cursor:pointer;font-weight:600}
+#post-crumb a:hover{text-decoration:underline}
+#post-crumb .ct{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#post-crumb .crumb-back{margin-left:auto;flex:none}
+/* 右上角：单个放大版返回列表按钮 */
+#post-back{font-size:13.5px;font-weight:700;letter-spacing:1px;padding:8px 18px;
+  color:#fff;background:linear-gradient(180deg,#4a8bf0,#2f6fe0);border:0;border-radius:999px;
+  box-shadow:0 3px 10px rgba(47,111,224,.3);cursor:pointer;transition:.15s}
+#post-back:hover{filter:brightness(1.07)}
+#post-tools{display:flex;gap:10px;padding:12px 20px;border-bottom:1px solid #eef2f8;align-items:center}
+#post-tools .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+#post-meta{padding:14px 20px 0;font-size:12.5px;color:#9aa5b8;display:flex;gap:14px}
+#post-title{padding:6px 20px 4px;font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:23px;color:#16233c;font-weight:800;line-height:1.45}
+#post-title .btag{display:none}
+.post-head{display:flex;align-items:center;gap:12px;padding:12px 20px 16px;border-bottom:1px solid #f2f5f9}
+.post-head .ph-ava{width:44px;height:44px;border-radius:50%;overflow:hidden;background:#eef3fb;flex:none;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 0 2px #fff,0 0 0 4px #e8f0fd}
+.post-head .ph-ava img{width:100%;height:100%;object-fit:cover;display:block}
+.post-head .ph-info{flex:1;min-width:0}
+.post-head .ph-name{font-size:14.5px;font-weight:700;color:#1d2b45}
+.post-head .ph-name .ph-lv{font-size:11px;color:#c05f10;background:#fdf3dc;border-radius:4px;padding:1px 7px;margin-left:7px;font-weight:600}
+.post-head .ph-time{font-size:12px;color:#9aa5b8;margin-top:2px}
+.post-head .ph-follow{flex:none}
+.post-body{padding:6px 20px 18px;font-size:14.5px;line-height:2.05;color:#2b3442;word-break:break-word}
+.post-actions{display:flex;gap:10px;padding:0 20px 18px;flex-wrap:wrap}
+.post-actions .pa{display:flex;align-items:center;gap:6px;font-size:13px;color:#5a6a80;background:#f6f8fc;border:1px solid #e9eef6;
+  border-radius:999px;padding:7px 16px;cursor:pointer;transition:.15s;font-family:inherit}
+.post-actions .pa:hover{border-color:#a9c4ee;color:#2f6fe0;background:#f0f6ff}
+.post-actions .pa b{font-weight:700;color:#2f6fe0}
+.post-actions .pa.on{color:#d63a1e;border-color:#f6cfbe;background:#fdeee7}
+.post-actions .pa.on b{color:#d63a1e}
+/* 评论区 */
+.cmt-title{padding:4px 20px 10px;font-size:15px;font-weight:800;color:#1d2b45;display:flex;align-items:center;gap:8px}
+.cmt-title b{color:#2f6fe0}
+.floorbox{display:flex;gap:12px;padding:14px 20px;border-top:1px solid #f2f5f9}
+.f-left{width:auto;flex:none;background:none;border:0;padding:0;text-align:left;display:flex;flex-direction:column;align-items:center;width:52px}
+.f-left .uname{font-size:11.5px;font-weight:600;color:#5a6a80;margin:6px 0 0;word-break:break-all;text-align:center;line-height:1.35}
+.f-left .uavatar{width:40px;height:40px;border-radius:50%;background:#eef3fb;display:flex;align-items:center;justify-content:center;
+  font-size:18px;overflow:hidden;flex:none}
+.f-left .uavatar img{width:100%;height:100%;display:block;object-fit:cover}
+.f-left .ustats,.f-left .ubadge{display:none}
+.f-right{flex:1;min-width:0;padding:0;display:flex;flex-direction:column}
+.f-rhead{display:flex;align-items:center;gap:8px;font-size:12px;color:#9aa5b8;padding-bottom:6px;border-bottom:0}
+.f-rhead .sq{display:none}
+.f-rhead .look{color:#2f6fe0;cursor:pointer}
+.f-rhead .look:hover{text-decoration:underline}
+.f-rhead .lz{margin-left:auto;color:#9aa5b8;display:flex;align-items:center;gap:6px}
+.f-rhead .lz .lz-tag{color:#c05f10;background:#fdf3dc;border-radius:4px;padding:1px 7px;font-weight:600}
+.f-content{flex:1;padding:6px 0 8px;font-size:14px;line-height:1.95;color:#2b3442;word-break:break-word}
+.f-footer{display:flex;gap:16px;font-size:12.5px;color:#9aa5b8;padding-top:2px}
+.f-footer span{cursor:pointer;transition:.15s}
+.f-footer span:hover{color:#2f6fe0}
+.f-bottombar{display:none}
+.reply-box{margin:8px 20px 22px;padding:14px 16px;background:#f8fafd;border:1px solid #e9eef6;border-radius:14px;display:flex;gap:10px}
+.reply-box input{flex:1;font-family:inherit;font-size:13.5px;padding:9px 14px;border:1px solid #dbe3ee;border-radius:10px;
+  outline:none;background:#fff;transition:.15s}
+.reply-box input:focus{border-color:#a9c4ee;box-shadow:0 0 0 3px rgba(47,111,224,.10)}
+
+/* 线索高亮 */
+.clue-spot{background:linear-gradient(transparent 55%,rgba(255,215,80,.9) 55%);cursor:pointer;padding:0 2px}
+.clue-spot:hover{background:rgba(255,180,60,.9)}
+
+/* ===== 私信（论坛风格：白卡 + 蓝主色气泡） ===== */
+/* R53：私信视图占满视口剩余高度，消息在固定大窗口内滑动（页面不持续变长） */
+#view-dm.on{display:flex;flex-direction:column}
+#dm-layout{display:flex;gap:16px;align-items:stretch;margin-top:4px;flex:1;min-height:0}
+#dm-list{width:248px;flex:none;background:#fff;border:1px solid #e6ebf3;border-radius:14px;overflow:hidden;
+  box-shadow:0 2px 10px rgba(30,50,90,.05);overflow-y:auto}
+.dm-li{display:flex;gap:11px;align-items:center;padding:13px 14px;cursor:pointer;transition:.15s;position:relative;border-bottom:1px solid #f2f5f9}
+.dm-li:last-child{border-bottom:0}
+.dm-li:hover{background:#f6f9fe}
+.dm-li.on{background:linear-gradient(120deg,#eaf1fd,#e2edfd)}
+.dm-li.on::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#2f6fe0}
+.dm-li-ava{width:42px;height:42px;flex:none;border-radius:50%;background:#eef3fb;display:flex;align-items:center;justify-content:center;font-size:19px;overflow:hidden}
+.dm-li-ava img{width:100%;height:100%;object-fit:cover}
+.dm-li-main{flex:1;min-width:0}
+.dm-li-name{font-size:14px;color:#1d2b45;font-weight:600;display:flex;align-items:center;gap:5px}
+.dm-li-prev{font-size:12px;color:#9aa5b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.dm-li.on .dm-li-prev{color:#7a93c4}
+
+#chat-wrap{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;background:#fff;border:1px solid #e6ebf3;border-radius:14px;
+  box-shadow:0 2px 10px rgba(30,50,90,.05);overflow:hidden}
+#chat-hd{position:relative;display:flex;align-items:center;justify-content:center;height:54px;padding:0 14px;color:#1d2b45;
+  font-size:16px;font-weight:700;background:linear-gradient(180deg,#fbfdff,#f3f8ff);border-bottom:1px solid #eef2f8;flex:none}
+#chat-hd .wx-back{position:absolute;left:8px;top:50%;transform:translateY(-50%);border:0;background:none;cursor:pointer;color:#3a7bf0;
+  font-size:13.5px;font-family:inherit;padding:6px 10px;border-radius:8px;display:flex;align-items:center;gap:2px}
+#chat-hd .wx-back:hover{background:#eaf1fd}
+#chat-hd .wx-back::before{content:'‹';font-size:18px;margin-right:1px}
+#chat-body{display:flex;flex:1;min-height:0}
+#dm-msgs{flex:1;min-height:0;overflow:auto;padding:18px 18px 8px;background:#f6f8fc}
+/* 消息行 */
+.wx-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px;animation:wxPop .22s ease-out}
+.wx-row.me{flex-direction:row-reverse}
+@keyframes wxPop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.wx-ava{width:40px;height:40px;flex:none;border-radius:50%;background:#eef3fb;display:flex;align-items:center;justify-content:center;
+  font-size:18px;overflow:hidden}
+.wx-ava img{width:100%;height:100%;object-fit:cover}
+.wx-col{max-width:68%;min-width:0;display:flex;flex-direction:column}
+.wx-row.me .wx-col{align-items:flex-end}
+.wx-nick{font-size:11px;color:#9aa5b8;margin:0 2px 4px}
+.wx-row.me .wx-nick{text-align:right}
+.wx-bub{position:relative;padding:10px 13px;border-radius:12px;font-size:14px;line-height:1.75;word-break:break-word;white-space:pre-wrap;
+  box-shadow:0 1px 3px rgba(30,50,90,.08)}
+.wx-row:not(.me) .wx-bub{background:#fff;color:#2b3442;border:1px solid #e6ebf3;border-top-left-radius:3px}
+.wx-row.me .wx-bub{background:linear-gradient(180deg,#4a8bf0,#2f6fe0);color:#fff;border-top-right-radius:3px}
+.wx-read{font-size:10.5px;color:#9aa5b8;margin-top:4px;text-align:right}
+.wx-row:not(.me) .wx-read{display:none}
+/* 居中时间 / 系统提示 */
+.wx-time{text-align:center;font-size:11.5px;color:#a8b0bf;margin:4px 0 12px}
+.wx-sys{display:flex;justify-content:center;margin:10px 0}
+.wx-sys span{background:#eef2f8;color:#67748a;font-size:11.5px;padding:4px 12px;border-radius:999px;line-height:1.7;text-align:center;max-width:80%}
+/* 转账系统提示：比普通系统行大两号 */
+.wx-sys.xfer span{font-size:15.5px;padding:6px 16px;letter-spacing:.5px}
+/* 拾取笔记本提示：卡片样式 + 可点击链接 */
+.wx-sys.nb{margin:16px 0}
+.wx-sys.nb span{background:#fdf7e9;border:1px solid #e7d5b0;color:#6b5638;font-size:13.5px;
+  padding:10px 16px;border-radius:10px;max-width:88%;line-height:1.9}
+.wx-sys.nb .sys-link{display:inline-block;margin-top:4px;color:#a2762c;text-decoration:none;font-size:12.5px;letter-spacing:.5px}
+.wx-sys.nb .sys-link:hover{text-decoration:underline}
+/* 转账卡片 */
+/* 链接消息：可点击直达 */
+a.dm-link{display:block;color:#2f6fe0;text-decoration:underline;cursor:pointer;line-height:1.7}
+a.dm-link:hover{color:#1d5fd0}
+a.dm-link .dm-link-url{display:block;font-size:11px;color:#8a94a6;text-decoration:none;margin-top:3px;word-break:break-all}
+.wx-bub a.dm-link{margin:-1px 0}
+/* 正在输入（三点跳动） */
+.wx-typing{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px}
+.wx-typing .wx-bub{padding:12px 14px;background:#fff;border:1px solid #e6ebf3}
+.wx-typing i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#b9c4d6;margin-right:3px;
+  animation:wxDot 1.1s infinite ease-in-out}
+.wx-typing i:nth-child(2){animation-delay:.16s}
+.wx-typing i:nth-child(3){animation-delay:.32s}
+@keyframes wxDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+/* 底部：剧情话题选项（不可自由输入） */
+/* 话题行仅作为交互载体存在（对话统一在底部文字框里点击发送），不在界面上重复显示 */
+#dm-sg-chips{display:none !important}
+#dm-sg-chips .dm-chip{border:1px solid #d5dde8;background:#fff;color:#3a4657;border-radius:999px;
+  padding:8px 15px;font-size:12.5px;cursor:pointer;font-family:inherit;transition:.15s;text-align:left}
+#dm-sg-chips .dm-chip:hover{border-color:#a9c4ee;color:#2f6fe0;background:#f5f9ff}
+#dm-sg-chips .dm-chip:disabled{opacity:.45;cursor:default}
+#dm-inputbar{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;background:#fbfcfe;border-top:1px solid #eef2f8;flex:none}
+#dm-inputbar .dm-hint{font-size:12.5px;color:#9aa5b8;text-align:center}
+/* 待发送内容（草稿）+ 发送按钮：与话题 chips 同步 */
+#dm-draft{flex:1;min-width:0;font-size:13px;color:#7c8aa5;background:#f1f4f9;border:1px solid #e2e8f2;border-radius:8px;
+  padding:8px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:.15s;text-align:left;font-family:inherit}
+#dm-draft:hover{border-color:#bcd0f0;color:#4a5a78}
+#dm-send{flex:none;border:0;background:#2f6fe0;color:#fff;font-family:inherit;font-size:13px;padding:8px 18px;border-radius:8px;cursor:pointer;transition:.15s}
+#dm-send:hover{background:#2559b8}
+#dm-send:disabled{background:#c7d4ec;cursor:default}
+.dm-tabs{display:none}
+@media(max-width:680px){
+  #dm-layout{flex-direction:column}
+  #dm-list{width:100%;display:flex;overflow:auto;max-height:none;border-right:0;border-bottom:1px solid #e6ebf3}
+  #dm-list .dm-li{flex:1;min-width:160px;border-bottom:0;border-right:1px solid #f2f5f9}
+}
+
+/* ===== 用户资料卡弹窗（现代白卡） ===== */
+#u-pop{position:fixed;inset:0;background:rgba(20,30,50,.4);backdrop-filter:blur(2px);z-index:450;display:none;align-items:center;justify-content:center}
+#u-pop.open{display:flex}
+#u-pop .up-card{width:260px;background:#fff;border:0;border-radius:18px;box-shadow:0 20px 60px rgba(10,20,40,.3);
+  padding:24px 20px 20px;text-align:center;font-family:inherit;animation:upIn .25s ease}
+@keyframes upIn{from{opacity:0;transform:scale(.94) translateY(8px)}to{opacity:1;transform:none}}
+#u-pop .up-name{font-size:18px;font-weight:800;color:#1d2b45;letter-spacing:1px;margin-bottom:14px}
+#u-pop .up-ava{width:96px;height:96px;margin:0 auto 14px;background:#eef3fb;border-radius:50%;
+  overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #fff,0 0 0 5px #e8f0fd}
+#u-pop .up-ava img,#u-pop .up-ava svg{width:100%;height:100%;object-fit:cover;display:block}
+#u-pop .up-stats{display:flex;background:#f6f8fc;border-radius:12px;margin-bottom:12px;padding:8px 0}
+#u-pop .up-stats div{flex:1;padding:2px 0;font-size:11.5px;color:#8a94a6;line-height:1.5}
+#u-pop .up-stats div+div{border-left:1px solid #e9eef6}
+#u-pop .up-stats b{display:block;font-size:17px;color:#1d2b45;font-weight:800}
+#u-pop .up-badge{font-size:12.5px;color:#5a6a80;line-height:2}
+#u-pop .up-badge .mem{color:#1a7f37;background:#e9f7ee;border-radius:4px;padding:1px 8px;font-weight:600}
+#u-pop .up-lv{font-size:12px;color:#c05f10;margin-bottom:14px}
+#u-pop .up-card .btn{width:100%;border-radius:999px;padding:9px 0}
+
+/* ===== 海螺广告（现代卡）· R72：移到主列顶部（欢迎条上方）· R73：改长条、与欢迎条齐宽 ===== */
+.conch-ad{border:1px solid #e6ebf3;border-radius:14px;background:linear-gradient(160deg,#ffffff,#f4f8ff);padding:16px 14px 14px;
+  text-align:center;font-family:inherit;box-shadow:0 2px 10px rgba(30,50,90,.05);margin-bottom:14px}
+.maincol .conch-ad{max-width:none;margin-bottom:14px;position:relative;padding:14px 16px 12px}
+.conch-ad .ca-tag{display:inline-block;font-size:10px;color:#8a94a6;background:#eef2f8;border-radius:4px;padding:1px 8px;letter-spacing:1px}
+.conch-ad .ca-logo{margin:10px auto 4px}
+.conch-ad .ca-logo img{width:84px;height:68px;object-fit:contain;pointer-events:none}
+.conch-ad .ca-title{font-size:19px;font-weight:900;letter-spacing:2px;line-height:1.25}
+.conch-ad .ca-title .b{color:#3B82F6}
+.conch-ad .ca-title .o{color:#FF9D2E}
+.conch-ad .ca-slogan{font-size:12.5px;color:#7a6a3a;margin:6px 0 12px;line-height:1.7}
+.conch-ad form{display:flex;align-items:center;background:#fff;border:1px solid #dbe6f8;border-radius:999px;padding:3px 3px 3px 12px;transition:.2s}
+.conch-ad form:focus-within{border-color:#3B82F6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.conch-ad input{flex:1;border:0;background:none;outline:none;font-size:12px;color:#333;min-width:0;font-family:inherit}
+.conch-ad button[type=submit]{width:auto;height:30px;padding:0 14px;border:0;border-radius:999px;background:#3B82F6;color:#fff;font-size:12.5px;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
+.conch-ad button[type=submit]:hover{background:#2f6fe0}
+.conch-ad .ca-go{display:block;margin-top:10px;font-size:13px;color:#fff;background:#3B82F6;
+  border:0;border-radius:999px;padding:9px 0;cursor:pointer;letter-spacing:1px;font-weight:600;transition:.15s}
+.conch-ad .ca-go:hover{background:#2f6fe0}
+/* 轮播广告槽 */
+.conch-ad #ad-slot{min-height:158px;text-align:center}
+.conch-ad .ca-brand{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0 4px}
+.conch-ad .ca-emo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.conch-ad .ca-brand .b{font-size:15px;font-weight:800;letter-spacing:1px;color:#1d2b45}
+.conch-ad .ad-dots{display:flex;gap:5px;justify-content:center;margin-top:12px}
+.conch-ad .ad-dots i{width:6px;height:6px;border-radius:50%;background:#cdd6e3;cursor:pointer;transition:.2s}
+.conch-ad .ad-dots i.on{background:#3B82F6;width:16px;border-radius:3px}
+.conch-ad .ad-dots i:hover{background:#9bb4e6}
+
+/* ===== R73：长条广告（宽屏）——logo | 文字+搜索 | CTA，与欢迎条齐长 ===== */
+.maincol .conch-ad .ca-tag{position:absolute;top:10px;right:12px}
+.maincol .conch-ad #ad-slot{min-height:0;display:flex;align-items:center}
+.maincol .conch-ad .ca-row{display:flex;align-items:center;gap:16px;width:100%;text-align:left}
+.maincol .conch-ad .ca-logo{margin:0;flex:none}
+.maincol .conch-ad .ca-logo img{width:64px;height:52px}
+.maincol .conch-ad .ca-txt{flex:1;min-width:0}
+.maincol .conch-ad .ca-title{font-size:18px}
+.maincol .conch-ad .ca-slogan{margin:2px 0 0;font-size:12.5px}
+.maincol .conch-ad form{max-width:300px;margin-top:8px}
+.maincol .conch-ad .ca-go{flex:none;display:inline-block;margin:0;padding:10px 20px}
+.maincol .conch-ad .ca-brand{justify-content:flex-start;margin:0;flex:none}
+.maincol .conch-ad .ca-brand .b{font-size:17px}
+.maincol .conch-ad .ca-slogan-inline{flex:1;min-width:0;margin:0;text-align:left}
+.maincol .conch-ad .ad-dots{margin-top:10px}
+/* 窄屏回退竖排 */
+@media (max-width:700px){
+  .maincol .conch-ad{padding:16px 14px 14px}
+  .maincol .conch-ad .ca-tag{position:static;display:inline-block;margin:0 0 4px}
+  .maincol .conch-ad #ad-slot{display:block;min-height:0}
+  .maincol .conch-ad .ca-row{display:block}
+  .maincol .conch-ad .ca-logo{margin:6px auto 2px}
+  .maincol .conch-ad .ca-logo img{width:84px;height:68px}
+  .maincol .conch-ad .ca-brand{justify-content:center;margin:8px 0 4px}
+  .maincol .conch-ad .ca-slogan-inline{text-align:center;margin:0 0 8px}
+  .maincol .conch-ad form{max-width:none;margin-top:8px}
+  .maincol .conch-ad .ca-go{display:block;width:100%;margin-top:10px;padding:9px 0}
+}
+
+/* ===== 全局提示 ===== */
+#page-toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%) translateY(10px);background:rgba(29,43,69,.92);
+  color:#fff;font-size:13.5px;padding:10px 22px;border-radius:999px;opacity:0;transition:.3s;z-index:300;pointer-events:none;white-space:nowrap;
+  box-shadow:0 8px 24px rgba(10,20,40,.3)}
+#page-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* 详情页双栏：主列 + 右推荐栏 */
+.post-detail{display:flex;gap:0;align-items:flex-start}
+.detail-main{flex:1;min-width:0}
+.detail-rec{width:250px;flex:none;border-left:1px solid #eef2f8;padding:16px 14px 20px;background:#fbfcfe}
+.detail-rec .panel{margin-bottom:12px;box-shadow:none;border-radius:12px}
+.detail-rec .panel-hd{padding:10px 14px 8px;font-size:13px}
+#rec-list{list-style:none}
+#rec-list li{padding:8px 4px;border-bottom:1px solid #f2f5f9;cursor:pointer;font-size:12.5px;color:#3a4657;line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#rec-list li:last-child{border-bottom:0}
+#rec-list li:hover{color:#2f6fe0}
+#rec-list li small{display:block;color:#a4adc0;font-size:11px;margin-top:2px}
+.rec-board{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:9px;cursor:pointer;font-size:12.5px;color:#3a4657}
+.rec-board:hover{background:#f2f7ff;color:#2f6fe0}
+
+/* 右下角浮动发帖按钮 */
+#fab-float{position:fixed;right:22px;bottom:26px;z-index:90;width:52px;height:52px;border:0;border-radius:50%;
+  background:linear-gradient(150deg,#4a8bf0,#2f6fe0);color:#fff;font-size:26px;line-height:1;cursor:pointer;
+  box-shadow:0 8px 22px rgba(47,111,224,.42);transition:.18s;display:none;align-items:center;justify-content:center}
+#fab-float.show{display:flex}
+#fab-float:hover{transform:translateY(-3px) scale(1.05)}
+#fab-float:active{transform:scale(.95)}
+
+@media (max-width:1080px){
+  .detail-rec{display:none}
+  .post-detail{display:block}
+  /* R70：窄屏（平板/手机）不再隐藏右侧栏——公告板 / 论坛统计 / 我的 全部保留，
+     整体改为单列流式：主列 → 左侧栏（版块导航/在线）→ 右侧栏，卡片全宽堆叠 */
+  .layout{flex-direction:column;gap:12px}
+  .maincol{order:1;width:100%}
+  .side{order:2;width:100%;position:static;display:grid;align-items:start;
+    grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:12px}
+  .side .panel,.side .online-card{width:100%;margin-bottom:0}
+  .side-right{order:3;width:100%;position:static;display:grid;align-items:start;
+    grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:12px}
+  .side-right .panel{width:100%;margin-bottom:0}
+}
+@media (max-width:860px){
+  #fm-search{margin-left:0;width:100%}
+  #post-win{display:block}
+  .post-card .pc-thumb{width:72px;height:72px;font-size:26px}
+  #fm-nav{margin-left:0}
+}
+/* R56：图片点击放大 */
+#img-zoom{position:fixed;inset:0;z-index:2000;background:rgba(4,6,10,.94);cursor:zoom-out;
+  display:none;align-items:center;justify-content:center;padding:24px}
+#img-zoom.on{display:flex}
+#img-zoom img{max-width:94vw;max-height:92vh;object-fit:contain;border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.8);animation:zoomIn .22s ease-out}
+@keyframes zoomIn{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:none}}
+body.zom{overflow:hidden}
+.zomable{cursor:zoom-in}
+</style>
+
+</head>
+<body>
+
+<div id="win">
+  <div class="win-inner">
+
+    <header id="fm-head">
+      <div class="fm-title"><h1>海城大学校园论坛</h1><p>海纳百川，有容乃大。</p></div>
+      <nav id="fm-nav">
+        <button class="nav-btn on" data-view="forum">首 页</button>
+        <button class="nav-btn" data-view="dm">私 信</button>
+      </nav>
+      <form id="fm-search"><input id="fm-q" placeholder="搜索帖子 / 关键词"></form>
+      <button id="fab-post" data-needlogin data-action="newpost">发帖</button>
+      <div class="fm-auth" id="fm-auth"><!-- 登录态由脚本注入 --></div>
+    </header>
+
+    <!-- ================= 论坛视图 ================= -->
+    <div class="view on" id="view-forum">
+      <div class="layout">
+        <aside class="side">
+          <div class="panel">
+            <div class="panel-hd">📂 版块导航</div>
+            <div class="panel-bd" style="padding:8px" id="side-boards"><!-- 版块列表由脚本注入 --></div>
+          </div>
+          <div class="online-card">
+            <div class="oc-t">当前在线</div>
+            <div class="oc-n" id="online-num">1286</div>
+            <div class="oc-s">今日新帖 <b>328</b> · 今日回复 <b>1.2k</b><br>数据每 5 分钟更新</div>
+          </div>
+        </aside>
+        <main class="maincol">
+          <!-- R72：广告位移到主列顶部（欢迎条上方） -->
+          <div class="conch-ad" id="ad-box">
+            <span class="ca-tag">广告</span>
+            <div id="ad-slot"></div>
+            <div class="ad-dots" id="ad-dots"></div>
+          </div>
+          <div class="welcome"><span>欢迎来到海城大学校园论坛！有建议或者想加入我们，可以私信论坛管理员。<b>论坛发帖请遵守《校园网络行为规范》。</b></span></div>
+          <div id="cat-root"></div>
+        </main>
+        <aside class="side-right">
+          <div class="panel">
+            <div class="panel-hd">公告板</div>
+            <div class="panel-bd" style="padding:10px 12px">
+              <div id="notice-board" style="font-size:12.5px;line-height:2;color:#5a6472">
+                如果没有看到上方的广告位，可能是由于您的浏览器广告插件处于工作状态，如果可以请您关掉这个插件，或是更换一个没有屏蔽插件的浏览器，以便享受完整游戏体验。
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd">论坛统计</div>
+            <div class="panel-bd" id="stat-panel"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd">我 的</div>
+            <div class="panel-bd" id="my-panel"><!-- 登录态由脚本注入 --></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- ================= 板块帖子列表 ================= -->
+    <div class="view" id="view-board">
+      <div id="board-crumb"><a data-go="forum">海城大学校园论坛</a> » <span id="board-crumb-name"></span></div>
+      <div class="toolrow">
+        <button class="btn" data-needlogin data-action="newpost">发新帖</button>
+        <button class="btn" data-needlogin data-action="reply">回 复</button>
+        <div class="right"><button class="btn" id="board-back">返回列表</button></div>
+      </div>
+      <div class="thread-list" id="thread-root"></div>
+    </div>
+
+    <!-- ================= 私信（论坛风格） ================= -->
+    <div class="view" id="view-dm">
+      <div id="dm-layout">
+        <div id="dm-list"></div>
+        <div id="chat-wrap">
+          <div id="chat-hd">
+            <button class="wx-back" id="dm-back">返回论坛</button>
+            <span id="dm-title">故意的</span>
+          </div>
+          <div id="chat-body">
+            <div id="dm-msgs"></div>
+          </div>
+          <div id="dm-sg-chips"></div>
+          <div id="dm-inputbar">
+            <span id="dm-draft" hidden></span>
+            <button id="dm-send" class="dm-send" type="button" hidden>发送</button>
+            <span id="dm-hint" class="dm-hint">请点击上方话题回复（本游戏不支持自由输入）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= 帖子详情（现代覆盖页） ================= -->
+<section id="post-page">
+  <div id="post-win">
+    <div id="post-crumb">
+      <span class="ct"><a data-go="forum">海城大学校园论坛</a> » <a id="pc-board"></a> » <span id="pc-title"></span></span>
+      <button class="crumb-back" id="post-back">‹ 返回列表</button>
+    </div>
+    <div id="post-tools">
+      <button class="btn" data-needlogin data-action="newpost">发新帖</button>
+      <button class="btn" id="pt-replybtn">回 复</button>
+      <button class="btn" id="pt-dmowner" style="display:none">✉ 私信帖主</button>
+    </div>
+    <div class="post-detail">
+      <div class="detail-main">
+        <div id="post-title"></div>
+        <div class="post-head">
+          <div class="ph-ava" id="ph-ava"></div>
+          <div class="ph-info">
+            <div class="ph-name"><span id="ph-name"></span></div>
+            <div class="ph-time"><span id="ph-time"></span> · <span id="ph-meta"></span></div>
+          </div>
+          <button class="btn sm ph-follow" data-needlogin data-action="follow">＋ 关注</button>
+        </div>
+        <div class="post-body" id="post-content"></div>
+        <div class="post-actions" id="post-actions"></div>
+        <div class="cmt-title">💬 全部评论 <b id="cmt-count">0</b></div>
+        <div id="post-floors"></div>
+        <div class="reply-box">
+          <input id="post-reply" placeholder="写下你的回复…" autocomplete="off">
+          <button class="btn primary" id="post-replybtn">发 表 回 复</button>
+        </div>
+      </div>
+      <aside class="detail-rec">
+        <div class="panel">
+          <div class="panel-hd">📌 相关推荐</div>
+          <div class="panel-bd" style="padding:6px 10px"><ul id="rec-list"></ul></div>
+        </div>
+        <div class="panel">
+          <div class="panel-hd">📂 快速入口</div>
+          <div class="panel-bd" style="padding:8px" id="rec-boards"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<button id="fab-float" data-needlogin data-action="newpost" title="发帖">＋</button>
+
+<!-- ================= 用户资料卡弹窗（点用户名弹出） ================= -->
+<div id="u-pop">
+  <div class="up-card">
+    <div class="up-name" id="up-name"></div>
+    <div class="up-ava" id="up-ava"></div>
+    <div class="up-stats">
+      <div><b id="up-t">0</b>主题</div>
+      <div><b id="up-r">0</b>回帖</div>
+      <div><b id="up-z">0</b>获赞</div>
+    </div>
+    <div class="up-badge"><span class="mem">会员</span> · 生人</div>
+    <div class="up-lv">★ LV1</div>
+    <button class="btn" id="up-dm">✉ 私 信</button>
+  </div>
+</div>
+
+<div id="page-toast"></div>
+
+<script src="assets/ad.js"></script>
+<script>
+/* ============ 【玩家登录态】 ============ */
+var USER = { name:'万家灯火', avatar:'assets/avatar-player.png' };
+var LOGGED_IN = true;   // 点击"开始游戏"后，主控（万家灯火）已是登录状态
+
+/* 默认头像（SVG 灰底白人像） */
+var DEFAULT_AVATAR = '<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">' +
+  '<rect width="64" height="64" rx="8" fill="#cdd6e2"/>' +
+  '<circle cx="32" cy="25" r="12" fill="#fff"/>' +
+  '<path d="M11 55 C11 43 53 43 53 55 Z" fill="#fff"/></svg>';
+function avatarHTML(av){
+  if(av === 'DEFAULT' || !av) return '<img src="data:image/svg+xml;utf8,'+encodeURIComponent(DEFAULT_AVATAR)+'" alt="默认头像">';
+  /* 传入图片路径时按图片渲染（主控头像） */
+  if(/\.(png|jpe?g|gif|webp|svg)$/i.test(av)) return '<img src="'+av+'" alt="头像">';
+  return av;
+}
+
+/* 顶栏：登录态用户 */
+document.getElementById('fm-auth').innerHTML =
+  '<div class="fm-user"><div class="uava">'+avatarHTML(USER.avatar)+'</div>' +
+  '<span class="un">'+USER.name+'</span><span class="lv">★ LV2</span>' +
+  '<button class="btn sm" id="logout-btn">退出</button></div>';
+document.getElementById('logout-btn').addEventListener('click', function(){ toast('当前为剧情登录状态，无法退出'); });
+
+/* 我的面板：登录态 */
+document.getElementById('my-panel').innerHTML =
+  USER.name + '，欢迎回来！<br>积分 <b>128</b> · 等级 <b>LV2</b> · 签到 <b>7</b> 天。' +
+  '<div class="btnrow"><button class="btn sm" id="sign-btn">每日签到</button><button class="btn sm" data-needlogin data-action="store">积分商店</button></div>' +
+  '<div class="btnrow" style="margin-top:6px"><button class="btn sm" id="reset-btn" style="color:#a04a3a">重置进度</button></div>';
+document.getElementById('sign-btn').addEventListener('click', function(){ toast('今日已签到 +5 积分'); });
+/* 重置进度：清空全部游戏存档（线索本/手账本/日记/私信/博客解锁等）并刷新 */
+document.getElementById('reset-btn').addEventListener('click', function(){
+  if(confirm('确定要重置全部游戏进度吗？\n\n线索本、手账本、日记、私信记录、博客解锁状态等都会清空，且无法恢复。')){
+    try{ localStorage.clear(); }catch(_){}
+    /* R56-1：重置后重新打开的是校园论坛首页（清掉 #dm 等 hash） */
+    location.href = 'forum.html';
+  }
+});
+
+/* ============ 【论坛数据 —— 待填充区】 ============ */
+var SECTIONS = [
+  { name:'校务信息', icon:'📢', boards:[
+    { id:'notice', icon:'📋', name:'校园公告', desc:'学校通知、公告与办事指南。全体师生发布权威信息的地方。' },
+    { id:'lost',   icon:'🔍', name:'失物招领', desc:'丢了东西来这里看看，捡到东西请发帖。' }
+  ]},
+  { name:'校园生活', icon:'🏫', boards:[
+    { id:'talk', icon:'💬', name:'校园杂谈', desc:'所有和海大有关的帖子，按最后回复排在一起。' },
+    { id:'food', icon:'🍚', name:'美食天地', desc:'食堂测评、外卖红黑榜、探店笔记。' },
+    { id:'market', icon:'🛒', name:'跳蚤市场', desc:'二手书、二手电器、毕业甩卖，都在这里。' }
+  ]},
+  { name:'深夜树洞', icon:'🌙', boards:[
+    { id:'tree', icon:'🌙', name:'深夜树洞', desc:'那些没法轻易解释的经历，值得被认真记下。匿名发帖。' }
+  ]}
+];
+
+var FORUM_POSTS = [
+  /* —— 置顶悬赏帖（封面进入后首屏展示）—— */
+  { id:'p5', reward:true, top:true, board:'tree', author:'故意的', avatar:'assets/avatar-nebula.png', time:'2026-09-10', views:8888,
+    title:'重金悬赏十万，查清周教授坠崖案，还本人清白',
+    content:'rt，本人暑期跟随社会学系周正教授去往木客村做田野调查。\n周教授不幸坠崖，警方目前认定是意外事件。\n但开学没多久学校里就出现是我将教授推下悬崖的流言。\n流言已对本人的日常生活造成严重负面影响。\n特此重金悬赏，若谁能找到线索还我清白，我会自愿赠与十万元现金。',
+    replies:[
+      {a:'学校逼文盲读书', av:'🎓', t:'哎呦喂，这不是校草顾异吗？你不美院的吗？怎么跟社会学系的老师去做田野调查？', time:'2026-09-10'},
+      {a:'虾仁不眨眼', av:'🦐', t:'楼上的，肯定是暑期实践呗，这年头艺术生工作那么难找，有什么机会肯定能上则上', time:'2026-09-10'},
+      {a:'哦关我什么事', av:'🙄', t:'看我ID', time:'2026-09-10'},
+      {a:'进京赶烤冷面', av:'🍜', t:'oi，给我十万块钱，顺便给我炒俩菜', time:'2026-09-10'},
+      {a:'不系舟', av:'⛵', t:'可怜的楼主，都是拉屎的，没有递纸的', time:'2026-09-10'},
+      {a:'睡不醒', av:'😴', t:'先说这十万是人民币还是津巴布韦币', time:'2026-09-10'}
+    ]},
+  { id:'p6', board:'notice', author:'教务处', avatar:'🧑‍💼', time:'2026-09-10', views:1520,
+    title:'祝海城大学的老师们教师节快乐！',
+    content:'今天是第41个教师节。感谢每一位老师在讲台前的耐心，也感谢你们在深夜里的付出。愿你们被学生记得，也被岁月温柔以待。教师节快乐！',
+    replies:[
+      {a:'早八人', av:'🌅', t:'老师节日快乐！', time:'2026-09-10'}
+    ]},
+  { id:'p8', board:'tree', author:'不许桃', avatar:'🌟', time:'2026-09-10', views:540,
+    title:'有没有人愿意组团给3号楼附近的流浪猫和流浪狗做绝育呀？',
+    content:'rt，有意者联系我，非常感谢~',
+    replies:[
+      {a:'万家灯火', av:'assets/avatar-player.png', t:'顶顶', time:'2026-09-10'}
+    ]},
+  { id:'p9', board:'tree', author:'奶龙', avatar:'🐉', time:'2026-09-10', views:1302,
+    title:'"聪明药"吃多了头疼，有跟我一样情况的吗？',
+    content:'最近忙着补考，不小心吃多了最近很流行的那个聪明药，结果这两天头疼，去医院也没检查出原因。\n有跟我一样的吗？怎么解决的？',
+    replies:[
+      {a:'天要亡我', av:'🌩️', t:'我吃了一个月了，无事发生，楼主是不是没密封保存？说明书上说一定要密封保存，否则接触太多空气很容易变质，就不能吃了', time:'2026-09-10'},
+      {a:'好运酱汁', av:'🍀', t:'试试布洛芬？', time:'2026-09-10'},
+      {a:'一周有八天', av:'📅', t:'这个聪明药的原理不就是激活神经元增强大脑计算能力吗？吃多了大脑的算力可能会被透支，所以头疼？楼主要不然先停药吧', time:'2026-09-10'},
+      {a:'奶龙', av:'🐉', t:'谢谢楼上的回复，但不吃不行啊，补考不能再挂科了，而且大家都吃，就我不吃，我肯定更考不过别人了', time:'2026-09-10'},
+      {a:'我会有一个亿', av:'', t:'可是如果健康没了，补考过了又有什么意义呢？', time:'2026-09-10'}
+    ]}
+];
+
+var FLOOR_NAMES = ['沙发','板凳','地板'];
+
+/* ---------- 线索注册 ---------- */
+
+
+/* ---------- 通用 ---------- */
+var toastEl = document.getElementById('page-toast');
+function toast(msg){
+  toastEl.textContent = msg; toastEl.classList.add('show');
+  clearTimeout(toast._t); toast._t = setTimeout(function(){toastEl.classList.remove('show')},1800);
+}
+function esc(s){ return s.replace(/</g,'&lt;'); }
+function boardName(id){ var b = SECTIONS.reduce(function(a,s){return a.concat(s.boards)},[]).find(function(b){return b.id===id}); return b?b.name:id; }
+function postsOf(boardId){ return boardId==='all' ? FORUM_POSTS : FORUM_POSTS.filter(function(p){return p.board===boardId}); }
+
+/* 登录后：需要登录的按钮给出对应提示，而非"请先登录" */
+document.addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('[data-needlogin]') : null;
+  if(!b) return;
+  var act = b.getAttribute('data-action');
+  if(act === 'map')   toast('校园地图即将开放，敬请期待');
+  else if(act === 'store') toast('积分商店即将开放，敬请期待');
+  else if(act === 'newpost') toast('发帖功能即将开放');
+  else if(act === 'reply') toast('请在帖子底部回复框内回复');
+  else toast('该功能即将开放');
+});
+
+/* ---------- 视图切换 ---------- */
+/* R53：私信视图占满视口剩余高度（页面顶部论坛头之下），消息在固定窗口内滑动 */
+function fitDm(){
+  var v = document.getElementById('view-dm'), h = document.getElementById('fm-head');
+  if(!v || !h) return;
+  var used = h.getBoundingClientRect().height;
+  var ft = document.getElementById('fm-foot');
+  if(ft) used += ft.getBoundingClientRect().height;
+  v.style.height = Math.max(360, window.innerHeight - used - 20) + 'px';
+}
+function showView(id){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('on')});
+  document.getElementById('view-'+id).classList.add('on');
+  document.querySelectorAll('.nav-btn[data-view]').forEach(function(n){
+    n.classList.toggle('on', n.getAttribute('data-view')===id);
+  });
+  /* R53：私信全屏时隐藏页脚，给消息区腾地方；切回其他视图恢复 */
+  var ft = document.getElementById('fm-foot');
+  if(ft) ft.style.display = (id === 'dm') ? 'none' : '';
+  if(id === 'dm'){
+    fitDm();
+    /* R55-9：进入私信视图后把消息区滚到最新（显示当前进度） */
+    setTimeout(function(){
+      var b = document.getElementById('dm-msgs');
+      if(b) b.scrollTop = b.scrollHeight;
+      try{ sgMon2Sync(); }catch(_){}
+    }, 260);
+  }
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.nav-btn[data-view]').forEach(function(n){
+  n.addEventListener('click', function(){
+    showView(n.getAttribute('data-view'));
+  });
+});
+/* 支持 forum.html#dm 直达私信视图（原 dm-owner「去论坛回复」入口，R53 起两窗皆可直接交互） */
+if((location.hash||'').replace('#','')==='dm'){
+  window.addEventListener('load', function(){ setTimeout(function(){ showView('dm'); }, 60); });
+}
+var fitDmTimer = null;
+window.addEventListener('resize', function(){
+  if(!document.getElementById('view-dm').classList.contains('on')) return;
+  clearTimeout(fitDmTimer);
+  fitDmTimer = setTimeout(fitDm, 120);
+});
+
+/* ---------- 首页渲染：侧栏版块导航 + 帖子卡流 ---------- */
+var BOARD_COLORS = { notice:'#3b82f6', lost:'#8b5cf6', talk:'#10b981', food:'#f59e0b', market:'#ec4899', tree:'#6366f1', all:'#0ea5e9' };
+function boardIcon(id){ var b = SECTIONS.reduce(function(a,s){return a.concat(s.boards)},[]).find(function(x){return x.id===id}); return b?b.icon:'📁'; }
+
+function renderHome(){
+  /* —— 侧栏版块导航 —— */
+  var sb = '<div class="bd-item on" data-board="all"><div class="bn">全部讨论</div><div class="bc">'+FORUM_POSTS.length+'</div></div>';
+  SECTIONS.forEach(function(s){
+    sb += '<div class="bd-sep">'+s.name+'</div>';
+    s.boards.forEach(function(b){
+      sb += '<div class="bd-item" data-board="'+b.id+'"><div class="bn">'+b.name+'</div><div class="bc">'+postsOf(b.id).length+'</div></div>';
+    });
+  });
+  document.getElementById('side-boards').innerHTML = sb;
+  document.querySelectorAll('#side-boards .bd-item').forEach(function(it){
+    it.addEventListener('click', function(){ openBoard(it.getAttribute('data-board')); });
+  });
+
+  /* —— 帖子卡流（按时间倒序，置顶悬赏帖在最前） —— */
+  var list = FORUM_POSTS.slice().sort(function(a,b){
+    if(!!b.top !== !!a.top) return b.top?1:-1;
+    return (b.time>a.time)?1:(b.time<a.time?-1:0);
+  });
+  var html = list.map(function(p){
+    var color = BOARD_COLORS[p.board] || '#64748b';
+    var plain = p.content.replace(/<[^>]+>/g,'');
+    var flags = (p.top?'<span class="pc-flag top">置顶</span>':'') + (p.reward?'<span class="pc-flag reward">悬赏</span>':'') + (p.hot?'<span class="pc-flag hot">热门</span>':'');
+    return '<div class="post-card" data-post="'+p.id+'">' +
+      '<div class="pc-main">' +
+        '<div class="pc-tags"><span class="pc-board" style="background:'+color+'">'+boardName(p.board)+'</span>'+flags+'</div>' +
+        '<div class="pc-title">'+p.title+'</div>' +
+        '<div class="pc-desc">'+plain+'</div>' +
+        '<div class="pc-foot">' +
+          '<span class="pc-author"><span class="ava">'+avatarHTML(p.avatar)+'</span>'+p.author+'</span>' +
+          '<span class="pc-it">👍 <b>'+(p.replies.length+3)+'</b></span>' +
+          '<span class="pc-it">💬 <b>'+p.replies.length+'</b></span>' +
+          '<span class="pc-it">👁 <b>'+p.views+'</b></span>' +
+        '</div>' +
+      '</div></div>';
+  }).join('');
+  document.getElementById('cat-root').innerHTML = html || '<div class="pc-empty">暂无帖子，来发第一帖吧</div>';
+  document.querySelectorAll('#cat-root .post-card').forEach(function(c){
+    c.addEventListener('click', function(){ openPost(c.getAttribute('data-post')); });
+  });
+
+}
+
+/* ---------- 板块帖子列表 ---------- */
+function openBoard(boardId){
+  document.getElementById('board-crumb-name').textContent = boardName(boardId);
+  var list = postsOf(boardId);
+  document.getElementById('thread-root').innerHTML = list.length ? list.map(function(p){
+    return '<div class="thread-row" data-post="'+p.id+'">' +
+      '<div class="tmain"><div class="tname">'+(p.top?'<span class="fm-top">置顶</span>':'')+(p.reward?'<span class="fm-reward">悬赏</span>':'')+p.title+'</div></div>' +
+      '<div class="tstat">回复 '+p.replies.length+' · 浏览 '+p.views+'<br>'+p.author+' · '+p.time+'</div></div>';
+  }).join('') : '<div style="padding:36px;text-align:center;color:#9aa5b8;font-size:13px">本板块暂无帖子</div>';
+  document.querySelectorAll('#thread-root .thread-row').forEach(function(r){
+    r.addEventListener('click', function(){ openPost(r.getAttribute('data-post')); });
+  });
+  showView('board');
+}
+document.getElementById('board-back').addEventListener('click', function(){ showView('forum'); });
+
+/* ---------- 帖子详情 ---------- */
+var postPage = document.getElementById('post-page');
+var curPost = null, curFloor = 0;
+function floorHTML(a, av, content, time, idx, isLz){
+  var tag = idx===0 ? '楼主' : (FLOOR_NAMES[idx-1] || (idx+1+'楼'));
+  return '<div class="floorbox">' +
+    '<div class="f-left"><div class="uavatar">'+avatarHTML(av)+'</div><div class="uname">'+a+'</div></div>' +
+    '<div class="f-right">' +
+      '<div class="f-rhead"><span>'+time+' · <span class="look" data-needlogin data-action="report">举报</span></span>' +
+        '<span class="lz">'+(isLz?'<span class="lz-tag">楼主</span>':'')+' '+tag+'</span></div>' +
+      '<div class="f-content">'+content.replace(/\n/g,'<br><br>')+'</div>' +
+      '<div class="f-footer"><span data-like>👍 赞 <i>'+(idx===0?203:0)+'</i></span><span data-fav>⭐ 收藏</span><span data-share>⇄ 分享</span><span data-reply>💬 回复</span></div>' +
+    '</div></div>';
+}
+function openPost(id){
+  curPost = FORUM_POSTS.find(function(p){return p.id===id});
+  var p = curPost;
+  document.getElementById('pc-board').textContent = boardName(p.board);
+  document.getElementById('pc-board').onclick = function(){ openBoard(p.board); };
+  document.getElementById('pc-title').textContent = p.title.replace(/<[^>]+>/g,'');
+  document.getElementById('post-title').textContent = p.title.replace(/<[^>]+>/g,'');
+  /* 作者行 */
+  document.getElementById('ph-ava').innerHTML = avatarHTML(p.avatar);
+  document.getElementById('ph-name').textContent = p.author;
+  document.getElementById('ph-time').textContent = p.time;
+  document.getElementById('ph-meta').textContent = '阅读 '+p.views+' · 评论 '+p.replies.length;
+  /* 正文 */
+  document.getElementById('post-content').innerHTML = p.content.replace(/\n/g,'<br><br>');
+  /* 互动条 */
+  document.getElementById('post-actions').innerHTML =
+    '<button class="pa" data-pa="like">👍 点赞 <b id="pa-like">'+(p.replies.length+203)+'</b></button>' +
+    '<button class="pa" data-pa="fav">⭐ 收藏 <b id="pa-fav">89</b></button>' +
+    '<button class="pa" data-pa="share">⇄ 分享</button>' +
+    '<button class="pa" data-pa="report" data-needlogin data-action="report">🚩 举报</button>';
+  document.getElementById('cmt-count').textContent = p.replies.length;
+  document.getElementById('post-floors').innerHTML =
+    p.replies.map(function(r,i){ return floorHTML(r.a, r.av||'DEFAULT', esc(r.t), r.time, i+1, false); }).join('');
+  /* 右侧推荐栏 */
+  var rec = FORUM_POSTS.filter(function(x){return x.id!==id}).slice(0,6);
+  document.getElementById('rec-list').innerHTML = rec.map(function(x){
+    return '<li data-post="'+x.id+'">'+x.title.replace(/<[^>]+>/g,'')+'<small>'+boardName(x.board)+' · '+x.author+'</small></li>';
+  }).join('') || '<li style="border:0;color:#a4adc0">没有更多推荐</li>';
+  document.querySelectorAll('#rec-list li').forEach(function(li){
+    li.addEventListener('click', function(){ openPost(li.getAttribute('data-post')); });
+  });
+  document.getElementById('rec-boards').innerHTML = SECTIONS.reduce(function(a,s){return a.concat(s.boards)},[]).map(function(b){
+    return '<div class="rec-board" data-board="'+b.id+'">'+b.name+'</div>';
+  }).join('');
+  document.querySelectorAll('#rec-boards .rec-board').forEach(function(rb){
+    rb.addEventListener('click', function(){ closePost(); openBoard(rb.getAttribute('data-board')); });
+  });
+  /* 互动条行为 */
+  document.getElementById('post-actions').onclick = function(e){
+    var t = e.target.closest ? e.target.closest('[data-pa]') : null;
+    if(!t || t.hasAttribute('data-needlogin')) return;
+    var k = t.getAttribute('data-pa');
+    if(k==='like'){ var i=t.querySelector('b'); i.textContent=(parseInt(i.textContent)||0)+1; t.classList.toggle('on'); toast('已点赞'); }
+    else if(k==='fav'){ t.classList.toggle('on'); toast(t.classList.contains('on')?'已收藏到个人空间':'已取消收藏'); }
+    else if(k==='share'){ try{ navigator.clipboard && navigator.clipboard.writeText(location.href); }catch(_){} toast('链接已复制'); }
+  };
+  // 悬赏帖：显示"私信帖主"按钮
+  document.getElementById('pt-dmowner').style.display = p.reward ? 'inline-block' : 'none';
+  postPage.classList.add('active');
+  document.body.style.overflow='hidden';
+  postPage.scrollTop = 0;
+  document.getElementById('fab-float').classList.add('show');
+}
+function closePost(){
+  postPage.classList.remove('active');
+  document.body.style.overflow='';
+  document.getElementById('fab-float').classList.remove('show');
+}
+document.getElementById('post-back').addEventListener('click', closePost);
+function doReply(){
+  var v = document.getElementById('post-reply').value.trim(); if(!v) return;
+  curPost.replies.push({a:USER.name, av:USER.avatar, t:esc(v), time:'刚刚'});
+  document.getElementById('post-reply').value='';
+  openPost(curPost.id);
+  toast('回复成功');
+}
+document.getElementById('post-replybtn').addEventListener('click', doReply);
+document.getElementById('pt-replybtn').addEventListener('click', function(){
+  document.getElementById('post-reply').focus();
+});
+/* R59：悬赏帖 → 私信帖主，直接跳到站内私信界面（故意的的会话），不再开独立页 */
+document.getElementById('pt-dmowner').addEventListener('click', function(){
+  closePost();
+  curDm = 'sg';
+  showView('dm');
+  try{ renderDmList(); }catch(_){}
+  try{ renderDm(); }catch(_){}
+  setTimeout(function(){
+    var b = document.getElementById('dm-msgs');
+    if(b) b.scrollTop = b.scrollHeight;
+  }, 320);
+});
+document.getElementById('post-reply').addEventListener('keydown', function(e){ if(e.key==='Enter') doReply(); });
+document.getElementById('post-floors').addEventListener('click', function(e){
+  var t = e.target.closest('span');
+  if(!t) return;
+  if(t.hasAttribute('data-like')){ var i=t.querySelector('i'); if(i){ i.textContent = (parseInt(i.textContent)||0)+1; t.style.color='#d63a1e'; } toast('已点赞'); }
+  else if(t.hasAttribute('data-fav')) toast('已收藏到个人空间');
+  else if(t.hasAttribute('data-share')){ try{ navigator.clipboard && navigator.clipboard.writeText(location.href); }catch(_){} toast('链接已复制'); }
+  else if(t.hasAttribute('data-reply')){ document.getElementById('post-reply').focus(); }
+});
+
+/* ---------- 私信（多会话：故意的 / 不系舟 / 不许桃） ---------- */
+var curDm = 'sg';
+var DM_PARTNERS = [
+  { id:'sg',  name:'故意的', av:'assets/avatar-nebula.png' },
+  { id:'bxz', name:'不系舟', av:'⛵' },
+  { id:'xbt', name:'不许桃', av:'🌟' }
+];
+function dmPartnerName(id){ var p=DM_PARTNERS.find(function(x){return x.id===id}); return p?p.name:id; }
+function dmKey(id){ return id==='sg' ? 'sg_chat_log' : 'dm_'+id; }
+function dmPartnerLog(id){ try{ return JSON.parse(localStorage.getItem(dmKey(id))||'[]'); }catch(_){ return []; } }
+function curLog(){ return dmPartnerLog(curDm); }
+function sgLog(){ return dmPartnerLog('sg'); }
+
+/* 首次进入：播种 NPC 私聊（只播一次） */
+function seedDm(id, msgs){
+  try{
+    if(localStorage.getItem('dm_seed_'+id)==='1') return;
+    localStorage.setItem(dmKey(id), JSON.stringify(msgs));
+    localStorage.setItem('dm_seed_'+id,'1');
+  }catch(_){}
+}
+if(!localStorage.getItem('sg_chat_log')){
+  sgMigrateOpenLink();   /* 旧存档：把博客链接移到开场最后 */
+/* 开场对话不再预置，改为玩家逐条点击发送（见 SG_OPEN_SCRIPT） */
+}
+/* R64：修复历史污染 —— NPC 会话（bxz/xbt）只应保留各自那 1 条种子消息，
+   多出来的都是当年 NPC 延迟回复串会话写进去的「故意的」对话，这里清理掉。 */
+function dmSanitizePartner(id){
+  try{
+    if(localStorage.getItem('dm_seed_' + id) !== '1') return;
+    var arr = dmPartnerLog(id);
+    if(arr.length <= 1) return;
+    localStorage.setItem(dmKey(id), JSON.stringify(arr.slice(0, 1)));
+  }catch(e){}
+}
+seedDm('bxz', [{r:'npc', t:'你最近不是老抱怨缺经费写毕业论文吗？快看主页最热的那个悬赏贴，你发财的机会到了！', d:'2026-09-10'}]);
+seedDm('xbt', [{r:'npc', t:'好舍友，帮忙顶一顶我的帖子', d:'2026-09-10'}]);
+dmSanitizePartner('bxz');
+dmSanitizePartner('xbt');
+/* 统一日期戳（与博客页 pushLog 一致：YYYY-MM-DD HH:mm） */
+function sgStamp(){ return '2026-09-10'; }   /* 私信时间统一显示 2026-09-10（不显示具体时间） */
+/* 私信中的链接统一转为网址形式（兼容旧存档的"新闻卡片"标记与旧昵称） */
+function sgUrlize(t){
+  return String(t==null?'':t)
+    .split('［新闻卡片：海城大学周正教授坠崖事件调查还原］').join('（网址：<a class="dm-link" href="news.html#news-death" target="_blank" rel="noopener">news.html#news-death</a>）')
+    .split('（网址：blog-prof.html）').join('（网址：<a class="dm-link" href="blog-prof.html" target="_blank" rel="noopener">blog-prof.html</a>）')
+    .split('是故意的').join('故意的');
+}
+
+/* ---- 微信风格渲染 ---- */
+function dmPartnerAv(id){ var p=DM_PARTNERS.find(function(x){return x.id===id}); return p?p.av:'DEFAULT'; }
+var dmRead = {};                                   /* id -> false 表示最后一条尚未显示"已读" */
+function wxTimeLabel(d){
+  if(!d) return '';
+  var p=String(d).split(' '), date=p[0], tm=p[1]||'';
+  var n=new Date(), pn=function(x){return x<10?'0'+x:''+x};
+  var today=n.getFullYear()+'-'+pn(n.getMonth()+1)+'-'+pn(n.getDate());
+  if(date===today) return tm.slice(0,5);
+  return date.slice(5).replace('-','月')+'日 '+tm.slice(0,5);
+}
+var __dmHtmlCache = {};
+function renderDm(){
+  var box = document.getElementById('dm-msgs');
+  var pname = dmPartnerName(curDm);
+  var ttl = document.getElementById('dm-title'); if(ttl) ttl.textContent = pname;
+  var log = curLog();
+  if(!log.length){
+    var emptyHtml = '<div style="text-align:center;color:#9a9a9a;font-size:12.5px;padding:40px 10px;line-height:2.2">📭<br>暂无与 '+pname+' 的消息记录。</div>';
+    if(__dmHtmlCache[curDm] !== emptyHtml){
+      box.innerHTML = emptyHtml; __dmHtmlCache[curDm] = emptyHtml;
+    }
+    return;
+  }else{
+    var html='', lastLabel='';
+    var lastMeIdx=-1;
+    log.forEach(function(m,i){ if(m.r==='me') lastMeIdx=i; });
+    log.forEach(function(m,i){
+      var label = wxTimeLabel(m.d);
+      if(label && label!==lastLabel){ html += '<div class="wx-time">'+label+'</div>'; lastLabel = label; }
+      if(m.r==='sys'){
+        var sysInner = sgUrlize(m.t);
+        if(m.link) sysInner = sysInner + '<br><a class="sys-link" href="'+m.link+'" target="_blank" rel="noopener">📓 打开笔记本 ›</a>';
+        html += '<div class="wx-sys'+(m.xfer?' xfer':'')+(m.link?' nb':'')+'"><span>'+sysInner+'</span></div>'; return;
+      }
+      /* 转账：整条渲染为居中系统提示（含旧存档） */
+      var _pay = /^【转账[：:]([\s\S]+)】$/.exec(String(m.t||''));
+      if(!m.link && _pay){
+        html += '<div class="wx-sys xfer"><span>——“故意的”向您转账' + payAmt(_pay[1]) + '元——</span></div>';
+        return;
+      }
+      var me = m.r==='me';
+      var avaHTML = me ? avatarHTML(USER.avatar) : avatarHTML(dmPartnerAv(curDm));
+      /* 已读回执：显示在自己最后一条消息下方 */
+      var showRead = me && i===lastMeIdx && dmRead[curDm]!==false;
+      /* 链接消息：整块可点击，新标签页打开目标页面 */
+      var bubHTML = m.link
+        ? '<a class="dm-link" href="'+m.link+'" target="_blank" rel="noopener">'+sgUrlize(m.t)+'<span class="dm-link-url">'+m.link+'</span></a>'
+        : sgUrlize(m.t);
+      /* 转账消息：改为居中系统提示（旧存档的【转账：…】同样兼容） */
+      var payM = /^【转账[：:]([\s\S]+)】$/.exec(String(m.t||''));
+      if(!m.link && payM){
+        bubHTML = '<div class="wx-sys xfer"><span>——“故意的”向您转账' + payAmt(payM[1]) + '元——</span></div>';
+      }
+      html += '<div class="wx-row'+(me?' me':'')+'">'+
+                '<div class="wx-ava">'+avaHTML+'</div>'+
+                '<div class="wx-col">'+
+                  '<div class="wx-nick">'+(me?USER.name:pname)+'</div>'+
+                  '<div class="wx-bub">'+bubHTML+'</div>'+
+                '</div></div>';
+    });
+    /* 仅当内容变化时才重绘 —— 否则每次轮询/定时器刷新都会闪一下 */
+    if(__dmHtmlCache[curDm] !== html){
+      box.innerHTML = html;
+      __dmHtmlCache[curDm] = html;
+      box.scrollTop = box.scrollHeight;
+    }
+  }
+}
+
+/* ---- 交互感：正在输入 + 对方回复 ---- */
+function dmTyping(on){
+  var box = document.getElementById('dm-msgs'); if(!box) return;
+  var ex = document.getElementById('wx-typing');
+  if(on){
+    if(ex) return;
+    var d = document.createElement('div');
+    d.id = 'wx-typing'; d.className = 'wx-typing';
+    d.innerHTML = '<div class="wx-ava">'+avatarHTML(dmPartnerAv(curDm))+'</div>'+
+                  '<div class="wx-bub"><i></i><i></i><i></i></div>';
+    box.appendChild(d); box.scrollTop = box.scrollHeight;
+  }else if(ex){ ex.remove(); }
+}
+/* NPC 回复：先"正在输入"，再落一条消息（写入共享记录） */
+function npcSay(text, delay, target){
+  var wait = (delay==null ? 700 : delay);
+  /* R64：捕获调用时的会话，避免延迟期间玩家切换会话导致回复串到别的会话 */
+  var who = target || curDm;
+  setTimeout(function(){
+    if(curDm === who) dmTyping(true);
+    setTimeout(function(){
+      if(curDm === who) dmTyping(false);
+      var l = dmPartnerLog(who); l.push({r:'npc', t:text, d:sgStamp()});
+      try{ localStorage.setItem(dmKey(who), JSON.stringify(l)); }catch(_){}
+      if(curDm === who) renderDm();
+      renderDmList();
+    }, 900);
+  }, wait);
+}
+/* 玩家发送（仅由话题选项触发） */
+function dmSend(text, reply){
+  /* R64：捕获调用时的会话 */
+  var who = curDm;
+  var l = dmPartnerLog(who); l.push({r:'me', t:text, d:sgStamp()});
+  try{ localStorage.setItem(dmKey(who), JSON.stringify(l)); }catch(_){}
+  dmRead[who] = false;
+  renderDm(); renderDmList();
+  if(reply){
+    npcSay(reply, 500, who);
+    setTimeout(function(){ dmRead[who] = true; if(curDm === who) renderDm(); }, 2000);
+  }else{
+    setTimeout(function(){ dmRead[who] = true; if(curDm === who) renderDm(); }, 1200);
+  }
+}
+/* ---- 私信话题：仅使用脚本中已有的对话（不含任何额外编造文案） ---- */
+function dmStoryActive(){
+  if(curDm!=='sg') return false;
+  var chatDone = localStorage.getItem('sg_chat_done')==='1';
+  var jDone = localStorage.getItem('sg_journal_done')==='1';
+  return chatDone && !jDone;
+}
+
+/* 会话列表（左侧 · 微信风格） */
+var __dmListCache = '';
+function renderDmList(){
+  var box = document.getElementById('dm-list'); if(!box) return;
+  box.innerHTML = DM_PARTNERS.map(function(p){
+    var arr = dmPartnerLog(p.id);
+    var last = arr.slice(-1)[0];
+    var prev = last ? ((last.r==='me'?'我：':'') + String(last.t||'').slice(0,14)) : '暂无消息';
+    return '<div class="dm-li'+(p.id===curDm?' on':'')+'" data-dm="'+p.id+'">'+
+      '<div class="dm-li-ava">'+avatarHTML(p.av)+'</div>'+
+      '<div class="dm-li-main"><div class="dm-li-name">'+p.name+'</div>'+
+      '<div class="dm-li-prev">'+esc(prev)+'</div></div>'+
+      '</div>';
+  }).join('');
+  Array.prototype.forEach.call(box.querySelectorAll('.dm-li'), function(li){
+    li.addEventListener('click', function(){
+      if(curDm===li.getAttribute('data-dm')) return;
+      curDm = li.getAttribute('data-dm');
+      renderDmList(); renderDm();
+      if(curDm==='sg'){ renderDm(); }
+    });
+  });
+}
+document.getElementById('dm-back').addEventListener('click', function(){ showView('forum'); });
+
+/* ---------- 私信第二阶段：宾馆手账本委托（连环问答完成后触发） ---------- */
+var JN_STORY = {
+  npc1: '到那边去我之前和教授一起住过的宾馆吧，我之前走的匆忙，把一个手账本落在宾馆了，如果还在的话送你了。',
+  me1: '多谢老板！收获手账本➕1！',
+  me2: '老板，已经到达宾馆，你的本子也拿到啦。',
+  npc2: 'OK。'
+};
+/* 幂等推送：若最后一条已是同一条（同 r + 同文本）则跳过 —— 防止多标签页竞态造成重复 */
+function sgPushOnce(r, t){
+  var l = sgLog(), last = l[l.length-1];
+  if(last && last.r===r && String(last.t)===String(t)) return false;
+  sgJLog({r:r, t:t});
+  return true;
+}
+/* 清理历史存档里的相邻重复消息（仅一条一次） */
+function sgDedupe(){
+  var l; try{ l = JSON.parse(localStorage.getItem('sg_chat_log')||'[]'); }catch(_){ return; }
+  if(!l.length) return;
+  var out=[l[0]];
+  for(var i=1;i<l.length;i++){
+    var p=out[out.length-1];
+    if(!(p.r===l[i].r && String(p.t)===String(l[i].t))) out.push(l[i]);
+  }
+  if(out.length!==l.length){
+    try{ localStorage.setItem('sg_chat_log', JSON.stringify(out)); }catch(_){}
+  }
+}
+sgDedupe();
+/* 旧存档清理：同一条链接消息（新闻/博客）重复出现时只保留第一条 */
+(function sgDedupeLinks(){
+  try{
+    var l = JSON.parse(localStorage.getItem('sg_chat_log') || '[]');
+    if(!l.length) return;
+    var seen = {}, out = [];
+    l.forEach(function(m){
+      if(m && m.link){
+        var k = String(m.link) + '|' + String(m.t);
+        if(seen[k]) return;
+        seen[k] = 1;
+      }
+      out.push(m);
+    });
+    if(out.length !== l.length){ localStorage.setItem('sg_chat_log', JSON.stringify(out)); }
+  }catch(e){}
+})();
+/* 启动自愈：若上一条 npc 推送被刷新/关页打断，pending 标记会留在存档里导致整段卡死。
+   这里把这类「已标记但没进日志」的 pending 清掉，让对应阶段重新推一次。 */
+(function sgRepairPending(){
+  try{
+    var prefixes = ['sg_pre_step_p','sg_case_step_p','sg_travel_pending_','sg_mon_step_p','sg_plan_step_p','sg_fin_step_p'];
+    Object.keys(localStorage).forEach(function(k){
+      if(localStorage.getItem(k) !== '1') return;
+      if(!prefixes.some(function(p){ return k.indexOf(p) === 0; })) return;
+      localStorage.removeItem(k);
+    });
+  }catch(_){}
+})();
+function sgJLog(o){
+  if(!o.d) o.d = sgStamp();
+  var l = sgLog(); l.push(o);
+  try{ localStorage.setItem('sg_chat_log', JSON.stringify(l)); }catch(_){}
+}
+/* ---------- 私信开场：玩家逐条点击发送（博客链接在最后） ---------- */
+var SG_OPEN_SCRIPT = [
+  {me:'嗨，顾同学，我看到你发的悬赏贴了，那个去世的教授是我们专业的，我想了解更多细节，可以聊聊吗？'},
+  {npc:'可以'},
+  {npc:'你可以先读一下教授出事前写的博客，如果能全部解锁，说明你有实力接下这个任务，如果无法解锁……'},
+  {me:'如果无法解锁，我会自己灰溜溜离开~'},
+  {npc:'……如果无法解锁，可以找我求助，我给你提示'},
+  {me:'哦哦好的'},
+  {npc:'【教授博客链接】', link:'blog-prof.html'}
+];
+/* 旧存档兼容：把开场里的博客链接挪到这段对话最后 */
+function sgMigrateOpenLink(){
+  var l = sgLog();
+  var start = -1, i;
+  for(i=0;i<l.length;i++){ if(String(l[i].t||'').indexOf('嗨，顾同学') === 0){ start = i; break; } }
+  if(start < 0) return;
+  var linkIdx = -1;
+  for(i=start;i<Math.min(start+8,l.length);i++){ if(l[i].link){ linkIdx = i; break; } }
+  if(linkIdx < 0) return;
+  var endIdx = Math.min(start + 6, l.length - 1);
+  if(linkIdx === endIdx) return;
+  var msg = l.splice(linkIdx,1)[0];
+  l.splice(endIdx,0,msg);
+  try{ localStorage.setItem('sg_chat_log', JSON.stringify(l)); }catch(_){}
+  try{ if(l.length>=7) localStorage.setItem('sg_open_done','1'); }catch(_){}
+}
+
+function sgOpenRender(){
+  var box = document.getElementById('dm-sg-chips');
+  if(curDm!=='sg'){ box.innerHTML=''; box.classList.remove('on'); return; }
+  var done = false;
+  try{ done = localStorage.getItem('sg_open_done')==='1'; }catch(_){}
+  if(done) return;
+  /* 旧存档（有预置的整段开场、且没有脚本进度）→ 直接视为完成 */
+  var l = sgLog();
+  var stepKey = localStorage.getItem('sg_open_step');
+  if(stepKey === null && l.length >= 5 && l.some(function(m){ return String(m.t||'').indexOf('嗨，顾同学') === 0; })){
+    try{ localStorage.setItem('sg_open_done','1'); }catch(_){}
+    return;
+  }
+  var step = parseInt(localStorage.getItem('sg_open_step')||'0', 10) || 0;
+  if(step>=SG_OPEN_SCRIPT.length){
+    box.classList.remove('on'); box.innerHTML='';
+    try{ localStorage.setItem('sg_open_done','1'); }catch(_){}
+    renderDm();
+    return;
+  }
+  var st = SG_OPEN_SCRIPT[step];
+  if(st.npc!==undefined){
+    box.classList.remove('on'); box.innerHTML='';
+    var pk = 'sg_open_pending_'+step;
+    if(localStorage.getItem(pk)!=='1'){
+      try{ localStorage.setItem(pk,'1'); }catch(_){}
+      setTimeout(function(){
+        dmTyping(true);
+        setTimeout(function(){
+          dmTyping(false);
+          if(st.link){ sgJLog({r:'npc', t:st.npc, link:st.link}); }
+          else sgPushOnce('npc', st.npc);
+          try{ localStorage.setItem('sg_open_step', String(step+1)); }catch(_){}
+          renderDm();
+        }, 850);
+      }, 700);
+    }
+    return;
+  }
+  box.classList.add('on'); box.innerHTML='';
+  var b = document.createElement('button'); b.className='dm-chip'; b.textContent = st.me;
+  b.addEventListener('click', function(){
+    sgJLog({r:'me', t:st.me});
+    try{ localStorage.setItem('sg_open_step', String(step+1)); }catch(_){}
+    renderDm();
+  });
+  box.appendChild(b);
+}
+
+/* ---------- 求助提示（2 选 1）：未解开博客密码时出现 ---------- */
+var SG_HINT_SCRIPT = [
+  {me:'这关好难啊，你直接告诉我答案吧。'},
+  {npc:'你确定吗？'},
+  {me:'我确定，告诉我答案吧。'},
+  {npc:'好吧，密码是19751222。'}
+];
+function sgHintRender(){
+  var box = document.getElementById('dm-sg-chips');
+  if(curDm!=='sg'){ box.innerHTML=''; box.classList.remove('on'); return; }
+  var done=false, unlocked=false, openDone=false, visited=false;
+  try{
+    done = localStorage.getItem('sg_hint_done')==='1';
+    unlocked = localStorage.getItem('prof_blog_unlocked')==='1';
+    openDone = localStorage.getItem('sg_open_done')==='1';
+    visited = localStorage.getItem('prof_blog_visited')==='1';
+  }catch(_){}
+  /* 自己解出了生日 → 该交互不再出现；还没打开过博客也不出现 */
+  if(done || unlocked || !openDone || !visited) return;
+  var step = parseInt(localStorage.getItem('sg_hint_step')||'0', 10) || 0;
+  if(step>=SG_HINT_SCRIPT.length){
+    box.classList.remove('on'); box.innerHTML='';
+    try{ localStorage.setItem('sg_hint_done','1'); }catch(_){}
+    renderDm();
+    return;
+  }
+  var st = SG_HINT_SCRIPT[step];
+  if(st.npc!==undefined){
+    box.classList.remove('on'); box.innerHTML='';
+    var pk='sg_hint_pending_'+step;
+    if(localStorage.getItem(pk)!=='1'){
+      try{ localStorage.setItem(pk,'1'); }catch(_){}
+      setTimeout(function(){
+        dmTyping(true);
+        setTimeout(function(){
+          dmTyping(false);
+          sgPushOnce('npc', st.npc);
+          try{ localStorage.setItem('sg_hint_step', String(step+1)); }catch(_){}
+          renderDm();
+        }, 850);
+      }, 700);
+    }
+    return;
+  }
+  box.classList.add('on'); box.innerHTML='';
+  var b = document.createElement('button'); b.className='dm-chip'; b.textContent = st.me;
+  b.addEventListener('click', function(){
+    sgJLog({r:'me', t:st.me});
+    try{ localStorage.setItem('sg_hint_step', String(step+1)); }catch(_){}
+    renderDm();
+  });
+  box.appendChild(b);
+}
+
+/* ---------- 私信第一阶段：解锁全部内容（翻到博客最后一篇）→ 追问进展 ---------- */
+var SG_PRE_SCRIPT = [
+  {me:'后来呢？什么情况？'},
+  {npc:'看完所有博客了？'},
+  {me:'嗯。'},
+  {npc:'【新闻链接：晨光新闻网 · 海城大学周正教授坠崖事件调查还原】', link:'news.html#news-death'},
+  {npc:'这个新闻就是后来发生的事了'}
+];
+function sgPreRender(){
+  var box = document.getElementById('dm-sg-chips');
+  if(curDm!=='sg'){ box.innerHTML=''; box.classList.remove('on'); return; }
+  /* 开场对话没走完不进入下一步 */
+  if(localStorage.getItem('sg_open_done')!=='1') return;
+  var blogDone=false, preDone=false;
+  try{ blogDone = localStorage.getItem('sg_blog_done')==='1'; }catch(_){}
+  try{ preDone = localStorage.getItem('sg_pre_done')==='1'; }catch(_){}
+  /* 未读完博客 / 本段已完成：不动 chips（不抢后续阶段） */
+  if(!blogDone || preDone) return;
+  var step = parseInt(localStorage.getItem('sg_pre_step')||'0', 10) || 0;
+  if(step>=SG_PRE_SCRIPT.length){
+    box.classList.remove('on'); box.innerHTML='';
+    if(!preDone){
+      try{ localStorage.setItem('sg_pre_done','1'); }catch(_){}
+      renderDm();
+    }
+    return;
+  }
+  var st = SG_PRE_SCRIPT[step];
+  if(st.npc!==undefined){
+    box.classList.remove('on'); box.innerHTML='';
+    if(st.link){
+      /* 新闻链接：对方直接发来一条链接消息（带 link 字段，推送前先查重，避免重复出现） */
+      if(localStorage.getItem('sg_pre_pending_'+step)!=='1'){
+        try{ localStorage.setItem('sg_pre_pending_'+step,'1'); }catch(_){}
+        setTimeout(function(){
+          var lg = sgLog();
+          var dup = lg.some(function(m){ return m.r==='npc' && String(m.t)===String(st.npc) && m.link===st.link; });
+          if(!dup) sgJLog({r:'npc', t:st.npc, link:st.link});
+          try{ localStorage.setItem('sg_pre_step', String(step+1)); }catch(_){}
+          renderDm();
+        }, 900);
+      }
+      return;
+    }
+    var pk = 'sg_pre_pending_'+step;
+    if(localStorage.getItem(pk)!=='1'){
+      try{ localStorage.setItem(pk,'1'); }catch(_){}
+      setTimeout(function(){
+        dmTyping(true);
+        setTimeout(function(){
+          dmTyping(false);
+          sgPushOnce('npc', st.npc);
+          try{ localStorage.setItem('sg_pre_step', String(step+1)); }catch(_){}
+          renderDm();
+        }, 850);
+      }, 700);
+    }
+    return;
+  }
+  /* 主控台词：作为「待发送内容」呈现 */
+  box.classList.add('on'); box.innerHTML='';
+  var pb = document.createElement('button'); pb.className='dm-chip'; pb.textContent = st.me;
+  pb.addEventListener('click', function(){
+    sgJLog({r:'me', t:st.me});
+    try{ localStorage.setItem('sg_pre_step', String(step+1)); }catch(_){}
+    renderDm();
+  });
+  box.appendChild(pb);
+}
+
+/* ---------- 私信第二阶段：读完坠崖调查新闻 → 故意的 来问进度（触发：news.html#news-death） ---------- */
+var SG_CASE_SCRIPT = [
+  {me:'你那天上午完全没看到教授，或者是听到教授房间有什么动静吗？'},
+  {npc:'那天上午我起得很晚，醒来已经快十一点了，当时教授应该早就出门了。我起床后随便吃了点面包和饼干当做早午饭，画了一会儿画之后就出门写生了，一直没见到教授。'},
+  {me:'你对教授死亡前一晚的博客怎么看？'},
+  {npc:'我不明白教授为什么会写出那些东西'},
+  {npc:'你这是开始审问我了？'},
+  {me:'如果你现在认为我有实力接下这个悬赏，那我就有资格审问你了'},
+  {npc:'……也是'},
+  {me:'我觉得那个泥塑有问题，里面可能有致幻的成分，导致教授产生了幻觉，所以李希和教授才想拿它去做化验'},
+  {npc:'可是警方事后把掉落在木客崖边的泥塑拿去化验了，完全没有任何异常，更奇怪的是，他们在去化验所的路上，都突然改口说去木客崖，这又是为什么呢？'},
+  {me:'这……'},
+  {me:'不管怎样，教授的博客内容不能全信，神清药厂是正规药厂，要是真有问题，不会到现在都没爆出来。'},
+  {npc:'但幻觉是确有其事的吧？是什么导致教授产生了幻觉呢？'},
+  {me:'搞不好是他吃了毒蘑菇产生了阴谋论和幻觉。'},
+  {npc:'可是我每天跟教授一起吃饭，为什么我没有产生过幻觉？'},
+  {me:'这个我目前还不知道。但聪明药可能有问题这事儿我们先别往外说了，如果我们未经证实就把它散播出去，我们肯定都会被药厂告上法庭'},
+  {npc:'嗯，好'},
+  {me:'我实在是没头绪，要不然我去木客村实地探访一番吧，反正我现在研三没什么课'},
+  {npc:'【转账：一万块钱】'},
+  {npc:'报销你的机酒钱'},
+  {me:'老板大气！教授的死跟你肯定没关系！'},
+  {npc:'……'}
+];
+/* 第三段对话统一按「第二天」的时间戳显示（与第二段隔一天） */
+var sgCaseDay = null, sgCaseTimer = null, sgTravelTimer = null;
+/* 生成「今天 + offset 天」的时间戳（seq 每条递增 2 分钟） */
+function sgDayStamp(offset, seq){ return '2026-09-10'; }   /* 私信时间统一 2026-09-10 */
+/* 第三段（审问）显示为第二天 */
+function sgCaseStamp(seq){ return sgDayStamp(1, seq); }
+/* 第四段（抵达木客镇）显示为次日 */
+function sgTravelStamp(seq){ return sgDayStamp(2, seq); }
+function sgStampLast(stamp){
+  var l = sgLog();
+  if(l.length){ l[l.length-1].d = stamp; try{ localStorage.setItem('sg_chat_log', JSON.stringify(l)); }catch(_){} }
+}
+function sgCaseRender(){
+  var box = document.getElementById('dm-sg-chips');
+  /* 其他会话（不系舟/不许桃）不显示故意的专属剧情 */
+  if(curDm!=='sg'){ box.innerHTML=''; box.classList.remove('on'); return; }
+  var done=false;
+  try{ done = localStorage.getItem('sg_case_done')==='1'; }catch(_){}
+  /* 本段已完成：不动 chips（不抢后续阶段） */
+  if(done) return;
+  /* 触发条件：第二段（解锁全部内容的追问）结束后 2 秒自动开始 */
+  if(localStorage.getItem('sg_pre_done')!=='1') return;
+  var step = parseInt(localStorage.getItem('sg_case_step')||'0', 10) || 0;
+  /* 全部聊完：让出 chips，开启「手账委托」阶段 */
+  if(step>=SG_CASE_SCRIPT.length){
+    box.classList.remove('on'); box.innerHTML='';
+    if(!done){
+      try{
+        localStorage.setItem('sg_case_done','1');
+        localStorage.setItem('sg_chat_done','1');
+        localStorage.setItem('sg_case_done_at', String(Date.now()));
+      }catch(_){}
+      renderDm();
+    }
+    return;
+  }
+  /* 第二段结束后 2 秒才出现待发送内容（不做弹窗提醒；时间戳显示为第二天）
+     注意：用时间戳判定而非一次性标记 —— 第二段完成时 sgPreRender 会递归触发一次
+     renderDm，若只用「已启动」标记，第二次渲染就会跳过 2 秒延迟。
+     同时保留一次性定时器，保证到点后一定会重绘一次。 */
+  if(step===0){
+    var at = parseInt(localStorage.getItem('sg_case_start_at')||'0', 10) || 0;
+    if(!at){ at = Date.now(); try{ localStorage.setItem('sg_case_start_at', String(at)); localStorage.setItem('sg_case_started','1'); }catch(_){} }
+    if(!sgCaseTimer){
+      sgCaseTimer = setTimeout(function(){ sgCaseTimer = null; if(curDm==='sg') renderDm(); },
+                               Math.max(60, 2000 - (Date.now() - at)));
+    }
+    if(Date.now() - at < 2000) return;
+  }
+  var st = SG_CASE_SCRIPT[step];
+  if(st.npc!==undefined){
+    /* 先清掉已发出的待发送内容，等对方回复期间不残留草稿 */
+    box.classList.remove('on'); box.innerHTML='';
+    /* R54 幂等修复：pending 标记会被启动时的 sgRepairPending() 清掉，若在「排队→推送」
+       窗口内刷新/重入，同一条 npc 会被推送两次（日志里出现重复消息）。
+       sg_case_sent_<step> 记录「已成功入日志」，与 pending 独立且不被清理。 */
+    var pk = 'sg_case_pending_'+step, sk = 'sg_case_sent_'+step;
+    if(localStorage.getItem(pk)!=='1' && localStorage.getItem(sk)!=='1'){
+      try{ localStorage.setItem(pk,'1'); }catch(_){}
+      setTimeout(function(){
+        try{ if(localStorage.getItem('sg_case_done')==='1') return; }catch(_){}
+        dmTyping(true);
+        setTimeout(function(){
+          dmTyping(false);
+          /* R54 跨窗口幂等二次确认：另一窗口已推过就只推进 step，不再重复入日志 */
+          try{ if(localStorage.getItem(sk)==='1'){ localStorage.setItem('sg_case_step', String(step+1)); renderDm(); return; } }catch(_){}
+          sgPushOnce('npc', st.npc);
+          sgStampLast(sgCaseStamp(step));
+          try{ localStorage.setItem(sk,'1'); }catch(_){}
+          try{ localStorage.setItem('sg_case_step', String(step+1)); }catch(_){}
+          renderDm();
+        }, 850);
+      }, 700);
+    }else if(localStorage.getItem(sk)==='1' && parseInt(localStorage.getItem('sg_case_step')||'0',10)===step){
+      /* 已入日志但 step 未推进（刷新打断）：补推进，避免卡死 */
+      try{ localStorage.setItem('sg_case_step', String(step+1)); }catch(_){}
+    }
+    return;
+  }
+  /* 主控台词：作为「待发送内容」呈现（chips + 底部草稿） */
+  box.classList.add('on'); box.innerHTML='';
+  var b = document.createElement('button'); b.className='dm-chip'; b.textContent = st.me;
+  b.addEventListener('click', function(){
+    if(b.disabled) return;                       /* 防双击重复发送 */
+    b.disabled = true;
+    sgJLog({r:'me', t:st.me, d:sgCaseStamp(step)});
+    try{ localStorage.setItem('sg_case_step', String(step+1)); }catch(_){}
+    renderDm();
+  });
+  box.appendChild(b);
+}
+/* ---------- 私信第三阶段：抵达木客镇（审问对话结束后「一天」）→ 故意的 想起笔记本 ---------- */
+var SG_TRAVEL_SCRIPT = [
+  {sys:'——几天后——'},
+  {me:'报告！我飞到木客镇了，已成功抵达你们之前住的芳芳宾馆'},
+  {npc:'我突然想起来，之前走得匆忙，把教授送我的笔记本落在宾馆了，那个笔记本是银星学会寄送他的，他又送给我了'},
+  {npc:'宾馆老板有联系过我，说能邮给我'},
+  {npc:'但她得进城才能寄快递，而她平时只有有顾客的时候才会进城采购，所以最近一直没给我邮'},
+  {npc:'你给她看一下咱俩的聊天记录，那个笔记本干脆送给你了'},
+  {npc:'里面重要的东西我之前都拍照备份了，我留着没什么用了'},
+  {me:'好的，那我就当自己的日记本用啦'}
+];
+function sgTravelRender(){
+  var box = document.getElementById('dm-sg-chips');
+  if(curDm!=='sg'){ box.innerHTML=''; box.classList.remove('on'); return; }
+  var caseDone=false, travelDone=false;
+  try{ caseDone = localStorage.getItem('sg_case_done')==='1'; }catch(_){}
+  try{ travelDone = localStorage.getItem('sg_travel_done')==='1'; }catch(_){}
+  if(!caseDone || travelDone) return;
+  /* 触发条件：第三段最后一问一答结束后即触发，仅显示时间跨到次日 */
+  var startAt = parseInt(localStorage.getItem('sg_travel_start_at')||'0', 10) || 0;
+  if(!startAt){
+    startAt = Date.now();
+    try{ localStorage.setItem('sg_travel_start_at', String(startAt)); }catch(_){}
+  }
+  if(!sgTravelTimer){
+    sgTravelTimer = setTimeout(function(){ sgTravelTimer = null; if(curDm==='sg') renderDm(); },
+                               Math.max(60, 1500 - (Date.now() - startAt)));
+  }
+  if(Date.now() - startAt < 1500) return;
+  var step = parseInt(localStorage.getItem('sg_travel_step')||'0', 10) || 0;
+  if(step>=SG_TRAVEL_SCRIPT.length){
+    box.classList.remove('on'); box.innerHTML='';
+    if(!travelDone){
+      try{
+        localStorage.setItem('sg_travel_done','1');
+        localStorage.setItem('sg_journal_done','1');   /* 获得笔记本（原手账本） */
+      }catch(_){}
+      var nbTxt = '你拾取了这个笔记本。（点击链接可以查看笔记本的内容）';
+      var lg = sgLog(), llast = lg[lg.length-1];
+      if(!(llast && llast.r==='sys' && String(llast.t)===nbTxt)){ sgJLog({r:'sys', t:nbTxt, link:'notebook.html'}); }
+      renderDm();
+    }
+    return;
+  }
+  var st = SG_TRAVEL_SCRIPT[step];
+  /* 系统灰字（如「——几天后——」）：直接入日志，随后自动进入下一句 */
+  if(st.sys!==undefined){
+    box.classList.remove('on'); box.innerHTML='';
+    var sk='sg_travel_pending_'+step;
+    if(localStorage.getItem(sk)!=='1'){
+      try{ localStorage.setItem(sk,'1'); }catch(_){}
+      setTimeout(function(){
+        sgJLog({r:'sys', t:st.sys});
+        try{ localStorage.setItem('sg_travel_step', String(step+1)); }catch(_){}
+        renderDm();
+      }, 400);
+    }
+    return;
+  }
+  if(st.npc!==undefined){
+    box.classList.remove('on'); box.innerHTML='';
+    var pk='sg_travel_pending_'+step;
+    if(localStorage.getItem(pk)!=='1'){
+      try{ localStorage.setItem(pk,'1'); }catch(_){}
+      setTimeout(function(){
+        dmTyping(true);
+        setTimeout(function(){
+          dmTyping(false);
+          sgPushOnce('npc', st.npc);
+          sgStampLast(sgTravelStamp(step));
+          try{ localStorage.setItem('sg_travel_step', String(step+1)); }catch(_){}
+          renderDm();
+        }, 850);
+      }, 700);
+    }
+    return;
+  }
+  box.classList.add('on'); box.innerHTML='';
+  var tb = document.createElement('button'); tb.className='dm-chip'; tb.textContent = st.me;
+  tb.addEventListener('click', function(){
+    sgJLog({r:'me', t:st.me, d:sgTravelStamp(step)});
+    try{ localStorage.setItem('sg_travel_step', String(step+1)); }catch(_){}
+    renderDm();
+  });
+  box.appendChild(tb);
+}
+
+/* ---------- 手账本触发的三段对话（阅读对应章节后自动开始） ---------- */
+function sgStageDriver(opt){
+  /* opt: {noticeKey, doneKey, stepKey, script, req} —— req 为必须已完成的前置阶段 */
+  var box = document.getElementById('dm-sg-chips');
+  if(curDm!=='sg'){ box.innerHTML=''; box.classList.remove('on'); return; }
+  /* 优先级：前置阶段未完成时本阶段不接管，避免多段剧情互相覆盖待发送栏 */
+  if(opt.req && opt.req.some(function(k){ return localStorage.getItem(k)!=='1'; })) return;
+  var notice=false, done=false;
+  try{ notice = localStorage.getItem(opt.noticeKey)==='1'; }catch(_){}
+  try{ done = localStorage.getItem(opt.doneKey)==='1'; }catch(_){}
+  if(!notice || done) return;
+  var step = parseInt(localStorage.getItem(opt.stepKey)||'0', 10) || 0;
+  if(step>=opt.script.length){
+    box.classList.remove('on'); box.innerHTML='';
+    if(!done){ try{ localStorage.setItem(opt.doneKey,'1'); }catch(_){} renderDm(); }
+    return;
+  }
+  var st = opt.script[step];
+  if(st.sys!==undefined){
+    /* R51: 系统提示（灰底居中） */
+    box.classList.remove('on'); box.innerHTML='';
+    if(localStorage.getItem(opt.stepKey+'_p'+step)!=='1'){
+      try{ localStorage.setItem(opt.stepKey+'_p'+step,'1'); }catch(_){}
+      setTimeout(function(){
+        sgPushOnce('sys', st.sys);
+        try{ localStorage.setItem(opt.stepKey, String(step+1)); }catch(_){}
+        renderDm();
+      }, 600);
+    }
+    return;
+  }
+  if(st.npc!==undefined){
+    box.classList.remove('on'); box.innerHTML='';
+    var pk=opt.stepKey+'_p'+step;
+    if(localStorage.getItem(pk)!=='1'){
+      try{ localStorage.setItem(pk,'1'); }catch(_){}
+      setTimeout(function(){
+        dmTyping(true);
+        setTimeout(function(){
+          dmTyping(false);
+          sgPushOnce('npc', st.npc);
+          try{ localStorage.setItem(opt.stepKey, String(step+1)); }catch(_){}
+          renderDm();
+        }, 850);
+      }, 700);
+    }
+    return;
+  }
+  box.classList.add('on'); box.innerHTML='';
+  var b = document.createElement('button'); b.className='dm-chip'; b.textContent = st.me;
+  b.addEventListener('click', function(){
+    sgJLog({r:'me', t:st.me});
+    try{ localStorage.setItem(opt.stepKey, String(step+1)); }catch(_){}
+    renderDm();
+  });
+  box.appendChild(b);
+}
+
+/* 阅读手账本「万家灯火·第一篇」（含选择题）后：故意的 问收获 */
+var SG_MON_SCRIPT = [
+  {npc:'今天收获如何？'},
+  {me:'刚从木客村回到宾馆，累死我了'},
+  {me:'才连上网，所以才刚看见你的消息'},
+  {me:'我把整个木客村都走了一遍'},
+  {npc:'有什么新发现吗？'},
+  {me:'我先问你一些别的事儿'},
+  {me:'宾馆对面的超市装的监控，但只能拍到靠路边的地方，所以去年冬天和今年夏天的两次坠崖事件，监控都只能拍到出租车的右侧，完全拍不到街对面驶过的汽车，对吧？'},
+  {npc:'嗯'},
+  {me:'除此之外，这个小镇就没有其他监控了？'},
+  {npc:'对'},
+  {me:'我明白了。我得想个办法搞来这两段监控，寻找更多线索才能证明你的清白。'},
+  {npc:'有什么是我能帮忙的吗'},
+  {me:'暂时没有，不过说不定以后你的笔记能帮上大忙呢'}
+];
+function sgMonRender(){ sgStageDriver({noticeKey:'sg_mon_notice', doneKey:'sg_mon_done', stepKey:'sg_mon_step', script:SG_MON_SCRIPT, req:['sg_travel_done']}); }
+
+/* 阅读手账本「万家灯火·第三篇」后：向顾异同步计划 */
+var SG_PLAN_SCRIPT = [
+  {me:'顾同学，我已经有了初步的结论，教授的死不是意外，是被木客村里的某个人谋杀的'},
+  {me:'我明天会再次前往木客村查找新的线索，看看能不能偷一个泥塑拿去城里化验，这次有警察暗中帮助，你不用担心'}
+];
+function sgPlanRender(){ sgStageDriver({noticeKey:'sg_plan_notice', doneKey:'sg_plan_done', stepKey:'sg_plan_step', script:SG_PLAN_SCRIPT, req:['sg_travel_done','sg_mon_done']}); }
+/* R60-10：已移除私信下方的灰色提示（请玩家不要再点击发送…） */
+
+/* 阅读手账本「万家灯火·第五篇」后：结案汇报 + 尾款 */
+var SG_FIN_SCRIPT = [
+  {me:'事情圆满结束！凶手果然是我推理的那个人。你的嫌疑被完全洗清了'},
+  {npc:'这两天在外面写生，才看到消息，你现在怎么样了？一定要注意安全'},
+  {me:'罪犯已经绳之以法了，非常顺利！你去哪里写生啦？让我欣赏一下你的大作'},
+  {npc:'随手画了点东西，没什么好看的'},
+  {npc:'对了，剩下的报酬给你'},
+  {npc:'【转账：九万块钱】'},
+  {me:'老板大气！以后有这种活儿还会找我吗？'},
+  {npc:'当然^ ^'},
+  {sys:'——游戏已结束，感谢您的支持！——'}
+];
+function sgFinRender(){ sgStageDriver({noticeKey:'sg_fin_notice', doneKey:'sg_fin_done', stepKey:'sg_fin_step', script:SG_FIN_SCRIPT, req:['sg_travel_done','sg_mon_done','sg_plan_done']}); }
+
+/* R55-13：笔记本读到「随即我又想起顾异…」那页时（sg_mon2_notice=1），
+   若该句尚未出现在私信里则补一条 —— 幂等，且消息只从这里出，避免重复。 */
+var NOTE_MON2 = '暂时没有，不过说不定以后你的笔记能帮上大忙呢';
+function sgMon2Sync(){
+  try{
+    if(localStorage.getItem('sg_mon2_notice') !== '1') return;
+    if(localStorage.getItem('sg_mon2_done') === '1') return;
+    var log = sgLog();
+    if(log.some(function(m){ return m && String(m.t) === NOTE_MON2; })){   /* 已由 SG_MON_SCRIPT 发出 */
+      localStorage.setItem('sg_mon2_done', '1');
+      return;
+    }
+    if(localStorage.getItem('sg_mon_done') !== '1') return;                 /* 等监控问答走完再补 */
+    log.push({ r:'me', t:NOTE_MON2 });
+    localStorage.setItem('sg_chat_log', JSON.stringify(log));
+    localStorage.setItem('sg_mon2_done', '1');
+    renderDm();
+  }catch(e){}
+}
+
+/* ---------- 同标签页兜底：轮询剧情标记变化 ----------
+   storage 事件只在「其他标签页」写入时触发；若玩家在同一标签页完成前置
+   （例如读完新闻后回到论坛），且停留在同一个会话（点击当前会话会return），
+   这里轮询关键标记，保证待发送内容照常出现。 */
+(function(){
+  var KEYS=['sg_news_read','sg_case_done','sg_case_step','sg_pre_done','sg_pre_step',
+            'sg_blog_done','sg_travel_done','sg_travel_step','sg_mon_notice','sg_plan_notice','sg_fin_notice',
+            'sg_open_done','sg_open_step','sg_hint_step','sg_hint_done','prof_blog_unlocked','prof_blog_visited'];
+  function snap(){
+    return KEYS.map(function(k){ try{ return localStorage.getItem(k); }catch(_){ return null; } }).join('|');
+  }
+  var last = snap();
+  /* R52：dm-owner 镜像窗口的「发送」按钮写入 sg_send_request，由论坛端代为发出当前待发送内容
+     （复用 #dm-send 的 fire() 路径，连点/重复都有既有去重守卫保护） */
+  var lastSendReq = null;
+  try{ lastSendReq = localStorage.getItem('sg_send_request'); }catch(_){}
+  setInterval(function(){
+    try{
+      var req = localStorage.getItem('sg_send_request');
+      if(req && req !== lastSendReq){
+        lastSendReq = req;
+        if(curDm === 'sg'){
+          renderDm();   /* 刷新 chips 与待发送栏到最新状态 */
+          var sendBtn = document.getElementById('dm-send');
+          if(sendBtn && !sendBtn.hidden && !sendBtn.disabled) sendBtn.click();
+        }
+      }
+    }catch(_){}
+    var now = snap();
+    if(now === last){
+      /* R55：即使剧情键没变，也同步 mon2 补句与 plan 灰色提示（幂等） */
+      try{ if(curDm === 'sg'){ sgMon2Sync(); } }catch(_){}
+      return;
+    }
+    last = now;
+    if(curDm === 'sg'){ renderDm(); try{ sgMon2Sync(); }catch(_){} }
+    renderDmList();
+  }, 1500);
+})();
+
+/* 转账已改为系统提示，不再提供收款交互 */
+/* renderDm 末尾追加各阶段剧情（脚本内已有话题，不额外编造对话） */
+var __origRenderDm = renderDm;
+/* 底部输入框：显示待发送内容（与话题 chips 同步），点「发送」或草稿即发出 */
+/* 转账金额格式化：一万块钱 → 10,000 */
+function payAmt(v){
+  var map = { '一万块钱':'10,000', '九万块钱':'90,000', '一万':'10,000', '九万':'90,000' };
+  return map[String(v).trim()] || String(v).trim();
+}
+var dmSending = false;
+function dmDraftSync(){
+  var draft=document.getElementById('dm-draft'),
+      send=document.getElementById('dm-send'),
+      hint=document.getElementById('dm-hint');
+  if(!draft||!send||!hint) return;
+  var chip=document.querySelector('#dm-sg-chips .dm-chip');
+  if(chip){
+    draft.textContent = chip.textContent;
+    /* 同一句只允许发送一次（连点/抖动都不会重复入日志） */
+    var sig = String(chip.textContent);
+    draft.hidden = false; send.hidden = false; hint.hidden = true;
+    send.disabled = false;
+    function fire(){
+      if(dmSending) return;
+      dmSending = true;
+      draft.hidden = true; send.hidden = true;    /* 立刻收起，视觉上不再重复 */
+      var lg = sgLog(), lastM = lg[lg.length-1];
+      if(lastM && lastM.r==='me' && String(lastM.t)===sig){ dmSending=false; return; }
+      try{ chip.click(); }finally{ setTimeout(function(){ dmSending=false; }, 400); }
+    }
+    send.onclick = fire;
+    draft.onclick = fire;
+  }else{
+    draft.hidden = true; send.hidden = true; hint.hidden = false;
+  }
+  /* 共享「待发送内容」给 dm-owner.html 镜像窗口（保持两处同步） */
+  try{ localStorage.setItem('sg_pending', chip ? chip.textContent : ''); }catch(_){}
+}
+renderDm = function(){ renderDmList(); __origRenderDm(); sgOpenRender(); sgHintRender(); sgPreRender(); sgCaseRender(); sgTravelRender(); sgMonRender(); sgPlanRender(); sgFinRender(); dmDraftSync(); };
+renderDmList(); renderDm();
+
+/* 私信不再提供自由输入：只能点击对话框中已有的话题选项发送（见 dmSend / 各阶段剧情芯片） */
+/* 跨标签页：博客页剧情推进时，私信页实时刷新 */
+window.addEventListener('storage', function(e){
+  if(e.key==='sg_chat_log' || e.key==='sg_chat_done' || e.key==='sg_news_read' || e.key==='sg_case_step'
+     || e.key==='sg_blog_done' || e.key==='sg_pre_done' || e.key==='sg_pre_step'
+     || e.key==='sg_mon_notice' || e.key==='sg_plan_notice' || e.key==='sg_fin_notice' || e.key==='sg_case_done'
+     || (e.key && e.key.indexOf('dm_')===0)){
+    if(curDm==='sg' || (e.key && e.key===dmKey(curDm))){ renderDm(); }
+    renderDmList();
+  }
+});
+
+/* ---------- 搜索框 + 右侧轮播广告 ---------- */
+document.getElementById('fm-search').addEventListener('submit', function(e){
+  e.preventDefault();
+  var v = document.getElementById('fm-q').value.trim();
+  window.open('search.html?q=' + encodeURIComponent(v || '神奇海螺'), '_blank');
+});
+
+/* 广告轮播：神奇海螺 + 六条游戏内广告 */
+function conchSubmit(e){ e.preventDefault(); var v=document.getElementById('conch-q').value.trim(); window.open('search.html?q='+encodeURIComponent(v||'神奇海螺'),'_blank'); }
+function conchGo(){ window.open('search.html','_blank'); }
+function adBrand(name,text){
+  return '<div class="ca-row">'+
+           '<div class="ca-brand"><span class="b">'+name+'</span></div>'+
+           '<div class="ca-slogan ca-slogan-inline">'+text+'</div>'+
+         '</div>';
+}
+var CONCH_AD =
+  '<div class="ca-row">'+
+    '<div class="ca-logo"><img src="assets/conch-logo.png" alt="神奇海螺" draggable="false"></div>'+
+    '<div class="ca-txt">'+
+      '<div class="ca-title"><span class="b">神奇</span><span class="o">海螺</span></div>'+
+      '<div class="ca-slogan">你为什么不问问神奇海螺呢？</div>'+
+      '<form id="conch-form"><input type="text" id="conch-q" placeholder="问问海螺吧…" aria-label="搜索"><button type="submit">搜索</button></form>'+
+    '</div>'+
+    '<button class="ca-go" id="conch-go">前往神奇海螺 ›</button>'+
+  '</div>';
+var FORUM_ADS = [
+  CONCH_AD,
+  adBrand('神清药厂','新一代“聪明药”来袭！每天一颗，脑筋转得飞快！'),
+  adBrand('鬼推磨侦探事务所','欢迎海城大学法律系学生来实习')
+];
+var adIdx = 0, adTimer = null;
+function renderAd(){
+  var slot = document.getElementById('ad-slot'); if(!slot) return;
+  slot.innerHTML = FORUM_ADS[adIdx];
+  if(adIdx===0){
+    var cf = document.getElementById('conch-form');
+    if(cf) cf.onsubmit = conchSubmit;
+    var cg = document.getElementById('conch-go');
+    if(cg) cg.onclick = conchGo;
+  }
+  var dots = document.getElementById('ad-dots');
+  if(dots){
+    dots.innerHTML = FORUM_ADS.map(function(_,i){ return '<i class="'+(i===adIdx?'on':'')+'"></i>'; }).join('');
+    Array.prototype.forEach.call(dots.children, function(d,i){
+      d.addEventListener('click', function(){ adIdx=i; renderAd(); resetAd(); });
+    });
+  }
+}
+function nextAd(){ adIdx = (adIdx+1)%FORUM_ADS.length; renderAd(); }
+function resetAd(){ if(adTimer) clearInterval(adTimer); adTimer = setInterval(nextAd, 4500); }
+renderAd(); resetAd();
+
+/* ---------- 旧的浮动侧边广告已移除，改用右侧静态广告栏（见 .side-right） ---------- */
+
+/* ---------- 用户资料卡弹窗（点楼层用户名弹出，含"私信"入口） ---------- */
+var UPOP_STATS = { '故意的': {t:1,r:16,z:2} };
+var upop = document.getElementById('u-pop'), upWho = '';
+function openUpop(name, avaInner){
+  upWho = name;
+  var st = UPOP_STATS[name] || {t:0,r:0,z:0};
+  document.getElementById('up-name').textContent = name;
+  document.getElementById('up-ava').innerHTML = avaInner;
+  document.getElementById('up-t').textContent = st.t;
+  document.getElementById('up-r').textContent = st.r;
+  document.getElementById('up-z').textContent = st.z;
+  upop.classList.add('open');
+}
+document.getElementById('post-floors').addEventListener('click', function(e){
+  var un = e.target.closest('.uname'); if(!un) return;
+  var av = un.closest('.f-left').querySelector('.uavatar');
+  openUpop(un.textContent, av ? av.innerHTML : avatarHTML('DEFAULT'));
+});
+document.getElementById('up-dm').addEventListener('click', function(){
+  upop.classList.remove('open');
+  if(upWho==='故意的'){ curDm='sg'; renderDm(); showView('dm'); }
+
+  else toast('对方不接收陌生人私信');
+});
+upop.addEventListener('click', function(e){ if(e.target===upop) upop.classList.remove('open'); });
+
+/* ---------- 论坛统计 + 站点信息（真实性补充） ---------- */
+(function(){
+  var topics = FORUM_POSTS.length;
+  var replies = FORUM_POSTS.reduce(function(a,p){ return a+p.replies.length; },0);
+  var sp = document.getElementById('stat-panel');
+  if(sp) sp.innerHTML =
+    '总主题 <b>'+topics+'</b> 条 · 总回复 <b>'+replies+'</b> 条<br>今日新帖 <b>12</b> 条 · 今日签到 <b>347</b> 人<br>在线会员 <b>128</b> 人 / 游客 <b>531</b> 人';
+  document.querySelector('.win-inner').insertAdjacentHTML('beforeend',
+    '<div id="fm-foot" style="border-top:2px solid #1b4e9b;margin-top:16px;padding:10px 6px 2px;font-size:12px;color:#8a8a80;line-height:2;text-align:center">'+
+    '海城大学校园论坛 · 由海城大学信息化建设与管理中心提供技术支持<br>'+
+    '<span style="color:#1a4f8b;cursor:pointer">网站声明</span> | <span style="color:#1a4f8b;cursor:pointer">隐私政策</span> | 联系我们：bbs@haicheng.edu.cn<br>'+
+    '校园网内部站点 · 网站标识码 bm0301.hic.edu.cn · © 2003-2026 海城大学</div>');
+})();
+
+renderHome();
+</script>
+
+<!-- R56：图片放大层 -->
+<div id="img-zoom"><img id="img-zoom-img" alt=""></div>
+<script>
+/* R56-5：所有内容图片点击放大，点击任意处关闭（头像类小图不放大） */
+(function(){
+  var box = document.getElementById('img-zoom'), big = document.getElementById('img-zoom-img');
+  if(!box || !big) return;
+  function close(){ box.classList.remove('on'); document.body.classList.remove('zom'); big.src=''; }
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if(t === box || t === big){ close(); return; }
+    if(t && t.tagName === 'IMG'){
+      if(t.closest('#img-zoom')) return;
+      if(t.closest('[class*="avatar"],[class*="ava"],[class*="logo"],[class*="ad-"]')) return;  /* 头像/广告不放大 */
+      if(t.closest('#unlock-img,#book-cover,#bottom-stage')) return;   /* 封面/解锁图有自身点击行为，不放大 */
+      big.src = t.currentSrc || t.src;
+      big.alt = t.alt || '';
+      box.classList.add('on');
+      document.body.classList.add('zom');
+    }else if(box.classList.contains('on')){
+      close();
+    }
+  }, true);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+})();
+</script>
+</body>
+</html>

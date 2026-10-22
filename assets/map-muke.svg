@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 470" font-family="'Comic Sans MS','Segoe Print','Kaiti SC',cursive">
+  <rect width="720" height="470" fill="#f6f0e2"/>
+  <!-- 纸张纹理 -->
+  <g opacity=".5">
+    <rect width="720" height="470" fill="none" stroke="#d8c9a8" stroke-width="1"/>
+    <path d="M0 60 Q180 40 360 58 T720 52" fill="none" stroke="#e6dcc4" stroke-width="1"/>
+    <path d="M0 180 Q200 165 400 182 T720 176" fill="none" stroke="#e6dcc4" stroke-width="1"/>
+    <path d="M0 300 Q200 288 400 302 T720 296" fill="none" stroke="#e6dcc4" stroke-width="1"/>
+    <path d="M0 410 Q200 398 400 412 T720 406" fill="none" stroke="#e6dcc4" stroke-width="1"/>
+  </g>
+
+  <!-- 标题 -->
+  <text x="360" y="42" text-anchor="middle" font-size="26" font-weight="bold" fill="#5a4632">木客村 探访手绘路线图</text>
+  <text x="360" y="66" text-anchor="middle" font-size="14" fill="#8a765c">（教授速写 · 银星协会提供）</text>
+
+  <!-- 城区（左下） -->
+  <g>
+    <rect x="30" y="330" width="150" height="110" rx="8" fill="#dbe7f0" stroke="#7d99b3" stroke-width="2"/>
+    <text x="105" y="392" text-anchor="middle" font-size="19" fill="#41607d">城 区</text>
+    <text x="105" y="416" text-anchor="middle" font-size="12" fill="#5f7f9c">（出租车站）</text>
+  </g>
+
+  <!-- 镇子边缘 宾馆（中） -->
+  <g>
+    <rect x="290" y="300" width="150" height="90" rx="8" fill="#e8e2d0" stroke="#a89468" stroke-width="2"/>
+    <text x="365" y="338" text-anchor="middle" font-size="16" fill="#6d5836">镇子边缘</text>
+    <text x="365" y="362" text-anchor="middle" font-size="16" font-weight="bold" fill="#8a4a1f">宾馆 ★</text>
+    <text x="365" y="380" text-anchor="middle" font-size="11" fill="#8a765c">（休整一晚）</text>
+  </g>
+
+  <!-- 木客村（右上，被封锁） -->
+  <g>
+    <circle cx="600" cy="140" r="72" fill="#dfe8d5" stroke="#6f8f5c" stroke-width="3"/>
+    <text x="600" y="136" text-anchor="middle" font-size="20" font-weight="bold" fill="#3f5c2f">木客村</text>
+    <text x="600" y="160" text-anchor="middle" font-size="12" fill="#5c7a48">（禁止拍照）</text>
+    <!-- 禁止拍照标记 -->
+    <g opacity=".85">
+      <circle cx="600" cy="140" r="80" fill="none" stroke="#b03a2e" stroke-width="4"/>
+      <line x1="543" y1="83" x2="657" y2="197" stroke="#b03a2e" stroke-width="5"/>
+    </g>
+  </g>
+
+  <!-- 山脉 / 树林 -->
+  <g fill="#a89468" opacity=".55">
+    <path d="M470 220 L500 170 L530 220 Z"/><path d="M520 220 L548 178 L576 220 Z"/>
+  </g>
+  <g fill="#6f8f5c" opacity=".5">
+    <circle cx="480" cy="300" r="16"/><circle cx="520" cy="312" r="14"/><circle cx="556" cy="298" r="15"/>
+  </g>
+
+  <!-- 公路（城区→镇子边缘→木客村） -->
+  <path d="M180 385 C 240 370, 260 350, 290 345" fill="none" stroke="#8a8a8a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M180 385 C 240 370, 260 350, 290 345" fill="none" stroke="#f2f2f2" stroke-width="2" stroke-dasharray="10 12"/>
+  <path d="M440 330 C 500 300, 540 220, 560 175" fill="none" stroke="#8a8a8a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M440 330 C 500 300, 540 220, 560 175" fill="none" stroke="#f2f2f2" stroke-width="2" stroke-dasharray="10 12"/>
+
+  <!-- 路线编号 -->
+  <g>
+    <circle cx="235" cy="360" r="15" fill="#8a4a1f"/><text x="235" y="366" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">1</text>
+    <text x="200" y="330" font-size="13" fill="#6d5836">① 出租车</text>
+    <circle cx="500" cy="252" r="15" fill="#8a4a1f"/><text x="500" y="258" text-anchor="middle" font-size="15" fill="#fff" font-weight="bold">2</text>
+    <text x="470" y="228" font-size="13" fill="#6d5836">② 次日徒步</text>
+  </g>
+
+  <!-- 陨石标记（协会要核实的） -->
+  <g>
+    <path d="M640 300 q18 -10 34 2 q6 16 -12 22 q-22 4 -26 -10 q-2 -10 4 -14 Z" fill="#8d8d8d" stroke="#5f5f5f" stroke-width="2"/>
+    <text x="672" y="300" font-size="12" fill="#5f5f5f">？</text>
+    <text x="662" y="336" text-anchor="middle" font-size="12" fill="#8a4a1f">村中陨石（待核实）</text>
+  </g>
+
+  <!-- 图例 -->
+  <g>
+    <rect x="480" y="378" width="210" height="72" rx="6" fill="#fff" stroke="#c9b98f" stroke-width="1.5"/>
+    <text x="492" y="400" font-size="13" fill="#5a4632">图例：</text>
+    <line x1="492" y1="416" x2="530" y2="416" stroke="#8a8a8a" stroke-width="8" stroke-linecap="round"/>
+    <text x="538" y="420" font-size="12" fill="#6d5836">公路</text>
+    <circle cx="600" cy="416" r="8" fill="#8a4a1f"/>
+    <text x="614" y="420" font-size="12" fill="#6d5836">停靠点</text>
+    <line x1="492" y1="436" x2="530" y2="436" stroke="#b03a2e" stroke-width="4"/>
+    <text x="538" y="440" font-size="12" fill="#6d5836">禁拍区</text>
+  </g>
+</svg>

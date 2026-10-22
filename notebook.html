@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>笔记本 · 木客诡事</title>
+<style>
+:root{
+  --ink:#2c2a25; --ink-2:#4a463c; --ink-3:#7d766a;
+  --paper:#f6f1e3; --paper-2:#efe8d6; --line:rgba(120,105,80,.16);
+  --gold:#b08a4a;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html,body{height:100%}
+body{
+  margin:0;font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(120% 80% at 50% 0%,#1d2c4d 0%,#111b33 45%,#070c1a 100%);
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* R60：深蓝星空纸纹与暗角 */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    repeating-linear-gradient(93deg,rgba(255,255,255,.02) 0 2px,transparent 2px 7px),
+    repeating-linear-gradient(1deg,rgba(0,0,0,.06) 0 1px,transparent 1px 5px),
+    radial-gradient(70% 60% at 50% 45%,transparent 40%,rgba(0,0,0,.6) 100%);
+  mix-blend-mode:multiply;
+}
+#app{position:relative;z-index:1;height:100%;display:flex;align-items:center;justify-content:center;padding:22px}
+
+/* ================= 闭合的笔记本（R53：星空封面图 tn-cover.jpg） ================= */
+#cover-stage{display:flex;flex-direction:column;align-items:center;gap:26px;perspective:1600px}
+#book-cover{
+  position:relative;width:min(300px,66vw);aspect-ratio:1795/3370;
+  border-radius:6px 14px 14px 6px;cursor:pointer;overflow:hidden;
+  box-shadow:
+    0 30px 60px -18px rgba(0,0,0,.75),
+    0 6px 16px rgba(0,0,0,.5),
+    inset 0 0 0 1px rgba(255,255,255,.12);
+  transition:transform .5s cubic-bezier(.2,.9,.3,1),box-shadow .5s;
+  transform-style:preserve-3d;
+}
+#book-cover img{width:100%;height:100%;display:block;object-fit:cover;pointer-events:none}
+#book-cover::after{    /* 书脊 */
+  content:'';position:absolute;left:0;top:0;bottom:0;width:26px;border-radius:6px 0 0 6px;
+  background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.12) 60%,rgba(255,255,255,.08));
+  border-right:1px solid rgba(0,0,0,.35);pointer-events:none;
+}
+#book-cover:hover{transform:translateY(-6px) rotateX(2deg);box-shadow:0 40px 70px -20px rgba(0,0,0,.8),0 8px 20px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.16)}
+#book-cover:active{transform:translateY(-2px) scale(.99)}
+/* R55-14：页内提示文字（原锁页提示迁至「随即我又想起顾异…」页底部） */
+.pg-tip{margin-top:16px;padding-top:12px;border-top:1px dashed #ddd3bd;text-align:center;
+  font-size:12.5px;line-height:2;color:#b0a688;letter-spacing:1px}
+/* R60：闸门灰字提示（可点击跳转论坛私信） */
+.gate-tip{cursor:pointer;margin-top:8px;padding-top:6px;border-top:none;color:#b6a98c}
+.gate-tip:hover{color:#8d7f5c}
+/* R54：锁页提示（quiz 未选 / 计划未发出） */
+.locked-tip{margin-top:26px;padding:0 8px;text-align:center;font-size:13px;line-height:2.2;color:#b6a98c;letter-spacing:1px}
+/* R54：笔记本背面（末页点击后合上显示） */
+#bottom-stage{display:none;flex-direction:column;align-items:center;gap:26px;perspective:1600px}
+#bottom-stage img{width:min(300px,66vw);aspect-ratio:1795/3370;object-fit:cover;
+  border-radius:14px 6px 6px 14px;cursor:pointer;
+  box-shadow:0 30px 60px -18px rgba(0,0,0,.75),0 6px 16px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.12);
+  transition:transform .5s cubic-bezier(.2,.9,.3,1)}
+#bottom-stage img:hover{transform:translateY(-6px)}
+.cover-hint{
+  font-size:12.5px;letter-spacing:5px;color:rgba(236,226,206,.62);
+  animation:breathe 2.6s ease-in-out infinite;
+}
+.cover-hint b{font-weight:400;color:rgba(236,226,206,.9)}
+@keyframes breathe{0%,100%{opacity:.45}50%{opacity:.95}}
+.cover-back{position:absolute;left:30px;bottom:26px;font-size:12px;color:rgba(236,226,206,.4);letter-spacing:1px;text-decoration:none}
+.cover-back:hover{color:rgba(236,226,206,.8)}
+
+/* 星象锁：解锁页（R53：黑底与星空封面融合） */
+#unlock-stage{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:#101a33;overflow:hidden;z-index:5}
+#unlock-stage.hide{opacity:0;pointer-events:none;transition:opacity .45s}
+#unlock-img{max-width:100%;max-height:100%;object-fit:contain;cursor:crosshair;
+  animation:lockIn .6s cubic-bezier(.2,.9,.3,1) both;user-select:none;-webkit-user-drag:none}
+@keyframes lockIn{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:none}}
+#unlock-img.shake{animation:lockShake .4s}
+@keyframes lockShake{0%,100%{transform:none}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.unlock-hint{position:absolute;bottom:26px;left:0;right:0;text-align:center;
+  font-family:'Source Han Serif SC','Noto Serif SC',serif;font-size:12.5px;letter-spacing:4px;
+  color:rgba(255,255,255,.42);text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.unlock-nope{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);
+  font-size:12px;letter-spacing:2px;color:rgba(255,255,255,.72);
+  opacity:0;transition:opacity .25s;pointer-events:none}
+.unlock-nope.on{opacity:1}
+
+/* 翻开动画 */
+#book-cover.opening{animation:openBook .62s cubic-bezier(.4,.1,.2,1) forwards}
+@keyframes openBook{
+  0%{transform:rotateY(0) translateZ(0)}
+  55%{transform:rotateY(-34deg) translateX(-16px) scale(1.02)}
+  100%{transform:rotateY(-88deg) translateX(-46px) scale(.98);opacity:0}
+}
+
+/* ================= 阅读态 ================= */
+#reader{display:none;flex-direction:column;align-items:center;gap:14px;width:100%}
+#reader.on{display:flex}
+#book{
+  position:relative;display:flex;
+  width:min(96vw,calc(86vh * 22 / 21));aspect-ratio:22/21;height:auto;
+  border-radius:8px;
+  background:linear-gradient(180deg,#2c241b,#231c14);
+  box-shadow:0 40px 80px -24px rgba(0,0,0,.85),0 10px 28px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.06);
+  padding:10px;
+}
+/* 书脊阴影 */
+#book::before{
+  content:'';position:absolute;left:50%;top:8px;bottom:8px;width:56px;transform:translateX(-50%);
+  background:linear-gradient(90deg,rgba(0,0,0,0),rgba(60,44,26,.45) 42%,rgba(0,0,0,.42) 50%,rgba(60,44,26,.45) 58%,rgba(0,0,0,0));
+  pointer-events:none;z-index:3;
+}
+.pg{
+  position:relative;flex:1;min-width:0;
+  background:
+    repeating-linear-gradient(0deg,transparent 0 25px,var(--line) 25px 26px),
+    linear-gradient(104deg,#fbf7ec,#f5efe0 62%,#efe8d6);
+  box-shadow:inset 0 0 40px rgba(150,130,95,.16);
+  overflow:hidden;
+}
+.pg.left{border-radius:5px 2px 2px 5px;box-shadow:inset -18px 0 26px -12px rgba(80,60,35,.28),inset 0 0 40px rgba(150,130,95,.16)}
+.pg.right{border-radius:2px 5px 5px 2px;box-shadow:inset 18px 0 26px -12px rgba(80,60,35,.28),inset 0 0 40px rgba(150,130,95,.16)}
+.pg.only{border-radius:5px;box-shadow:inset 0 0 46px rgba(150,130,95,.18)}
+.pg-body{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  padding:38px 32px 26px;padding-top:44px;overflow:hidden;
+}
+.pg-head{display:flex;align-items:baseline;gap:10px;flex:none;margin-bottom:14px}
+.pg-who{font-size:11.5px;letter-spacing:3px;color:#9b8a6c}
+.pg-no{font-family:'Source Han Serif SC','Noto Serif SC',serif;font-size:19px;letter-spacing:2px;color:#4b4335}
+.pg-text{flex:1;overflow:hidden}
+.pg-foot{min-height:24px;flex:none;display:flex;justify-content:center;font-size:11px;color:#a2988a;letter-spacing:1px;padding-top:8px}
+.pg-body.hand .pg-text p{
+  font-family:'Source Han Serif SC','Noto Serif SC','思源宋体',serif;
+  font-size:18.67px;line-height:1.68;color:#312d26;margin:0 0 10px;text-indent:2em;
+}
+.pg-body.plain .pg-text p{
+  font-family:'Source Han Sans SC','Noto Sans SC','思源黑体',sans-serif;
+  font-size:18.67px;line-height:1.68;color:#2f2b25;margin:0 0 10px;text-indent:2em;
+}
+.pg-body.blank{background:linear-gradient(104deg,#faf6ec,#f2ecdc);}
+.pg-body.blank .blank-mark{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  font-family:'Source Han Serif SC',serif;color:#cbbfa8;font-size:26px;letter-spacing:12px;
+}
+.pg-body.blank .blank-note{
+  position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:'Source Han Serif SC',serif;
+  font-size:11.5px;letter-spacing:4px;color:#b8ab92
+}
+.art{margin:6px 0 14px;text-align:center}
+.art img{width:100%;max-height:56%;display:block;margin:0 auto;border-radius:3px;object-fit:contain;
+  box-shadow:0 5px 14px rgba(70,55,35,.22);filter:saturate(.96)}
+.art figcaption{font-size:11px;color:#8d8271;letter-spacing:.5px;margin-top:6px;font-family:'Source Han Serif SC',serif}
+.quiz{margin:14px 0 6px;padding:14px 16px;border:1px solid rgba(150,120,70,.35);border-radius:8px;background:rgba(255,250,236,.6)}
+.quiz h4{margin:0 0 10px;font-size:13.5px;letter-spacing:1px;color:#6a5b41;font-weight:600}
+.quiz .opts{display:flex;flex-wrap:wrap;gap:8px}
+.quiz button{
+  border:1px solid rgba(140,110,65,.4);background:#fffdf7;color:#5a4c35;border-radius:999px;
+  padding:6px 16px;font-size:12.5px;cursor:pointer;font-family:inherit;transition:.18s;
+}
+.quiz button:hover{background:#f3e9d3;border-color:rgba(140,110,65,.7)}
+.quiz button.on{background:#5a4c35;color:#f7f1e2;border-color:#5a4c35}
+.quiz .qnote{margin:10px 0 0;font-size:11.5px;color:#8d8271;line-height:1.7}
+.pg.turn-in{animation:pgIn .42s ease both}
+@keyframes pgIn{from{opacity:.2;transform:translateX(10px)}to{opacity:1;transform:none}}
+
+#nav{display:flex;align-items:center;gap:18px;color:rgba(240,232,214,.72);font-size:12.5px;letter-spacing:2px}
+.nb-btn{
+  border:1px solid rgba(230,218,192,.28);background:rgba(255,255,255,.05);color:rgba(240,232,214,.86);
+  border-radius:999px;padding:7px 16px;font-size:12.5px;letter-spacing:2px;cursor:pointer;font-family:inherit;
+  transition:.18s;backdrop-filter:blur(4px);
+}
+.nb-btn:hover{background:rgba(255,255,255,.13);border-color:rgba(230,218,214,.5)}
+.nb-btn:disabled{opacity:.3;cursor:default}
+#pg-count{min-width:86px;text-align:center;font-variant-numeric:tabular-nums}
+
+/* 右下角剧情提醒 */
+#nb-toast{
+  position:fixed;right:20px;bottom:22px;z-index:60;max-width:min(360px,88vw);
+  background:rgba(26,23,19,.96);color:#f2ecdf;border:1px solid rgba(255,255,255,.1);
+  border-radius:14px;padding:14px 42px 14px 16px;font-size:13.5px;line-height:1.7;
+  box-shadow:0 18px 40px rgba(0,0,0,.55);cursor:pointer;
+  transform:translateY(16px);opacity:0;pointer-events:none;transition:.34s cubic-bezier(.2,.9,.3,1);
+}
+#nb-toast.on{transform:none;opacity:1;pointer-events:auto}
+#nb-toast b{color:#ffd88a;font-weight:600}
+#nb-toast .t-sub{display:block;margin-top:3px;font-size:11.5px;color:#a89a86;letter-spacing:1px}
+#nb-toast .t-x{
+  position:absolute;top:8px;right:10px;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:#8d8478;font-size:14px;
+}
+#nb-toast .t-x:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* 用于分页测量的隐藏页：与真实页面同排版，但不裁切内容 */
+#measure{position:fixed !important;inset:auto !important;left:-9999px !important;top:0 !important;
+  overflow:visible !important;visibility:hidden;padding:0 !important}
+#measure .pg-text{overflow:visible !important;flex:0 0 auto !important;padding-bottom:1px}  /* 1px 内边距阻止末段 margin 溢出父级，保证测量与真实页一致 */
+
+/* 手机：单页 */
+/* 矮视口（TN 本较矮）：选择题卡片紧凑排版，避免单独一页放不下 */
+@media (max-height:620px){
+  .quiz{margin:10px 0 4px;padding:10px 12px}
+  .quiz h4{margin:0 0 8px;font-size:12.5px}
+  .quiz button{padding:5px 11px;font-size:11.5px}
+  .quiz .opts{gap:6px}
+  .quiz .qnote{margin-top:8px;font-size:11px}
+}
+
+@media (max-width:819px){
+  #app{padding:10px}
+  #book{width:min(94vw,calc(88vh * 11 / 21));aspect-ratio:11/21;height:auto;padding:7px}
+  #book::before{display:none}
+  .pg-body{padding:24px 22px 18px}
+  .pg-who{font-size:10.5px}
+  .pg-no{font-size:16px}
+  /* R69：手机端不再压缩字号 —— 保持四号字(18.67px)，改为「单页显示」补偿容量 */
+  .pg-body.hand .pg-text p{font-size:18.67px;line-height:1.68;margin-bottom:10px}
+  .pg-body.plain .pg-text p{font-size:18.67px;line-height:1.68;margin-bottom:10px}
+  .pg-body{padding:34px 20px 20px}
+  .cov-title{font-size:34px;right:40px;top:44px}
+  .cov-tag{left:40px;bottom:64px}
+  .cov-frame{inset:22px 18px 22px 34px}
+  #nav{gap:6px;flex-wrap:nowrap;justify-content:center;width:100%}
+  .nb-btn{padding:6px 10px;font-size:11.5px;letter-spacing:1px;white-space:nowrap}
+  #pg-count{min-width:70px;font-size:11.5px}
+  #nb-toast{right:10px;bottom:12px;max-width:calc(100vw - 20px)}
+}
+/* R56：图片点击放大 */
+#img-zoom{position:fixed;inset:0;z-index:2000;background:rgba(4,6,10,.94);cursor:zoom-out;
+  display:none;align-items:center;justify-content:center;padding:24px}
+#img-zoom.on{display:flex}
+#img-zoom img{max-width:94vw;max-height:92vh;object-fit:contain;border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.8);animation:zoomIn .22s ease-out}
+@keyframes zoomIn{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:none}}
+body.zom{overflow:hidden}
+.zomable{cursor:zoom-in}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- 星象锁：先找到摩羯座（R53：封面图即 tn-cover.jpg，点图中摩羯座星座解锁） -->
+  <div id="unlock-stage">
+    <img id="unlock-img" src="assets/nb-unlock.jpg" alt="星象笔记本封面">
+    <div class="unlock-nope" id="unlock-nope">这里没有动静……</div>
+    <div class="unlock-hint">只有点击某一符号的左下角才能解锁该手账本<br>请回忆前面的剧情，判断出正确的符号</div>
+  </div>
+
+  <!-- 闭合状态（R53：星空封面图） -->
+  <div id="cover-stage">
+    <div id="book-cover" role="button" tabindex="0" aria-label="翻开笔记本">
+      <img src="assets/tn-cover.jpg" alt="星象笔记本封面">
+    </div>
+    <div class="cover-hint">点击 <b>翻开</b></div>
+    <div id="nb-ver" style="position:fixed;left:12px;bottom:10px;z-index:1200;font-size:11px;
+      color:rgba(190,200,220,.35);letter-spacing:1px;user-select:none">vR73</div>
+  </div>
+
+  <!-- R54：笔记本背面（阅读到最后一页点击后显示） -->
+  <div id="bottom-stage">
+    <img src="assets/nb-bottom.jpg" alt="笔记本背面">
+    <div class="cover-hint">点击 <b>回到封面</b></div>
+  </div>
+
+  <!-- 阅读状态 -->
+  <div id="reader">
+    <div id="book">
+      <div class="pg left" id="pg-left"><div id="left-inner"></div></div>
+      <div class="pg right" id="pg-right"><div id="right-inner"></div></div>
+    </div>
+    <div id="nav">
+      <button class="nb-btn" id="btn-prev">‹ 上一页</button>
+      <span id="pg-count">1 / 1</span>
+      <button class="nb-btn" id="btn-next">下一页 ›</button>
+      <button class="nb-btn" id="btn-close">合上</button>
+    </div>
+  </div>
+
+  <div id="measure" style="position:fixed;left:-9999px;top:0;visibility:hidden;padding:0;display:block;font-family:'Source Han Sans SC',sans-serif"></div>
+
+  <div id="bgm-toggle" style="display:none;position:fixed;right:16px;top:12px;z-index:900;
+    padding:11px 20px;border-radius:999px;background:rgba(30,40,66,.82);color:#e8dfc9;
+    font-size:16px;letter-spacing:1px;cursor:pointer;user-select:none;
+    box-shadow:0 4px 14px rgba(0,0,0,.28)">🔊 音乐开</div>
+  <div id="nb-toast">
+    <span class="t-x" id="toast-x">✕</span>
+    <div id="toast-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ================= 内容 ================= */
+  var CHAPTERS = [
+    { who:'顾异', no:'', date:'', paras:[
+      '好消息：终于到宾馆了。',
+      '坏消息：这辈子没住过条件这么差的宾馆。',
+      '一楼大厅（其实就是一个堂屋）没有空调，这边的空气湿度还高，又闷又热，像个蒸笼。',
+      '老板兼前台还安慰我们说还好现在是夏天，冬天的话这边没有暖气，大厅跟外头一样冷，我们会更惨。',
+      '安慰得很好，下次别安慰了。'
+    ], arts:[
+      ['assets/nb-hotel.jpg','芳芳宾馆']
+    ]},
+
+    { who:'顾异', no:'', date:'', paras:[
+      '没想到二楼的房间还挺整洁，心情好点了。',
+      '我跟教授一人一间挨着。',
+      '休整好之后，我跟教授踏上了去木客村的路。',
+      '通往木客村的路是一个长长的下坡路，信号越来越差。',
+      '看来这里的信号强弱跟地势高低和距离木客镇的距离有关系。',
+      '等到了木客村，估计一点信号都没有。'
+    ], arts:[
+      ['assets/nb-mushroom2.jpg','沿途看到的蘑菇 1/3'],
+      ['assets/nb-mushroom3.jpg','沿途看到的蘑菇 2/3'],
+      ['assets/nb-mushroom4.jpg','沿途看到的蘑菇 3/3'],
+      ['assets/nb-lumber.jpg','去木客村路上途经的木材加工厂'],
+      ['assets/map.jpg','我画的路线图']
+    ]},
+
+    { who:'顾异', no:'', date:'', paras:[
+      '木客村竟然真的家家户户都拜鬼。',
+      '教授在来的路上就跟我说过，他们信奉鬼的力量，认为鬼很强大，可以满足他们的愿望。',
+      '我的评价是：学不好数理化，生活处处是魔法。'
+    ], arts:[['assets/nb-village.jpg','木客村全貌']]},
+
+    { who:'顾异', no:'', date:'', paras:[
+      '来参观陨石了。',
+      '这个陨石正如村长所说，特别像他们村供奉的阴阳眼泥塑，所以他认为这个陨石跟木客村有缘分。',
+      '这么多年来，多少人出钱他都不卖。'
+    ], arts:[['assets/nb-meteor.jpg','村长收藏的陨石']], trigger:'meteor'},
+
+    /* 隔一页空白（换字体） */
+    { blank:true },
+
+    { who:'万家', no:'', date:'', trigger:'mon', paras:[
+      '看完顾异的所有笔记，我对他的怀疑并没有打消。',
+      '教授出事的那天他说自己去写生了，但没有任何人证物证。',
+      '如果他跟教授约好了在木客崖见面呢？',
+      '宾馆到木客崖的距离也没有很远，走得再慢一个小时也能到了。',
+      '如果他九点多就出发去木客崖，藏在某棵树后面不被方勇看到，等到教授见到他后，再把教授推下木客崖，也不是不可能的事。',
+      '但是这些只是猜测，我需要更多关于木客村的信息。',
+      '等参观完木客村我再来更新日记吧。'
+    ]},
+
+    { who:'万家', no:'', date:'', quiz:true, paras:[
+      '新的一天又开始了。',
+      '我按原计划把整个木客镇走了一遍。原以为会像昨天那样累得不行，没想到竟然比昨天轻松很多。',
+      '因为木客镇也就比木客村大一点，巴掌大的地方，没几家商铺。',
+      '这个年代竟然还有这么破败的小镇，真让我吃惊。',
+      '晚上回到宾馆，简单洗漱之后，我联系了爸爸生前的同事林叔，跟他说了最近的事。',
+      '他责备我不该以身试险。',
+      '我说我需要这笔钱去完成田野调查，这样才能顺利毕业，也能减轻妈妈的负担。',
+      '他沉默了一会儿，说让我等一下。',
+      '过了一个小时，林叔打来视频电话。',
+      '林叔的背景是他在警局的办公室。',
+      '“我刚刚找木客镇那边的派出所要来了这两段监控视频，我只能通过视频通话的形式给你看这两段，你不准录屏，但可以多看几遍。”',
+      '我对林叔千恩万谢。',
+      '林叔开始播放第一段监控画面。',
+      '那是木客镇去年的冬天，地上的积雪非常厚，还有很多雪沫被寒风刮得四处飘散，街边跟今年一样没什么商铺，遑论路人。',
+      '林叔这时插了句话：“李希发短信跟方勇约定第二天下午两点去城里的化验所，但那天路上有大量积雪，方勇不得不减速慢行，迟到了大概十分钟。他还接到了李希催促他的电话，方勇表示再过几分钟就赶到。宾馆老板证实了方勇的说法，她说李希在一楼大厅至少等了十来分钟。”',
+      '虽然监控拍不到宾馆那侧的街对面，但能想象方勇开着出租车从木客崖的方向驶来。他没有在宾馆门口停下，而是调转车头停在超市门口，进入监控范围后，停车等待李希从宾馆出来。',
+      '“据方勇说，他停车没多久，就给李希打电话说他到了。通话记录也能证实这一点。”',
+      '过了大概二十分钟，才从车的后方过来一个人。',
+      '我想这个人应该就是李希了。',
+      '他戴着黑色的厚帽子，还有防止雪盲症的滑雪镜，脸上是蓝色医用口罩，身上穿着黑色的男款羽绒服，黑色棉裤，深棕色棉鞋，手上也戴着厚厚的灰色手套。',
+      '他打开副驾驶的车门钻了进去。',
+      '车的四个侧窗和后窗都贴了一层黑色的膜，让人看不清车内的景象。',
+      '车子没一分钟就开走了，消失在监控画面中。',
+      '林叔的声音传来，“方勇说李希要去木客崖，他把李希放在木客崖附近就回城了。”',
+      '“警方调查过城里的监控，发现方勇在回城的时间上还是比较吻合的。”',
+      '“他当时为什么在车里等了二十分钟才进去？”',
+      '“方勇说，他停车后给李希打了个电话，跟他说到了。李希说他有一些东西撒地上了，要收拾，让他再等一会儿。”',
+      '林叔从文件中抽出一张照片。',
+      '那是案发现场的照片。',
+      '照片中李希倒在一片乱石堆和杂草中，脑袋都摔变形了，周围散落着脑浆一样的东西。',
+      '一条浅灰色的围巾在死者脖子上紧紧缠了好几圈，上面的血渍像凌乱的花纹。',
+      '林叔接着点开了第二段监控。',
+      '监控开头跟第一段一样。',
+      '可以想象方勇像去年那样开着出租车从木客崖的方向驶来，他没有在宾馆门口停下，而是调转车头停在超市门口，然后停车等待教授从宾馆出来。',
+      '我仔细观察这两次的区别。',
+      '我发现车的后窗仍然贴了黑膜，但侧窗没有黑膜了。',
+      '我提出这点疑问。',
+      '林叔翻看手头的文件，开口道：“这一点警方有记录，去年坠崖时间发生后，因为汽车窗户上的膜对警方从监控观察车内景象造成了阻碍，所以警方怀疑方勇给汽车贴膜的动机。当时方勇十分生气，回家就把汽车侧窗的膜都撕了，说这辈子都不会再给汽车贴膜了。”',
+      '我没说什么，继续看这段监控。',
+      '想必方勇把汽车空调温度调得非常低，因为侧窗已经蒙上了一层白雾，真是个会享受的人。',
+      '林叔解说道：“方勇说，他到了之后，没看见教授出来。等了两三分钟后他给教授打了个电话，教授请他再等一会儿，他有重要的资料还没整理完。通话记录显示的时间跟监控里他抵达之后的时间是一致的。”',
+      '方勇的车在原地等待了大概二十分钟之久，画面仅有的变化是车窗上变幻莫测的雾气，而教授始终没有出现在监控画面中。',
+      '虽然监控里没拍到，但教授应该是打开左侧后方车门上车了。',
+      '方勇开车离开，从监控画面中消失。',
+      '“方勇说教授前一天还发短信跟他说想去城里的化验所，结果上车后说想去木客崖。方勇把教授送到木客崖后离开，后来出现在城里的监控画面中，时间上是没问题的。”',
+      '我让林叔把这两段监控来来回回又放了几遍。',
+      '我总觉得有哪里不对，但总是抓不住那缕异样的直觉。',
+      '两个人都是上车之后突然改口说要去木客崖，而且都带着那个阴阳眼泥塑。',
+      '木客崖到底有什么魔力在吸引着他们？',
+      '挂上视频电话，我决定蒙头睡一觉，说不定梦境中能梦到真相呢。'
+    ]},
+
+    { who:'万家', no:'', date:'', trigger:'plan', paras:[
+      '或许是受教授博客的影响，这一夜的梦光怪陆离。',
+      '我一会儿长出第三只阴阳眼，一会儿被木棍追着打，还一度升到夜空中看流星雨。',
+      '醒来之后浑浑噩噩的，满脑子都是昨天监控的画面。',
+      '拧开水龙头，我用冷水洗了把脸。',
+      '洗着洗着，我突然意识到为什么监控里的画面让我觉得有异常了。',
+      '由于发现太过突然，我直接被洗脸水呛到。',
+      '很多细节被我一瞬间连接起来，我意识到我触及到了事情的真相！',
+      '可是……',
+      '我没有证据啊！',
+      '直接跟警察说，让警察去取证，警察会认为我在妨碍公务吧？',
+      '从被呛中缓过来，我的脑子渐渐冷静下来。',
+      '一个大胆的以身入局的计划缓缓浮上心头。',
+      '我拨通了林叔的视频通话。',
+      '再一次看完监控视频后，我确定了我的推理没问题。',
+      '我向林叔说了我的推理，林叔沉思。',
+      '他也挑不出什么毛病。',
+      '“但是你没有证据。”',
+      '林叔一针见血地指出了我的尴尬之处。',
+      '于是我又向他说出了我的计划。',
+      '林叔果然非常激烈地反对，说我这样做简直是肉包子打狗——有去无回。',
+      '果然不同意。',
+      '我再次提出一个要求：“那能不能派一个便衣警察跟我一起行动？到时候我们跟警方暗中保持通话状态，如果中途发现有可疑的地方，再出警？”',
+      '林叔沉思了一会儿，艰难开口：“也行，但是你答应我，千万不能冒险，一定要时时刻刻紧跟警察。”',
+      '挂上视频电话后，我再次感慨，当你想要开窗，先说掀屋顶真的很好用。',
+      '\u0001随即我又想起顾异。',
+      '是他让我卷进这件事，雇我来这调查，我也跟他同步一下情况吧。'
+    ], trigger:'plan'},
+
+    /* R62-4：「随即我又想起顾异…」之后补一页空白页 */
+    { blank:true, who:'万家' },
+
+    { who:'万家', no:'', date:'', paras:[
+      '都第二天了，顾异怎么还没回复我？',
+      '奇怪，可能是忙着上课呢吧。',
+      '不管了，反正他给的钱足够我处理完这个事再回学校了，不给尾款我也不怕。',
+      '刚吃完早饭，便衣警察就来了。',
+      '果然跟我设想的一样，是个彪形大汉。',
+      '我们简单交流了一下今天的计划，就出发去木客村了。',
+      '便衣是开车来的，为了方便后面找借口坐方勇的车，他把汽车停在了镇子里，我们步行前往木客村。',
+      '依旧是村长接待我们。',
+      '村长请我们进屋喝茶，我借口上厕所跑出来，凭借上次在村里参观的记忆，偷偷溜进方勇的家里把阴阳眼泥塑裹起来放进包里。',
+      '回到宾馆后，手机终于有了信号。',
+      '我给方勇发短信，让他现在就来载我跟我的同伴去城里化验所。',
+      '方勇立刻回了我，驱车赶来。',
+      '我们离开时，在一楼大厅没看到宾馆老板，不知道她去了哪里。',
+      '我跟便衣警察上车后，便衣警察偷偷拨通了总部的电话，并保持通话状态。',
+      '汽车开始启动，空调温度很低，冷得我打了一哆嗦。',
+      '\u0001“杀死李希和周教授的人，就是你吧，方勇。”',
+      '方勇一脚踩在刹车上，轮胎跟地面之间发出刺耳的声音。',
+      '接着方勇重新开动汽车，乐呵呵地说：“你们城里来的就是喜欢开玩笑。”',
+      '我无视他的调侃，为了尽快套他话，我将推理出来的真相一股脑倾倒出来。',
+      '“我看了两次案件的宾馆对面的监控，李希坠崖案中，看似是李希上了你的车，实则不然。',
+      '“你将车开到宾馆对面，走进宾馆，李希看到你来打算跟你离开，这时你拨打李希的电话，趁李希掏出手机接电话时，你猛击李希的头将其杀害。你拿着李希的手机接通电话，几秒钟后挂掉，营造你通知他出发的假象。',
+      '“接着你赶紧脱下他的衣帽鞋服，给自己换上。经过这一番折腾，时间起码过去了二十分钟。距离你停车的二十分钟后，你故意从车后方走进监控范围，伪造李希活着上车的假象。上车之后，你迅速从副驾驶挪到主驾驶，将车开走。',
+      '“驶出监控范围后，你立刻沿着道路左侧倒车到宾馆门口，你进入宾馆，把李希的衣服脱下给他穿上，然后将李希的尸体搬到汽车后座。',
+      '“你开到木客崖，将李希的尸体从崖边扔下去，然后火速驶进城里。虽然倒车回去运李希的尸体耽误了有十分钟左右，但你用雪天路滑、半路上下车去方便了之类的借口在警方那边糊弄了过去。',
+      '“至此，李希坠崖案就被你伪造出来了。”',
+      '方勇先是沉默了一会儿，然后用轻松的语气发出质疑：“你凭什么说监控里的那个人不是李希？就因为他裹得严严实实？”',
+      '“因为围巾。”我缓缓道。',
+      '方勇沉默不语，我继续推理。',
+      '“那个旅馆一楼大厅没有空调和暖气，夏天跟室外一样热，冬天跟室外一样冷。',
+      '“那天积雪很厚，寒风刺骨，风刮在脸上跟刀割一样疼。当时李希在一楼大厅等了你十来分钟，又只有一个薄薄的医用口罩，可以推断出他那个时候大概率围着围巾。',
+      '“如果真的如你所说，李希当时因为什么东西撒了所以晚了二十分钟才离开宾馆大厅，那么他忍受了至少半个小时的严寒，更应该围上围巾！',
+      '“而监控中出现的人并没有带围巾，说明那个人不是李希。',
+      '“那个人就是你吧？方勇。你伪装成李希，却没有围围巾，是你遗漏了吗？',
+      '“不是，是你有没办法戴围巾的理由！”',
+      '“什么理由？”一旁的便衣警察忍不住发问。',
+      '“那条浅灰色的围巾，在你殴打他头部的时候溅上了血！”',
+      '方勇握住方向盘的手肉眼可见地抖了一下。',
+      '汽车运行得要多慢有多慢，仿佛他在刻意拖延时间想办法。',
+      '“你发现围巾沾血，围在你的身上会在监控中暴露，所以选择不戴。在你把衣服给李希换回去时，因为时间紧张，只能赶紧在他脖子上胡乱缠了几圈。而正常人在没有棉口罩的情况下，大冬天是不会这样围围巾的。”',
+      '方勇语气开始变得冰冷，“你要是没有证据，就是在污蔑！”',
+      '“共犯的口供总可以了吧？宾馆老板方芳在你杀害李希时全程都在帮忙，比如清理大厅的血迹，搜查李希的房间有没有让你们不放心的东西。警察现在已经在去宾馆逮捕她的路上了，你还能嘴硬多久？”',
+      '其实警方只是答应我去找方芳问话，毕竟方勇这边还没认罪，等他认罪，警方才有逮捕方芳的理由。',
+      '方勇的手紧紧攥住方向盘，指节发白，“那周教授的死，你又凭什么说跟我有关系？我全程没下车！”',
+      '“你只是没打开右侧车门而已！”',
+      '方勇的身子抖了一下。',
+      '我继续说出我的推理。',
+      '“那天你把汽车停在监控范围内，下次走进宾馆。周教授在等着你，而你故技重施，跟他打电话。趁他低头看手机的工夫，你重击他的头部，将他杀死。你替他接通电话，几秒钟后再挂掉，营造他跟你通话过的假象。',
+      '血肯定流了很多，方芳拿出提前准备好的塑料布将尸体裹起来，跟你一起把尸体从汽车左侧的后门搬进了后座。',
+      '你将车开到木客崖，将周教授的尸体扔了下去。沾血的塑料布被你后来带回家烧掉了，死无对证！”',
+      '方勇这会儿已经冷静下来了，“还是那句话，你没有证据！”',
+      '“证据就是你汽车右侧车窗上的雾气！',
+      '“当时你的汽车刚停下来时蒙了一层厚厚的白雾，因为你喜欢把汽车温度调得很低，就像现在。而大概十分钟后，车窗上的雾气开始变淡，说明这时左侧的车门被打开，而且打开的时间不短，冷气全跑了。这段时间想必就是你正费力把周教授的尸体搬进后座！”',
+      '方勇踩下刹车。',
+      '我往窗外看去，方勇竟然把车开到了木客崖。',
+      '\u0001旁边的便衣警察也察觉到不对，立刻掏出手枪指向方勇，“警察！不许动！立刻下车！”',
+      '方勇在便衣警察的枪口下缓缓下车，我跟便衣警察也随即下了车。',
+      '“把手举起来！”',
+      '方勇并没有照做，而是转向我们开始说话。',
+      '“我承认，李希和周教授都是我杀的。但都是方芳指示我的！',
+      '“我每天从城里回村路过她的宾馆，都会帮她稍点东西。',
+      '“当初我跟她说，第二天要送李希去城里的化验所，方芳听了之后马上就想出了杀死李希的办法。',
+      '“周教授也是，当我跟她说第二天要送他去化验所后，方芳又想出了杀死周教授的方法。夏天的衣服不如冬天有伪装性，所以两次的方法不能完全一样。',
+      '“警察先生，都是她让我干的，她利用我对她的喜欢让我帮她杀人，我根本不想杀人的啊！”',
+      '我听不下去了，打断他。',
+      '“可拉倒吧，你们之所以杀掉李希，就是因为他怀疑你们入股的神清制药公司生产的‘聪明药’中，有一种有害物质。',
+      '“顺带一提，你们特地改了名字，用改后的名字注册了神清药厂，为的就是不让大家把神清药厂跟木客村联系在一起，守住木客村拥有独家原料的秘密和其背后的巨大利益。',
+      '“你改名成袁永，方芳是袁放，至于官网上提到的第三个创始人袁天，应该就是木客村村长方田。所有木客村村民都是神清药厂产业链的一部分！你跟方芳不是情侣，你是她的打手，专门处理药厂的隐患。',
+      '“李希发现药物原材料来自于木客村的一种蘑菇，村民们会把这种蘑菇榨汁混进泥塑里日日跪拜。所以他偷走泥塑想拿去化验，找出这种原料含有有害物质的证据，替被这种聪明药害死的孩子挽回公道！',
+      '一旁的便衣警察听到这里忍不住插嘴，“这种蘑菇有害在哪里？药物不是都通过药监局的检测了吗？”',
+      '“短期服用不会出事。据我推测，这种蘑菇的某种成分随着长时间暴露在空气中，会形成一种强烈的致幻剂，连皮肤接触都会产生强烈幻觉，长期服用更是会破坏大脑。',
+      '“它的原理应该是激活尽可能多的神经元，迫使神经元对看到的景象进行演算，推演眼前事物未来的可能性。',
+      '”所以村民在做泥塑的过程不会有危险，做好后日日供奉不会触碰，也不会有危险，但李希当时偷走放置了很久的泥塑，因为接触到这种致幻物质而产生了幻觉，还特地留下了纸条提醒别人。',
+      '“周教授触摸到泥塑后同样产生了幻觉，他立刻明白了李希被杀害的原因是木客村村民，也就是神清制药公司的人为了掩盖真相而杀人灭口。毕竟这个事情一旦爆出来，神清制药就完蛋了！',
+      '“你们还偷偷将有致幻物质的泥塑替换成普通泥塑，塞进他们的书包扔下山崖，所以警方也查不出来什么。”',
+      '一旁的便衣警察若有所思。',
+      '方勇见状立刻掏出一把手枪向警察方向射击。',
+      '警察立刻伏地反击，但方勇立刻跑走，所以子弹打偏了。',
+      '可恶，没想到他竟然能搞来手枪。',
+      '但情况很快又出现急剧的转折。',
+      '不知哪里射过来一支弩箭，直冲方勇射去。',
+      '方勇被射中小腿后，立刻倒地不起，痛苦哀嚎。',
+      '警察见状立刻上前，踢开他的手枪，将他拷起来。',
+      '我们原地等待了一会儿，几辆警车呼啸赶来，更多的警察赶过来控制局面。',
+      '警察把方勇带走后，一个像是领导的人走到我面前。',
+      '“这次多亏了你，不然就让他们逍遥法外了！”',
+      '我有些不好意思地挠挠头，“你们抓到方芳了吗？我们从宾馆离开时没看见她。”',
+      '“抓到了。我们也没在宾馆看到她，最后是在宾馆附近树林里发现了她。她畏罪潜逃，结果不知道被谁用弩射中小腿，动弹不了了，我们很容易就抓住她了。”',
+      '又是弩……',
+      '阻止他们逃跑的神秘人到底是谁？',
+      '这时警察又接到一个电话，说了几句话后他挂断电话。',
+      '“走吧，我派人送你回城。我去趟木客村，村长那老家伙报警说有人偷了他收藏的宝贝陨石。',
+      '我正要找他算账呢，他自己倒送上门了！神清药厂也有他的股份，致幻剂的事他肯定也瞒了不少！”'
+    ]},
+
+    { who:'万家', no:'', date:'', trigger:'fin', paras:[
+      '尘埃落定之后，我掏出手机，给顾异汇报了一下最新进展。我发现他终于回消息了。'
+    ]}
+  ];
+
+  var QUIZ = ['方勇', '方芳', '方田', '意外坠落'];
+  /* R56-6/7：两道闸门 —— 监控问答章之后需 sg_mon_done，计划章之后需 sg_plan_done。
+     quiz 不再是解锁条件（选谁都能继续往下读）。 */
+  var QUIZ_CI = -1, MON_CI = -1, PLAN_CI = -1;
+  for(var _qi=0; _qi<CHAPTERS.length; _qi++){
+    var _ch = CHAPTERS[_qi];
+    if(_ch.quiz && QUIZ_CI < 0) QUIZ_CI = _qi;
+    if(_ch.trigger === 'mon' && MON_CI < 0) MON_CI = _qi;
+    if(_ch.trigger === 'plan' && PLAN_CI < 0) PLAN_CI = _qi;
+  }
+  function quizLocked(){ return QUIZ_CI >= 0 && !LS.get('nb_quiz'); }
+  function gateLocked(chIdx){
+    if(MON_CI >= 0 && chIdx > MON_CI && LS.get('sg_mon_done') !== '1') return 'mon';
+    if(PLAN_CI >= 0 && chIdx > PLAN_CI && LS.get('sg_plan_done') !== '1') return 'plan';
+    return '';
+  }
+  /* ---------- R60-7/9：闸门当页拦截 ----------
+     未完成论坛私信时：闸门章的最后一页下方出现灰字「——去看看校园论坛里的私信吧~——」，
+     下一页不可点击；私信完成后灰字消失、翻页恢复。 */
+  var GATE_TIP = '——去看看校园论坛里的私信吧~——';
+  var METEOR_CI = -1;
+  for(var _mi=0; _mi<CHAPTERS.length; _mi++){ if(CHAPTERS[_mi].trigger === 'meteor'){ METEOR_CI = _mi; break; } }
+  function gateState(){
+    var ends = window.__nbChapEnd || {};
+    /* R61-6：陨石章末锁定并弹论坛私信 */
+    if(METEOR_CI >= 0 && LS.get('sg_mon_done') !== '1'){
+      return { done:false, from:(ends[METEOR_CI] != null ? ends[METEOR_CI] : 0), gate:'meteor' };
+    }
+    if(MON_CI >= 0 && LS.get('sg_mon_done') !== '1'){
+      return { done:false, from:(ends[MON_CI] != null ? ends[MON_CI] : 0), gate:'mon' };
+    }
+    if(PLAN_CI >= 0 && LS.get('sg_plan_done') !== '1'){
+      return { done:false, from:(ends[PLAN_CI] != null ? ends[PLAN_CI] : 0), gate:'plan' };
+    }
+    return { done:true, from:Infinity, gate:'' };
+  }
+  /* R63-1：最后一个「有内容」的页索引（尾部空白补页不算） */
+  function lastContentIdx(){
+    for(var i = pages.length - 1; i >= 0; i--){
+      if(pages[i] && !pages[i].blank) return i;
+    }
+    return Math.max(0, pages.length - 1);
+  }
+  function canGoNext(){
+    var g = gateState();
+    if(g.done) return cur + perView < pages.length;
+    return cur + perView < pages.length && cur + perView <= g.from;
+  }
+  function injectGateTip(){
+    var old = document.getElementById('gate-tip');
+    if(old) old.parentNode.removeChild(old);
+    var g = gateState();
+    window.__nbGateFrom = g.from;      /* 供调试/测试读取 */
+    window.__nbGateDone = g.done;
+    window.__nbGateKind = g.gate;
+    if(g.done) return;
+    if(cur <= g.from && g.from < cur + perView){
+      var host = (perView === 2 && g.from === cur) ? inL : inR;
+      var el = document.createElement('div');
+      el.className = 'pg-tip gate-tip';
+      el.id = 'gate-tip';
+      el.innerHTML = GATE_TIP;
+      el.title = '点击前往校园论坛私信';
+      /* R61：提示放在当页页码（.pg-foot）正上方 */
+      var foot = host.querySelector('.pg-foot');
+      if(foot && foot.parentNode) foot.parentNode.insertBefore(el, foot);
+      else host.appendChild(el);
+    }
+  }
+  var DIMS = {};   /* 图片原始宽高：测量时预留高度，避免图片被裁切 */
+
+  /* ================= 状态 ================= */
+  var pages = [], cur = 0, perView = 2, fired = {};
+  var $ = function(id){ return document.getElementById(id); };
+  var coverStage = $('cover-stage'), reader = $('reader'), book = $('book');
+  var bottomStage = $('bottom-stage');
+  var shownBottom = false;   /* R65：末页是否已自动翻到背面（仅内存态，每次进入阅读重置） */
+  var pgL = $('pg-left'), pgR = $('pg-right'), inL = $('left-inner'), inR = $('right-inner');
+  var measure = $('measure');
+  var LS = {
+    get: function(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+    set: function(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+  };
+
+  /* ---------- 区块 HTML ---------- */
+  function esc(s){
+    return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function blockHTML(b){
+    if(b.t === 'p') return '<p>' + esc(b.v) + '</p>';
+    if(b.t === 'art'){
+      var dm = DIMS[b.v[0]];
+      var style = dm ? ' style="aspect-ratio:' + dm[0] + '/' + dm[1] + '"' : '';
+      return '<figure class="art"><img src="' + b.v[0] + '" alt=""' + style + '><figcaption>▲ ' + esc(b.v[1]) + '</figcaption></figure>';
+    }
+    if(b.t === 'brk') return '';                       /* 强制分页标记不渲染内容 */
+    if(b.t === 'tip') return '<div class="pg-tip">' + b.v + '</div>';
+    if(b.t === 'quiz'){
+      var chosen = LS.get('nb_quiz') || '';
+      return '<div class="quiz"><h4>你认为是谁杀死了李希和教授？</h4><div class="opts">' +
+        QUIZ.map(function(o){ return '<button data-q="' + esc(o) + '" class="' + (chosen === o ? 'on' : '') + '">' + esc(o) + '</button>'; }).join('') +
+        '</div><p class="qnote">' + (chosen ? '你选了：' + esc(chosen) + '。' : '') + '</p></div>';
+    }
+    return '';
+  }
+  function headHTML(p){
+    return '<div class="pg-head"><span class="pg-who">' + esc(p.who) + '</span><span class="pg-no">' + esc(p.no) + '</span></div>';
+  }
+  function footHTML(p){
+    return '<div class="pg-foot"><span class="pg-idx"></span></div>';
+  }
+  function chapterBlocks(ch){
+    var out = [];
+    (ch.paras || []).forEach(function(t){
+      /* R55：段首 \u0001 = 强制另起一页 */
+      if(String(t).charAt(0) === '\u0001'){ out.push({ t:'brk' }); out.push({ t:'p', v:String(t).slice(1) }); }
+      else out.push({ t:'p', v:t });
+    });
+    (ch.arts || []).forEach(function(a){ out.push({ t:'art', v:a }); });
+    if(ch.quiz) out.push({ t:'quiz' });
+    if(ch.tip) out.push({ t:'tip', v:ch.tip });     /* R55-14：锁页提示文字迁到指定页底部 */
+    return out;
+  }
+
+  /* 单块就溢出的长段落：按最靠中间的标点拆成两半（TN 窄页需要）。
+     必须保证切出的两段都非空，否则会原地打转（死循环）。 */
+  function splitParagraph(b){
+    if(!b || b.t !== 'p') return null;
+    var v = String(b.v || '');
+    if(v.length < 12) return null;
+    var mid = Math.floor(v.length / 2), best = -1, bestD = 1e9;
+    var punct = '。！？；…';
+    for(var i = 1; i < v.length - 1; i++){
+      if(punct.indexOf(v[i]) >= 0){
+        var d = Math.abs(i - mid);
+        if(d < bestD){ bestD = d; best = i; }
+      }
+    }
+    if(best < 0){
+      if(v.length < 24) return null;
+      best = mid;                       /* 没有可用标点：按字数硬切 */
+    }
+    var cut = best + 1;
+    if(cut <= 0 || cut >= v.length) return null;
+    return [{ t:'p', v: v.slice(0, cut) }, { t:'p', v: v.slice(cut) }];
+  }
+
+  /* ---------- 尺寸 ---------- */
+  function wideLayout(){ return window.innerWidth >= 820; }
+  function syncSizes(){
+    perView = wideLayout() ? 2 : 1;
+    if(perView === 1){
+      pgL.style.display = 'none';
+      pgR.style.flex = '1';
+      pgR.classList.add('only');
+    }else{
+      pgL.style.display = '';
+      pgL.classList.remove('only');
+      pgR.classList.remove('only');
+    }
+    var pad = wideLayout() ? [32, 38, 26] : [22, 24, 18];
+    var pgW = (book.clientWidth - 20) / perView;
+    var pgH = book.clientHeight - 20;
+    measure.style.width = Math.max(120, pgW - pad[0] * 2) + 'px';
+    measure.style.height = Math.max(160, pgH - pad[1] - pad[2]) + 'px';
+    measure.style.padding = '0';
+    measure.style.fontSize = '';   /* R69：不再强制 14px，统一跟随 CSS（四号字 18.67px） */
+    return { w: pgW, h: pgH };
+  }
+
+  /* ---------- 分页 ---------- */
+  function paginate(){
+    pages = [];
+    var ch, i, chIdx;
+    for(chIdx = 0; chIdx < CHAPTERS.length; chIdx++){
+      ch = CHAPTERS[chIdx];
+      /* R60：闸门改为「当页拦截」——内容照常分页，渲染时在该章末页加灰字并禁用下一页 */
+      if(ch.blank){
+        pages.push({ blank:true, who:ch.who || '', no:'', date:'', blocks:[], ci:chIdx, trigger:null });
+        continue;
+      }
+      var blocks = chapterBlocks(ch), idx = 0, part = 0, guard = 0;
+      measure.className = 'pg-body meas ' + (ch.who === '顾异' ? 'hand' : 'plain');
+      while(idx < blocks.length && guard++ < 400){
+        var take = [], overflow = false, spin = 0;
+        while(idx < blocks.length && spin++ < 3000){
+          /* R55：强制分页标记 —— 当前页已有内容则断页，否则直接跳过 */
+          if(blocks[idx].t === 'brk'){
+            if(take.length){ idx++; overflow = true; break; }
+            idx++; continue;
+          }
+          var test = take.concat([blocks[idx]]);
+          measure.innerHTML = headHTML({ who:ch.who, no:ch.no }) +
+            '<div class="pg-text">' + test.map(blockHTML).join('') + '</div>' +
+            footHTML({ date:ch.date });
+          /* 留 14px 余量：吸收 flex/块布局下段落 margin 的细微差异 */
+          var tooTall = measure.scrollHeight > measure.clientHeight + 2;
+          if(tooTall && take.length){
+            overflow = true; break;
+          }
+          if(tooTall && !take.length){
+            /* 单独一块就溢出：长段落按最近标点拆成两半再试 */
+            var parts = splitParagraph(blocks[idx]);
+            if(parts){ blocks.splice(idx, 1, parts[0], parts[1]); continue; }
+          }
+          take = test; idx++;
+        }
+        pages.push({
+          who:ch.who, no:ch.no, date:ch.date,
+          blocks:take, ci:chIdx, trigger:(part === 0 ? ch.trigger : null)
+        });
+        part++;
+        if(!overflow) break;
+      }
+      /* R60：记录该章最后一页索引（闸门提示就显示在这一页） */
+      window.__nbChapEnd = window.__nbChapEnd || {};
+      window.__nbChapEnd[chIdx] = pages.length - 1;
+    }
+    /* R61-8：固定 40 页 —— 不足补空白页（双页模式下生效；实测四号字自然分页为 40 页） */
+    var TARGET_PAGES = 40;
+    /* R69：单页视图（手机）也保证是偶数页并补齐下限；双页视图额外补到 40 页 */
+    var MIN_PAGES = perView === 2 ? TARGET_PAGES : 2;
+    if(perView === 2 && pages.length % 2 === 1 && !(pages[pages.length - 1] || {}).locked)
+      pages.push({ blank:true, who:'', no:'', date:'', blocks:[], ci:-1, trigger:null });
+    while(pages.length < MIN_PAGES)
+      pages.push({ blank:true, who:'', no:'', date:'', blocks:[], ci:-1, trigger:null });
+    if(perView === 2 && pages.length > TARGET_PAGES && window.console && console.warn)
+      console.warn('[notebook] 页数 ' + pages.length + ' 超过目标 ' + TARGET_PAGES);
+    measure.innerHTML = '';   /* 清空测量容器，避免其残留内容被误判为溢出 */
+    window.__nbPages = pages;
+  }
+
+  /* ---------- 渲染 ---------- */
+  function pageHTML(p, num){
+    if(p.locked){
+      /* R58：锁页是可交互的正常页，只显示灰色提示，不黑屏 */
+      return '<div class="pg-body plain"><div class="locked-tip">——去看看校园论坛里的私信吧~——</div></div>';
+    }
+    if(p.blank){
+      return '<div class="pg-body blank"><div class="blank-mark">· · ·</div>' +
+  '</div>';
+    }
+    return '<div class="pg-body ' + (p.who === '顾异' ? 'hand' : 'plain') + '">' +
+      headHTML(p) +
+      '<div class="pg-text">' + p.blocks.map(blockHTML).join('') + '</div>' +
+      footHTML(p) + '</div>';
+  }
+
+  function render(anim){
+    var total = pages.length;
+    try{ LS.set('nb_cur', String(cur)); }catch(e){}   /* R55-10：记住当前页，退出后回来接着看 */
+    var pL = perView === 2 ? pages[cur] : null;
+    var pR = perView === 2 ? pages[cur + 1] : pages[cur];
+    inL.innerHTML = pL ? pageHTML(pL, cur + 1) : '';
+    inR.innerHTML = pR ? pageHTML(pR, cur + (perView === 2 ? 2 : 1)) : '';
+    /* 页码 */
+    var nl = inL.querySelector('.pg-idx'), nr = inR.querySelector('.pg-idx');
+    if(nl) nl.textContent = (cur + 1) + ' / ' + total;
+    if(nr) nr.textContent = (cur + (perView === 2 ? 2 : 1)) + ' / ' + total;
+    $('pg-count').textContent = (cur + 1) + (perView === 2 && cur + 2 <= total ? '–' + (cur + 2) : '') + ' / ' + total;
+    $('btn-prev').disabled = cur <= 0;
+    $('btn-next').disabled = !canGoNext();
+
+    if(anim){
+      var pg = inR.parentNode, pg2 = inL.parentNode;
+      pg.classList.remove('turn-in'); void pg.offsetWidth; pg.classList.add('turn-in');
+      if(perView === 2){ pg2.classList.remove('turn-in'); void pg2.offsetWidth; pg2.classList.add('turn-in'); }
+    }
+    /* 触发剧情钩子 */
+    [pL, pR].forEach(function(p){ if(p && p.trigger) fireTrigger(p.trigger); });
+    try{ syncTruthBgm([pL, pR]); }catch(e){}
+    try{ injectGateTip(); }catch(e){}
+    /* R62-2：翻到最后一页即自动合上并显示背面图 */
+    if(cur + perView > lastContentIdx() && !shownBottom){
+      shownBottom = true;
+      reader.classList.remove('on');
+      coverStage.style.display = 'none';
+      bottomStage.style.display = 'flex';   /* R66：必须是 flex，'' 会回落到 CSS 的 display:none */
+      window.scrollTo(0, 0);
+    }
+    bindQuiz();
+  }
+
+  function bindQuiz(){
+    Array.prototype.forEach.call(document.querySelectorAll('.quiz button'), function(b){
+      b.addEventListener('click', function(e){
+        e.stopPropagation();
+        LS.set('nb_quiz', b.getAttribute('data-q'));
+        Array.prototype.forEach.call(b.parentNode.querySelectorAll('button'), function(x){ x.classList.remove('on'); });
+        b.classList.add('on');
+        var note = b.closest('.quiz').querySelector('.qnote');
+        if(note) note.textContent = '你选了：' + b.getAttribute('data-q') + '。';
+        /* R54-8：任一选择后解锁剩余内容（重新分页 + 重绘） */
+        setTimeout(function(){ layoutAll(); }, 40);
+      });
+    });
+  }
+
+  /* ---------- R55：真相 BGM（翻页时按内容切换） ---------- */
+  var truthAudio = document.getElementById('nb-truth-audio');
+  if(!truthAudio){
+    truthAudio = document.createElement('audio');
+    truthAudio.id = 'nb-truth-audio';
+    truthAudio.src = 'assets/nb-truth.wav';
+    truthAudio.volume = 0.2;   /* R58：真相大白音量 20% */
+    truthAudio.preload = 'none';
+    truthAudio.style.display = 'none';
+    document.body.appendChild(truthAudio);
+  }
+  function truthPlay(){
+    if(!truthAudio) return;
+    try{
+      truthAudio.volume = 0.2;
+      truthAudio.currentTime = 0;
+      var pr = truthAudio.play();
+      if(pr && pr.catch) pr.catch(function(){});
+      showBgmBtn(true);
+    }catch(e){}
+  }
+  /* R60-1：真相大白音乐开关 */
+  function showBgmBtn(show){
+    var b = document.getElementById('bgm-toggle');
+    if(!b){ return; }
+    if(!show){ b.style.display = 'none'; return; }
+    b.style.display = '';
+    b.textContent = (truthAudio && !truthAudio.paused) ? '🔊 音乐开' : '🔇 音乐关';
+  }
+  function truthStop(){ if(!truthAudio) return; try{ truthAudio.pause(); }catch(e){} try{ showBgmBtn(false); }catch(_){} }
+  function syncTruthBgm(shown){
+    var txt = (shown || []).map(function(p){
+      return (p.blocks || []).map(function(b){ return b.t === 'p' ? b.v : ''; }).join('');
+    }).join('\n');
+    if(txt.indexOf('旁边的便衣警察也察觉到不对') >= 0) truthStop();
+    else if(txt.indexOf('杀死李希和周教授的人') >= 0) truthPlay();
+  }
+
+  /* ---------- 剧情钩子 ---------- */
+  var toast = $('nb-toast'), toastBody = $('toast-body');
+  function showToast(html, href, key){
+    toastBody.innerHTML = html;
+    toast.classList.add('on');
+    /* R56-4：玩家点过（关闭或跳转）后记下，之后再翻到此处不再弹窗 */
+    if(key) LS.set('nb_toast_seen_' + key, '1');
+    toast.onclick = function(e){
+      if(key) LS.set('nb_toast_seen_' + key, '1');
+      toast.classList.remove('on');
+      if(e.target.id === 'toast-x') return;
+      window.open(href, '_blank');
+    };
+  }
+  function fireTrigger(t){
+    if(fired[t]) return;
+    fired[t] = true;
+    /* R56-4：该提示点过一次就不再弹（跨刷新记忆）；plan 的信号仍照常写入 */
+    if(LS.get('nb_toast_seen_' + t) === '1'){
+      if(t === 'plan') LS.set('sg_plan_notice', '1');
+      return;
+    }
+    if(t === 'mon'){
+      LS.set('sg_mon_notice', '1');
+      /* R62-1：笔记本不再弹出论坛私信提示（玩家自行去论坛） */
+    }else if(t === 'meteor'){
+      /* R61-6：翻到「村长收藏的陨石」这页 → 通知论坛私信；同时本页被闸门锁定 */
+      LS.set('sg_mon_notice', '1');
+    }else if(t === 'plan'){
+      /* R56-6：翻到「随即我又想起顾异…」这页 → 通知论坛私信进入计划阶段；
+         玩家在论坛发出那两句后 sg_plan_done=1，笔记本解锁后续（消息唯一出口在 forum 侧）。 */
+      LS.set('sg_plan_notice', '1');   /* R58：不再弹出「等你的计划同步」提示文字 */
+    }else if(t === 'fin'){
+      LS.set('sg_fin_notice', '1');
+      /* R62-1：不再弹出私信提示 */
+    }
+  }
+  $('toast-x').addEventListener('click', function(e){ e.stopPropagation(); toast.classList.remove('on'); });
+  /* R54-9：背面点击回到封面 */
+  bottomStage.addEventListener('click', function(){
+    bottomStage.style.display = 'none';
+    coverStage.style.display = '';
+    /* R65：把阅读位置回退到末页前一位，重进笔记本时不会立刻又弹封底 */
+    try{ localStorage.setItem('nb_cur', String(Math.max(0, lastContentIdx() - 2))); }catch(e){}   /* 退两页：双页视图才不会含末内容页 */
+    shownBottom = false;
+  });
+  /* R60-1：真相大白音乐开关 */
+  var bgmBtn = document.getElementById('bgm-toggle');
+  if(bgmBtn) bgmBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(!truthAudio) return;
+    if(truthAudio.paused){ try{ truthAudio.volume = 0.2; truthAudio.play(); }catch(_){} bgmBtn.textContent = '🔊 音乐开'; }
+    else { try{ truthAudio.pause(); }catch(_){} bgmBtn.textContent = '🔇 音乐关'; }
+  });
+  /* R60-7/9：点击灰字提示 → 前往校园论坛私信 */
+  document.addEventListener('click', function(e){
+    var t = e.target.closest ? e.target.closest('#gate-tip') : null;
+    if(t) window.open('forum.html#dm', '_blank');
+  });
+
+  /* R54-14 / R59-4：在论坛私信里完成对话（sg_mon_done / sg_plan_done）后自动解锁，
+     并把当前页定位到刚解锁的那一页，笔记保持在本界面、可继续翻页阅读 */
+  var lastPlanDone = LS.get('sg_plan_done') === '1';
+  var lastMonDone  = LS.get('sg_mon_done') === '1';
+  setInterval(function(){
+    var nowPlan = LS.get('sg_plan_done') === '1';
+    var nowMon  = LS.get('sg_mon_done') === '1';
+    if(nowPlan !== lastPlanDone || nowMon !== lastMonDone){
+      lastPlanDone = nowPlan;
+      lastMonDone  = nowMon;
+      if(reader.classList.contains('on') && typeof render === 'function'){
+        /* R60：灰字提示消失、下一页恢复（分页不再截断，无需重排） */
+        render(false);
+      }
+    }
+  }, 1500);
+
+  /* ---------- 翻页 ---------- */
+  function go(delta){
+    var next = cur + delta * perView;
+    if(next < 0) next = 0;
+    if(next >= pages.length) return;
+    cur = next;
+    render(true);
+  }
+  $('btn-prev').addEventListener('click', function(){ go(-1); });
+  $('btn-next').addEventListener('click', function(){ go(1); });
+  $('btn-close').addEventListener('click', function(){
+    reader.classList.remove('on');
+    coverStage.style.display = '';
+    window.scrollTo(0, 0);
+  });
+  document.addEventListener('keydown', function(e){
+    if(!reader.classList.contains('on')) return;
+    if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); if(canGoNext()) go(1); }
+    if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(-1); }
+  });
+  /* R54-9 / R59-5：末页点击 → 合上笔记本并显示背面图（左右页都可点） */
+  function lastPageTap(e){
+    if(e.target.closest('.quiz')) return;
+    if(cur + perView < pages.length){ if(canGoNext()) go(1); return; }
+    reader.classList.remove('on');
+    coverStage.style.display = 'none';
+    bottomStage.style.display = 'flex';   /* R66：必须是 flex */
+    window.scrollTo(0, 0);
+  }
+  pgR.addEventListener('click', lastPageTap);
+  pgL.addEventListener('click', function(e){
+    if(e.target.closest('.quiz')) return;
+    /* 末页（最后一张落在左页时）点击也应显示背面，而不是往前翻 */
+    if(cur + perView >= pages.length){ lastPageTap(e); return; }
+    if(cur > 0) go(-1);
+  });
+
+  /* ---------- 星象锁：点击最左端（9 点钟方向）摩羯座扇区 ---------- */
+var ZOD = { cx:50.3, cy:39.0, rx:21.1, ry:10.75, a0:165, a1:195 };   /* 按 nb-unlock.jpg 百分比标定 */
+var unlockStage = $('unlock-stage'), unlockImg = $('unlock-img'), unlockNope = $('unlock-nope');
+var unlocked = false;
+try{ unlocked = localStorage.getItem('nb_unlocked') === '1'; }catch(e){}
+if(unlocked){
+  unlockStage.style.display = 'none';
+}else{
+  coverStage.style.display = 'none';
+  var nopeT = null;
+  unlockImg.addEventListener('click', function(e){
+    var r = unlockImg.getBoundingClientRect();
+    var px = (e.clientX - r.left) / r.width * 100;
+    var py = (e.clientY - r.top) / r.height * 100;
+    var dx = (px - ZOD.cx) / ZOD.rx, dy = (py - ZOD.cy) / ZOD.ry;
+    var dist = Math.sqrt(dx*dx + dy*dy);
+    var ang = Math.atan2(dy, dx) * 180 / Math.PI;
+    var hit = dist >= 0.5 && dist <= 1.02 && ang >= ZOD.a0 && ang <= ZOD.a1;   /* 最左端扇区 */
+    if(hit){
+      try{ localStorage.setItem('nb_unlocked', '1'); }catch(e){}
+      unlockStage.classList.add('hide');
+      setTimeout(function(){
+        unlockStage.style.display = 'none';
+        coverStage.style.display = '';
+      }, 460);
+    }else{
+      unlockImg.classList.remove('shake'); void unlockImg.offsetWidth; unlockImg.classList.add('shake');
+      unlockNope.classList.add('on');
+      clearTimeout(nopeT); nopeT = setTimeout(function(){ unlockNope.classList.remove('on'); }, 1400);
+    }
+  });
+}
+
+/* ---------- 打开 ---------- */
+  function openBook(){
+    var cover = $('book-cover');
+    cover.classList.add('opening');
+    setTimeout(function(){
+      coverStage.style.display = 'none';
+      reader.classList.add('on');
+      shownBottom = false;      /* R65：每次进入阅读都允许再次到达末页弹封底 */
+      cover.classList.remove('opening');
+      (ready || Promise.resolve()).then(function(){ layoutAll(); });
+    }, 420);
+  }
+  $('book-cover').addEventListener('click', openBook);
+  $('book-cover').addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openBook(); } });
+
+  /* ---------- 预载图片后分页 ---------- */
+  var imgs = [];
+  CHAPTERS.forEach(function(c){ (c.arts || []).forEach(function(a){ imgs.push(a[0]); }); });
+  function preload(){
+    return Promise.all(imgs.map(function(src){
+      return new Promise(function(res){
+        var im = new Image();
+        im.onload = function(){ DIMS[src] = [im.naturalWidth, im.naturalHeight]; res(); };
+        im.onerror = function(){ DIMS[src] = [4, 3]; res(); };
+        im.src = src;
+      });
+    }));
+  }
+
+  function layoutAll(){
+    window.__nbGo = function(n){ cur = Math.max(0, Math.min(n, pages.length - 1)); render(false); };
+    syncSizes();
+    paginate();
+    /* R55-10：恢复上次阅读位置（解锁后页数变化时按比例兜底） */
+    try{
+      var sv = parseInt(LS.get('nb_cur') || '', 10);
+      if(!isNaN(sv) && sv >= 0 && sv < pages.length) cur = sv;
+    }catch(e){}
+    if(cur >= pages.length) cur = 0;
+    render(false);
+  }
+
+  var rt = null;
+  window.addEventListener('resize', function(){
+    if(!reader.classList.contains('on')) return;
+    clearTimeout(rt);
+    rt = setTimeout(function(){ layoutAll(); }, 180);
+  });
+
+  var ready = preload().then(function(){
+    /* 预分页一次（此时阅读器可能还隐藏，翻开时会重算） */
+    if(reader.classList.contains('on')) layoutAll();
+  });
+
+  /* 支持从论坛直接打开到指定章节（可选） */
+  if(location.hash === '#read'){
+    coverStage.style.display = 'none';
+    reader.classList.add('on');
+    layoutAll();
+  }
+})();
+</script>
+
+<!-- R56：图片放大层 -->
+<div id="img-zoom"><img id="img-zoom-img" alt=""></div>
+<script>
+/* R56-5：所有内容图片点击放大，点击任意处关闭（头像类小图不放大） */
+(function(){
+  var box = document.getElementById('img-zoom'), big = document.getElementById('img-zoom-img');
+  if(!box || !big) return;
+  function close(){ box.classList.remove('on'); document.body.classList.remove('zom'); big.src=''; }
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if(t === box || t === big){ close(); return; }
+    if(t && t.tagName === 'IMG'){
+      if(t.closest('#img-zoom')) return;
+      /* 先排除不可放大的图（头像/广告/封面/解锁图），它们要保留自身点击行为 */
+      if(t.closest('[class*="avatar"],[class*="ava"],[class*="logo"],[class*="ad-"]')) return;
+      if(t.closest('#unlock-img,#book-cover,#bottom-stage')) return;
+      e.stopPropagation();   /* R57：确实要放大时才拦截冒泡，避免同时触发书页翻页 */
+      big.src = t.currentSrc || t.src;
+      big.alt = t.alt || '';
+      box.classList.add('on');
+      document.body.classList.add('zom');
+    }else if(box.classList.contains('on')){
+      close();
+    }
+  }, true);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+})();
+</script>
+</body>
+</html>

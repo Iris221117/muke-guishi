@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>私信 - 故意的 - 海城大学校园论坛</title>
+<link rel="icon" href="data:,">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:#0f857a radial-gradient(900px 500px at 50% -100px,rgba(255,255,255,.14),transparent 60%);
+  font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;padding:14px 12px 40px}
+#win{max-width:820px;margin:0 auto;background:#fff;border:1px solid #5a5a5a;box-shadow:3px 3px 0 rgba(0,0,0,.25)}
+#titlebar{height:26px;display:flex;align-items:center;gap:7px;padding:0 8px;color:#fff;font-size:13px;font-weight:700;
+  background:linear-gradient(180deg,#3a78c8,#1b4e9b);border-bottom:1px solid #123a78;letter-spacing:1px}
+#titlebar .dot{width:11px;height:11px;background:#cfe0f5;border:1px solid #0e2f63;border-radius:2px}
+.win-inner{padding:12px 14px 16px}
+
+.btn{display:inline-block;font-family:inherit;font-size:13px;color:#222;padding:4px 16px;cursor:pointer;white-space:nowrap;
+  background:linear-gradient(180deg,#fdfdfd,#e0ddd4);border:1px solid #8a8a8a;border-radius:2px;
+  box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #b8b5ad}
+.btn:hover{background:linear-gradient(180deg,#fff,#eceae2)}
+
+#dm-crumb{font-size:12.5px;color:#666;padding:2px 2px 10px}
+#dm-crumb a{color:#1a4f8b;text-decoration:none;cursor:pointer}
+#dm-crumb a:hover{text-decoration:underline}
+.toolrow{display:flex;gap:10px;padding:4px 0 10px}
+
+#chat-wrap{border:1px solid #9aa7b8;background:#fbfaf6}
+#chat-hd{display:flex;align-items:center;gap:10px;padding:6px 12px;color:#fff;font-size:13px;font-weight:700;
+  background:linear-gradient(180deg,#3a78c8,#1f4f92);border-bottom:1px solid #123a78}
+#chat-hd .onum{font-weight:400;font-size:12px;color:#cfe0f5}
+#chat-body{height:430px}
+#dm-msgs{height:100%;overflow:auto;padding:14px 16px;font-size:13.5px;line-height:1.9;background:#fff}
+
+/* 消息 */
+.cline{margin-bottom:14px;word-break:break-word}
+.cline .cn{font-weight:700}
+.cline .ct2{color:#b0ada4;font-size:11px;margin-right:8px}
+.cline.me{text-align:right}
+.cline.me .cn{color:#c2571f}
+.cline.me .msgbox{display:inline-block;background:#fff4e8;border:1px solid #f0d0a8;border-radius:6px;padding:8px 12px;
+  text-align:left;max-width:78%}
+.cline.npc .msgbox{display:inline-block;background:#f4f8fc;border:1px solid #c6d8ea;border-radius:6px;padding:8px 12px;
+  text-align:left;max-width:78%}
+/* 博客链接卡 / 链接气泡 */
+.bloglink{display:inline-block;margin-top:6px;text-decoration:none;background:#fff;border:1px solid #a8cfe8;
+  border-radius:6px;padding:10px 12px;display:flex;gap:10px;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.bloglink:hover{background:#eef6fc;border-color:#7fb3d8}
+.bloglink .bl-ico{width:44px;height:44px;flex:none;border-radius:5px;background:#eaf4fb;display:flex;align-items:center;justify-content:center;font-size:22px}
+.bloglink .bl-t{font-size:13.5px;color:#1a4f8b;font-weight:700}
+.bloglink .bl-d{font-size:11.5px;color:#8aa0b3;margin-top:2px}
+a.dm-link{color:#2f6fe0;text-decoration:underline;word-break:break-all}
+a.dm-link .dm-link-url{display:block;font-size:11.5px;color:#93a3b8;text-decoration:none;margin-top:3px}
+/* 转账卡片 */
+.xfer{display:inline-flex;flex-direction:column;gap:3px;align-items:flex-start;
+  background:linear-gradient(135deg,#f79c48,#ef8b2e);color:#fff;border-radius:8px;padding:9px 14px;
+  box-shadow:0 2px 6px rgba(239,139,46,.28)}
+/* 底部：与论坛私信同步的「待发送内容」 */
+#dm-pending{display:flex;align-items:center;gap:10px;padding:10px 12px;border-top:1px solid #e0ddd4;background:#fbfcfe}
+#pending-text{flex:1;min-width:0;font-size:13px;color:#7c8aa5;background:#f1f4f9;border:1px solid #e2e8f2;border-radius:8px;
+  padding:8px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pending-empty{flex:1;font-size:12px;color:#9a978e;text-align:center}
+/* R52：本窗口可直接发送待发送内容（由论坛端代为入日志，两处记录不分叉） */
+#pending-send{flex:none;font-size:13px;color:#fff;background:linear-gradient(180deg,#ef8b2e,#d9741a);border:1px solid #b5611a;
+  border-radius:8px;padding:8px 18px;cursor:pointer;font-family:inherit}
+#pending-send:hover{filter:brightness(1.06)}
+#pending-send:disabled{opacity:.55;cursor:default;filter:none}
+.cline-sys{text-align:center;color:#9a978e;font-size:12px;margin:10px 0;line-height:1.8}
+.cline-sys.xfer{font-size:15.5px}
+#tip{font-size:12px;color:#9a978e;padding:8px 12px 0;line-height:1.7}
+
+@media(max-width:600px){
+  #chat-body{height:56vh}
+}
+</style>
+</head>
+<body>
+
+<div id="win">
+  <div id="titlebar"><span class="dot"></span><span class="dot"></span>海城大学校园论坛 - Microsoft Internet Explorer</div>
+  <div class="win-inner">
+    <div id="dm-crumb"><a onclick="location.href='forum.html'">海城大学校园论坛</a> » 私信 · <span>故意的</span></div>
+    <div class="toolrow"><button class="btn" onclick="location.href='forum.html'">返回论坛</button></div>
+
+    <div id="chat-wrap">
+      <div id="chat-hd">✉️ 私信 · <span class="onum">与 故意的 的对话</span></div>
+      <div id="chat-body"><div id="dm-msgs"></div></div>
+      <div id="dm-pending">
+        <span id="pending-text" hidden></span>
+        <span id="pending-empty">暂无待发送内容</span>
+        <button id="pending-send" type="button" hidden>发 送</button>
+      </div>
+      <div id="tip">💡 本窗口与校园论坛私信实时同步，可直接发送待回复的消息。</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+ * 故意的 私信窗口 —— 与 forum.html 私信视图共用同一份记录（sg_chat_log）
+ * 内容、可点击链接、待发送内容全部与论坛端保持同步。
+ * R52 起：本窗口的「发 送」按钮写入 sg_send_request，由论坛私信代为发出
+ *（实际入日志仍只有论坛端一条路径，两处记录不会分叉）。
+ * ============================================================ */
+var ME = '万家灯火';
+var box = document.getElementById('dm-msgs');
+
+function pad(n){ return n<10 ? '0'+n : ''+n; }
+function sgStamp(){
+  var d = new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes());
+}
+/* ---- 与论坛端共用的记录 ---- */
+function sgLog(){ try{ return JSON.parse(localStorage.getItem('sg_chat_log')||'[]'); }catch(_){ return []; } }
+function blogUnlocked(){ try{ return localStorage.getItem('prof_blog_unlocked')==='1'; }catch(_){ return false; } }
+/* 与论坛端一致：旧存档的"新闻卡片"标记转为网址形式；旧昵称兼容 */
+function sgUrlize(t){
+  return String(t==null?'':t)
+    .split('［新闻卡片：海城大学周正教授坠崖事件调查还原］').join('（网址：<a class="dm-link" href="news.html#news-death" target="_blank" rel="noopener">news.html#news-death</a>）')
+    .split('（网址：blog-prof.html）').join('（网址：<a class="dm-link" href="blog-prof.html" target="_blank" rel="noopener">blog-prof.html</a>）')
+    .split('是故意的').join('故意的');
+}
+function dstr(m){
+  if(!m.d) return '';
+  var p = String(m.d).split(' ');
+  return p.length>1 ? (p[0].slice(5)+' '+p[1]) : p[0];
+}
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function scroll(){ box.scrollTop = box.scrollHeight; }
+
+/* ---- 渲染：与论坛端同源同格式 ---- */
+function render(){
+  var log = sgLog();
+  if(!log.length){
+    box.innerHTML = '<div style="text-align:center;color:#9a978e;font-size:12.5px;padding:40px 10px;line-height:2.2">📭<br>暂无消息。</div>';
+    return;
+  }
+  box.innerHTML = log.map(function(m, i){
+    var ds = dstr(m);
+    /* 旧存档：系统提示里的博客链接 → 升级为博客卡片 */
+    if(m.r === 'sys'){
+      if(String(m.t).indexOf('blog-prof.html') >= 0){
+        return '<div class="cline npc">' +
+          '<span class="cn" style="color:#1a4f8b">故意的</span>' + (ds?'<span class="ct2">'+ds+'</span>':'') +
+          '<div class="msgbox"><a class="bloglink" id="blog-link" href="blog-prof.html" target="_blank" rel="noopener">' +
+            '<span class="bl-ico">📓</span>' +
+            '<span><span class="bl-t">周正的博客</span><span class="bl-d">blog-prof.html</span></span>' +
+          '</a></div></div>';
+      }
+      return '<div style="text-align:center;color:#9a978e;font-size:12px;margin:8px 0">' +
+        (ds?'<span style="opacity:.7;margin-right:6px">'+ds+'</span>':'') + sgUrlize(m.t) + '</div>';
+    }
+    var me = m.r === 'me';
+    var body;
+    /* 链接消息：与论坛端一致，蓝色可点击锚点 + 网址，新标签页打开 */
+    if(m.link){
+      body = '<a class="dm-link" href="'+m.link+'" target="_blank" rel="noopener">' + esc(m.t) +
+             '<span class="dm-link-url">' + m.link + '</span></a>';
+    }else{
+      /* 转账消息：与论坛端一致，转账卡片 */
+      var xf = /^【转账[：:]([\s\S]+)】$/.exec(String(m.t||''));
+      if(xf){
+        /* 转账：居中系统提示（与论坛端一致） */
+        var amt = { '一万块钱':'10,000', '九万块钱':'90,000' }[String(xf[1]).trim()] || String(xf[1]).trim();
+        return '<div class="cline-sys xfer">——“故意的”向您转账' + amt + '元——</div>';
+      }else{
+        body = sgUrlize(m.t);
+      }
+    }
+    return '<div class="cline' + (me?' me':' npc') + '">' +
+      (me?'':'<span class="cn" style="color:#1a4f8b">故意的</span>') +
+      (ds?'<span class="ct2">'+ds+'</span>':'') +
+      (me?'<span class="cn" style="color:#c2571f">万家灯火</span>':'') +
+      '<div class="msgbox">' + body + '</div></div>';
+  }).join('');
+  scroll();
+}
+
+/* ---- 待发送内容（由论坛私信写入 sg_pending，两处同步显示） ---- */
+function syncPending(){
+  var p = '';
+  try{ p = localStorage.getItem('sg_pending')||''; }catch(_){}
+  var el = document.getElementById('pending-text'), em = document.getElementById('pending-empty');
+  var send = document.getElementById('pending-send');
+  if(p){ el.textContent = p; el.hidden = false; em.hidden = true; send.hidden = false; }
+  else { el.hidden = true; em.hidden = false; send.hidden = true; }
+}
+/* R52：本窗口也可直接回复 —— 写入 sg_send_request，由论坛私信代为发出（记录不分叉） */
+document.getElementById('pending-send').addEventListener('click', function(){
+  var p = '';
+  try{ p = localStorage.getItem('sg_pending')||''; }catch(_){}
+  if(!p) return;
+  var b = this;
+  if(b.disabled) return;
+  try{ localStorage.setItem('sg_send_request', String(Date.now())); }catch(_){}
+  b.disabled = true; b.textContent = '已发送';
+  setTimeout(function(){ b.disabled = false; b.textContent = '发 送'; }, 1500);
+});
+/* R53：「去论坛回复」已删除 —— 本窗口与论坛私信实时同步，回复、点链接都可以直接在这里完成 */
+
+
+/* ---- 跨标签页实时同步：论坛端写入时刷新 ---- */
+var WATCH = ['sg_chat_log','sg_chat_done','sg_pending','sg_case_step','sg_pre_done','sg_pre_step','sg_blog_done','sg_journal_step','sg_diary_step','prof_blog_unlocked'];
+window.addEventListener('storage', function(e){
+  if(WATCH.indexOf(e.key) >= 0){ render(); syncPending(); }
+});
+setInterval(function(){
+  render(); syncPending();
+}, 2000);
+
+render(); syncPending();
+</script>
+</body>
+</html>

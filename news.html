@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>晨光新闻网 - 权威·真实·即时</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+body{font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;background:#f6f6f6;color:#222}
+a{color:inherit}
+
+/* ===== 报头 ===== */
+#masthead{background:#fff;border-bottom:3px solid #b4231f}
+#masthead .inner{max-width:1080px;margin:0 auto;padding:18px 16px 14px;display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+#masthead h1{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:40px;color:#b4231f;letter-spacing:6px;line-height:1}
+#masthead .slogan{font-size:12px;color:#999;letter-spacing:3px;padding-bottom:6px}
+#masthead .right{margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+#masthead .date{font-size:12px;color:#777}
+#searchbox{display:flex;border:2px solid #b4231f;border-radius:4px;overflow:hidden}
+#searchbox input{width:210px;border:0;outline:none;padding:7px 12px;font-size:13.5px}
+#searchbox button{border:0;background:#b4231f;color:#fff;padding:0 18px;font-size:13.5px;cursor:pointer;letter-spacing:2px}
+#searchbox button:hover{background:#9a1c18}
+
+/* ===== 导航 ===== */
+#nav{background:#fff;border-bottom:1px solid #e8e8e8;position:sticky;top:0;z-index:90;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+#nav .inner{max-width:1080px;margin:0 auto;padding:0 16px;display:flex;overflow-x:auto}
+#nav a{text-decoration:none;font-size:15px;font-weight:700;color:#333;padding:12px 18px;white-space:nowrap;border-bottom:3px solid transparent}
+#nav a.on,#nav a:hover{color:#b4231f;border-color:#b4231f}
+#nav .nav-cat{font-size:15px;font-weight:700;color:#333;padding:12px 18px;white-space:nowrap;cursor:default}
+
+/* ===== 主体 ===== */
+#main{max-width:1080px;margin:18px auto;display:flex;gap:16px;padding:0 12px}
+@media(max-width:860px){#main{flex-direction:column}}
+#left{flex:1;min-width:0}
+.card{background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.06);padding:22px 26px;margin-bottom:16px;scroll-margin-top:70px}
+#news-back{margin:0 0 14px;border:1px solid #cfe0ee;background:#f2f8fd;color:#2a6fb0;border-radius:4px;padding:7px 18px;font-size:13px;cursor:pointer;font-family:inherit}
+#news-back:hover{background:#e2eef9;border-color:#a9c8e4}
+.kicker{display:inline-block;background:#b4231f;color:#fff;font-size:12px;padding:2px 10px;border-radius:2px;letter-spacing:2px;margin-bottom:10px}
+.headline{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:26px;line-height:1.5;color:#111;margin-bottom:8px}
+.byline{font-size:12.5px;color:#999;padding-bottom:14px;border-bottom:1px solid #f0f0f0;margin-bottom:16px}
+.byline b{color:#b4231f;font-weight:400}
+.body-text{font-size:15.5px;line-height:2.1;color:#2a2a2a}
+.body-text p{margin-bottom:16px;text-indent:2em}
+.body-text .lead{font-weight:400}
+.clue-spot{background:linear-gradient(transparent 55%,rgba(255,210,90,.85) 55%);cursor:pointer;border-radius:2px;padding:0 1px}
+.photo-block{margin:18px 0;border:1px solid #ececec}
+.photo-block svg{display:block;width:100%;height:auto}
+.photo-block figcaption{font-size:12px;color:#888;text-align:center;padding:7px;background:#fafafa}
+.tag-row{margin-top:18px;font-size:13px;color:#888}
+.tag-row span{background:#f2f2f2;border-radius:3px;padding:2px 10px;margin-right:8px}
+
+/* 侧栏 */
+#right{width:300px;flex:none}
+@media(max-width:860px){#right{width:auto}}
+.r-card{background:#fff;border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.06);padding:16px 18px;margin-bottom:16px}
+.r-card h3{font-size:15px;color:#b4231f;border-left:4px solid #b4231f;padding-left:9px;margin-bottom:12px}
+.r-card ul{list-style:none}
+.r-card li{font-size:13.5px;color:#444;line-height:1.6;padding:8px 0;border-bottom:1px dashed #f0f0f0;cursor:pointer}
+.r-card li:hover{color:#b4231f}
+.r-card li small{display:block;color:#aaa;font-size:11px;margin-top:2px}
+.r-card .notice{font-size:12.5px;color:#666;line-height:1.9}
+.r-card .notice b{color:#b4231f}
+
+/* 头条速览列表 */
+.hl-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed #eee;cursor:pointer;font-size:14px}
+.hl-item:hover{color:#b4231f}
+.hl-item .dot{width:6px;height:6px;border-radius:50%;background:#b4231f;margin-top:8px;flex:none}
+
+#footer{background:#2b2b2b;color:#888;font-size:12px;text-align:center;padding:22px 12px;line-height:2;margin-top:10px}
+#footer a{color:#aaa}
+/* R56：图片点击放大 */
+#img-zoom{position:fixed;inset:0;z-index:2000;background:rgba(4,6,10,.94);cursor:zoom-out;
+  display:none;align-items:center;justify-content:center;padding:24px}
+#img-zoom.on{display:flex}
+#img-zoom img{max-width:94vw;max-height:92vh;object-fit:contain;border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.8);animation:zoomIn .22s ease-out}
+@keyframes zoomIn{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:none}}
+body.zom{overflow:hidden}
+.zomable{cursor:zoom-in}
+</style>
+</head>
+<body>
+
+<div id="masthead">
+  <div class="inner">
+    <div>
+      <h1>晨光新闻网</h1>
+      <div class="slogan">权威 · 真实 · 即时 CHENGUANG NEWS</div>
+    </div>
+    <div class="right">
+      <div class="date" id="today-line"></div>
+      <div class="date" style="color:#aaa">第 6842 期 · 数字报 · 今日多云转小雨 14℃~19℃</div>
+      <form id="searchbox" onsubmit="var v=this.querySelector('input').value.trim();location.href='search.html?q='+encodeURIComponent(v||'新闻');return false">
+        <input placeholder="新闻搜索：请输入关键词" aria-label="站内搜索">
+        <button type="submit">搜 索</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="nav"><div class="inner">
+  <a class="on" href="#">首页</a><span class="nav-cat">本地</span><span class="nav-cat">民生</span><span class="nav-cat">时事</span><span class="nav-cat">文化</span><span class="nav-cat">财经</span>
+</div></div>
+
+<div id="main">
+  <div id="left">
+    <!-- 无关键词 / 无锚点：提示用搜索查看新闻 -->
+    <div class="card" id="news-gate">
+      <span class="kicker">检索提示</span>
+      <div class="headline">请使用关键词检索新闻</div>
+      <div class="byline">晨光新闻网 不提供栏目浏览 · 站内新闻仅在命中检索关键词时呈现</div>
+      <div class="body-text">
+        <p class="lead">本站已取消分类导航与列表浏览。所有新闻标题与正文，只会在你使用关键词检索命中后出现。</p>
+        <p>（<span class="clue-spot" id="gate-search">点击回到站内搜索</span>）</p>
+      </div>
+      <div class="tag-row"><span>#关键词检索</span><span>#无栏目浏览</span></div>
+    </div>
+    <div class="card hide-gate" id="news-death">
+      <span class="kicker">今日头条 · 独家调查</span>
+      <div class="headline">海城大学周正教授坠崖事件调查还原：最后行程与警方结论</div>
+      <div class="byline">晨光新闻网讯（记者 周明）报道 · 2026-09-09 08:05 · 责任编辑：林一 · 阅读 11.2万</div>
+      <div class="body-text">
+        <p class="lead">本报讯 海城大学周正教授在木客崖坠亡一事引发广泛关注。记者多方走访，还原了教授出事前两天的最后行程，以及警方调查的关键细节。</p>
+        <p>据同行的学生向警方陈述：事发当天午饭后，他外出写生，晚上回到住处时没能见到教授，电话也联系不上，随即报警。警方第二天在镇子上展开搜索，最终在木客崖崖底发现了教授的遗体。</p>
+        <p>警方找到教授的手机并恢复了数据，显示其死前最后联系的人是出租车司机方勇——教授正是乘坐的他的出租车去的木客崖。</p>
+        <p>方勇接受调查时声称：当天上午十点他如约开到宾馆门口——车停在宾馆对面的超市门口——等待教授，但等了至少二十分钟教授才出现。教授上车后突然改口说要去木客崖，而不是原计划的城里，所以他把教授放到木客崖附近就进城了。</p>
+        <p>与此同时，城里的监控拍到了方勇乘出租车返回的正面画面，时间与他的说法大致吻合。</p>
+        <p>法医断定，教授的死亡时间大概是在前一天上午。由于尸体头骨损坏严重，法医通过对比牙齿记录确认了教授的身份。</p>
+        <p>警方随后调查了所有涉事人员——包括方勇、同行学生、宾馆老板和木客村多名村民——均找不到任何直接证据显示教授的死亡与他们有关。</p>
+        <p>警方给出的最新结论是教授意外坠崖。</p>
+        <p>本报将持续关注此事进展。</p>
+        <p style="font-size:12.5px;color:#999;border-top:1px dashed #eee;padding-top:10px;margin-top:14px">原创稿件，未经授权不得转载。报料热线：0871-XXXX XXXX。</p>
+      </div>
+      <div class="tag-row"><span>#周正</span><span>#木客崖</span><span>#调查还原</span><span>#方勇</span></div>
+    </div>
+    <div class="card hide-gate" id="news-wife">
+      <span class="kicker">社会 · 追踪</span>
+      <div class="headline">坠崖者妻子哭诉：孩子因"聪明药"病逝，丈夫生前疑药厂原料有问题</div>
+      <div class="byline">晨光新闻网讯（记者 周明）报道 · 2026-01-05 09:15 · 阅读 9.1万</div>
+      <div class="body-text">
+        <p class="lead">木客崖坠亡者李希的妻子王笙近日接受本网采访，数次情绪崩溃。</p>
+        <p>她称，俩人的孩子生前服用了神清药厂生产的"聪明药"，脑部出现严重不良反应后不幸病逝。李希生前曾怀疑该药厂的原料存在问题，于是去网传原料开采地木客村实地调查，"他总觉得孩子的事没那么简单，说要去查清楚，结果我那两天一直联系不上他……"话未说完便泣不成声。</p>
+        <p>记者就此联系神清药厂，对方回应称"产品均通过国家检验，网传说法不实"，并保留起诉网络谣言散播者的权利。</p>
+        <p>目前警方按意外事故结案。本报将持续关注此事进展。</p>
+
+      </div>
+      <div class="tag-row"><span>#神清药厂</span><span>#聪明药</span><span>#木客村</span></div>
+    </div>
+
+  </div>
+
+  <div id="right">
+    <div class="r-card">
+      <h3>公告通知</h3>
+      <ul>
+      </ul>
+    </div>
+    <div class="r-card">
+      <h3>温馨提示</h3>
+      <div class="notice">近期有多名市民反映接到陌生号码来电，自称"燃气检修员"上门检查。请广大市民注意保护个人信息与居家安全，可通过官方客服电话核实上门人员身份。</div>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  晨光新闻网 © 2026 版权所有 · 海城日报社主办<br>
+  互联网新闻信息服务许可证 5301XXXXXXX · 滇ICP备2026001988号-3 · 滇公网安备 53010202000000号<br>
+  联系我们：news@chenguang.example
+</div>
+
+<script>
+(function(){
+})();
+
+
+
+/* 新闻只在「命中检索(#锚点)」时呈现：无锚点时仅显示检索提示卡，不提供列表浏览 */
+(function(){
+  var left = document.getElementById('left');
+  var cards = [].slice.call(document.querySelectorAll('#left .card[id]'));
+  var news = cards.filter(function(c){ return c.id !== 'news-gate'; });
+  var gate = document.getElementById('news-gate');
+  function applyHash(){
+    var h = (location.hash||'').replace('#','');
+    var target = h ? document.getElementById(h) : null;
+    var isCard = !!(target && news.indexOf(target) >= 0);
+    if(isCard){
+      gate.style.display = 'none';
+      news.forEach(function(c){ c.style.display = (c===target ? 'block' : 'none'); });
+      window.scrollTo(0,0);
+      /* 读到坠崖调查报道 → 论坛私信里 故意的 会来找你问进度 */
+      if(target.id==='news-death'){
+        try{ localStorage.setItem('sg_news_read','1'); }catch(_){}
+      }
+    }else{
+      /* 未命中关键词：只显示检索提示 */
+      gate.style.display = 'block';
+      news.forEach(function(c){ c.style.display = 'none'; });
+    }
+  }
+  window.addEventListener('hashchange', applyHash);
+  applyHash();
+  var gs = document.getElementById('gate-search');
+  if(gs) gs.style.cursor = 'pointer';
+  if(gs) gs.addEventListener('click', function(){ location.href = 'search.html?q=' + encodeURIComponent('坠崖'); });
+})();
+</script>
+<!-- 游戏导航：返回论坛（浮动按钮） -->
+<a href="forum.html" id="back-forum-btn" style="position:fixed;right:18px;bottom:18px;z-index:9999;padding:8px 18px;font-size:13.5px;color:#333;background:#fff;border:1px solid #c9c9c9;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.2);text-decoration:none;font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;cursor:pointer" onmouseover="this.style.background='#f2f5f8'" onmouseout="this.style.background='#fff'">返回论坛</a>
+
+<!-- R56：图片放大层 -->
+<div id="img-zoom"><img id="img-zoom-img" alt=""></div>
+<script>
+/* R56-5：所有内容图片点击放大，点击任意处关闭（头像类小图不放大） */
+(function(){
+  var box = document.getElementById('img-zoom'), big = document.getElementById('img-zoom-img');
+  if(!box || !big) return;
+  function close(){ box.classList.remove('on'); document.body.classList.remove('zom'); big.src=''; }
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if(t === box || t === big){ close(); return; }
+    if(t && t.tagName === 'IMG'){
+      if(t.closest('#img-zoom')) return;
+      if(t.closest('[class*="avatar"],[class*="ava"],[class*="logo"],[class*="ad-"]')) return;  /* 头像/广告不放大 */
+      if(t.closest('#unlock-img,#book-cover,#bottom-stage')) return;   /* 封面/解锁图有自身点击行为，不放大 */
+      big.src = t.currentSrc || t.src;
+      big.alt = t.alt || '';
+      box.classList.add('on');
+      document.body.classList.add('zom');
+    }else if(box.classList.contains('on')){
+      close();
+    }
+  }, true);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+})();
+</script>
+</body>
+</html>

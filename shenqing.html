@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>神清药业 · 专注神经健康</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+body{font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;background:#f4f7fa;color:#1f2a37}
+a{text-decoration:none;color:inherit}
+
+/* 顶栏 */
+#top{background:#0f3d5c;color:#fff;position:sticky;top:0;z-index:90}
+#top .inner{max-width:1080px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+#brand{display:flex;align-items:center;gap:11px;cursor:pointer}
+#brand .logo{width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,#5fd0c5,#2b8aa0);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px;color:#06303a;font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif}
+#brand .bn{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:22px;font-weight:900;letter-spacing:2px}
+#brand .be{font-size:11px;letter-spacing:3px;color:#9fd6cf;margin-top:2px}
+#nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+#nav a{font-size:14.5px;font-weight:500;color:#cfe6ee;padding:8px 14px;border-radius:6px}
+#nav a.on,#nav a:hover{background:rgba(255,255,255,.12);color:#fff}
+
+/* Hero */
+#hero{background:linear-gradient(120deg,#0f3d5c,#1c6f7e 60%,#3aa89a);color:#fff;overflow:hidden;position:relative}
+#hero .inner{max-width:1080px;margin:0 auto;padding:62px 18px 70px}
+#hero h1{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:40px;line-height:1.4;letter-spacing:3px;max-width:760px}
+#hero p{margin-top:18px;font-size:16px;line-height:1.9;color:#d7efee;max-width:640px}
+#hero .pill{display:inline-block;margin-top:26px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:9px 20px;border-radius:999px;font-size:14px}
+#hero .deco{position:absolute;right:-60px;top:50%;transform:translateY(-50%) rotate(-12deg);font-size:200px;opacity:.08;font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif}
+
+/* 主体 */
+#main{max-width:1080px;margin:34px auto;padding:0 18px;display:flex;gap:22px;align-items:flex-start}
+@media(max-width:880px){#main{flex-direction:column}}
+#col{flex:1;min-width:0}
+section.block{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(20,60,90,.06);padding:26px 28px;margin-bottom:22px}
+section.block h2{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:24px;color:#0f3d5c;margin-bottom:6px;padding-left:12px;border-left:5px solid #2b8aa0}
+section.block .sub{font-size:12.5px;color:#8aa0b0;margin-bottom:16px;padding-left:13px}
+section.block p{font-size:15px;line-height:2.1;color:#33414f;margin-bottom:14px;text-indent:2em}
+section.block p .hl{color:#0f7a86;font-weight:700}
+.bignum{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 4px}
+.bignum .n{flex:1;min-width:120px;background:#eef6f7;border-radius:9px;padding:16px;text-align:center}
+.bignum .n b{display:block;font-size:28px;color:#0f7a86;font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif}
+.bignum .n span{font-size:12.5px;color:#5e7484}
+
+/* 新闻动态 */
+.news{min-height:0}
+.news .item{display:flex;gap:14px;padding:14px 4px;border-bottom:1px dashed #e3ebf0;cursor:pointer}
+.news .item:last-child{border-bottom:0}
+.news .d{flex:none;width:62px;text-align:center;background:#eef6f7;border-radius:7px;padding:8px 0;color:#0f7a86}
+.news .d b{display:block;font-size:20px;font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif}
+.news .d span{font-size:11px;color:#789}
+.news .t{font-size:15px;color:#27313c;line-height:1.6}
+.news .t small{display:block;color:#9aa9b5;font-size:12px;margin-top:3px}
+
+/* 产品 */
+.prod{display:flex;gap:18px;align-items:center;background:linear-gradient(120deg,#f3fbfa,#eaf4f7);border:1px solid #d7e8ec;border-radius:10px;padding:20px}
+.prod .box{width:96px;height:120px;border-radius:9px;background:linear-gradient(160deg,#fff,#e7f0f2);box-shadow:0 6px 16px rgba(20,80,90,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none}
+.prod .box b{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:22px;color:#0f7a86;letter-spacing:2px}
+.prod .box span{font-size:10px;color:#7b95a0;margin-top:6px}
+.prod .info h3{font-size:20px;color:#0f3d5c;margin-bottom:8px}
+.prod .info p{text-indent:0;font-size:14px;line-height:1.9;color:#3a4856}
+.prod .info .tag{display:inline-block;background:#0f7a86;color:#fff;font-size:12px;padding:3px 12px;border-radius:999px;margin-top:10px}
+/* R57：作用原理 / 保存方式说明块 */
+.prod{flex-wrap:wrap;align-items:flex-start}
+.prod .box2{width:100%;margin-top:4px;padding:16px 18px;border-radius:9px;background:#fff;
+  border:1px solid #dcebee;box-shadow:0 4px 12px rgba(20,80,90,.06)}
+.prod .box2 h3{font-size:15px;color:#0f7a86;margin:0 0 6px;letter-spacing:1px}
+.prod .box2 h3+h3,.prod .box2 p+p{margin-top:14px}
+.prod .box2 p{text-indent:0;font-size:13.5px;line-height:2;color:#3a4856}
+.prod .box2 .hl{color:#0f7a86;font-weight:700}
+
+/* 侧栏 */
+#side{width:300px;flex:none}
+@media(max-width:880px){#side{width:auto}}
+.s-card{background:#fff;border-radius:10px;box-shadow:0 2px 10px rgba(20,60,90,.06);padding:20px;margin-bottom:22px}
+.s-card h3{font-size:16px;color:#0f3d5c;border-left:4px solid #2b8aa0;padding-left:9px;margin-bottom:12px}
+.s-card .cert{font-size:13.5px;color:#445;line-height:2}
+.s-card .cert span{color:#0f7a86;font-weight:700}
+.s-card .contact{font-size:13px;color:#556;line-height:2.1}
+.s-card .contact b{color:#0f3d5c}
+
+#footer{background:#0b2a3e;color:#9fc0cc;font-size:12.5px;text-align:center;padding:26px 14px;line-height:2.1;margin-top:14px}
+#footer a{color:#bfe0e8}
+#footer .copy{margin-top:6px;color:#6d8a98}
+</style>
+</head>
+<body>
+
+<div id="top">
+  <div class="inner">
+    <div id="brand" onclick="location.href='shenqing.html'">
+      <div class="logo">神</div>
+      <div><div class="bn">神清药业</div><div class="be">SHENQING PHARMA</div></div>
+    </div>
+    <nav id="nav">
+      <a class="on" href="#intro">首页</a>
+      <a href="#intro">公司简介</a>
+      <a href="#news">新闻动态</a>
+      <a href="#prod">产品中心</a>
+      <a href="#contact">联系我们</a>
+    </nav>
+  </div>
+</div>
+
+<div id="hero">
+  <div class="inner">
+    <h1>专注神经健康<br>守护每一个清醒的明天</h1>
+    <p>神清药业深耕益智类健康产品研发与生产，以"科学、安心、普惠"为理念，服务千万家庭。我们坚信，清晰的头脑，是最好的礼物。</p>
+    <div class="pill">核心产品「聪明药」· 国家检验认证</div>
+  </div>
+  <div class="deco">神</div>
+</div>
+
+<div id="main">
+  <div id="col">
+    <section class="block" id="intro">
+      <h2>公司简介</h2>
+      <div class="sub">ABOUT SHENQING PHARMA</div>
+      <p><span class="hl">神清药业</span>成立于 2009 年，坐落于云岭山区，是一家集研发、生产、销售于一体的现代化制药企业。公司由<span class="hl">袁氏家族及外部投资机构共同持股</span>，自创立之初便确立"专注脑科学、服务亿万人"的宗旨，是国内领先的益智类健康产品生产企业。</p>
+      <p>依托云岭山区丰富的天然植物资源，神清药业建立了从原料种植、提取到制剂成品的完整产业链。公司主打益智类健康产品「聪明药」，广泛应用于用脑过度人群的学生与职场人士群体，累计服务用户逾百万人次。</p>
+      <p><b>股东信息</b>：袁放、袁永、袁天。</p>
+      <div class="bignum">
+        <div class="n"><b>2009</b><span>成立年份</span></div>
+        <div class="n"><b>100万+</b><span>累计服务用户</span></div>
+        <div class="n"><b>3</b><span>自主生产基地</span></div>
+        <div class="n"><b>60+</b><span>研发岗位</span></div>
+      </div>
+      <p style="margin-top:14px">"我们来自山村，最懂得清晰头脑对一个人、一个家庭意味着什么。"——神清药业创始人</p>
+    </section>
+
+    <section class="block news" id="news">
+      <h2>新闻动态</h2>
+      <div class="sub">NEWS &amp; EVENTS</div>
+      <div class="item">
+        <div class="d"><b>12</b><span>2025.11</span></div>
+        <div class="t">神清药业「聪明药」通过国家质量检验认证，批次合格率连续三年保持 100%<small>质量中心 · 企业公告</small></div>
+      </div>
+      <div class="item">
+        <div class="d"><b>03</b><span>2025.03</span></div>
+        <div class="t">「聪明药」校园公益计划启动，向山区学子免费发放益智健康包<small>公益行动</small></div>
+      </div>
+    </section>
+
+    <section class="block" id="prod">
+      <h2>产品中心</h2>
+      <div class="sub">OUR PRODUCTS</div>
+      <div class="prod">
+        <div class="box"><b>聪明药</b><span>CONGMING</span></div>
+        <div class="info">
+          <h3>聪明药 · 益智健脑配方</h3>
+          <p>以云岭山区原生植物提取物为核心原料，辅以现代营养科学配比，专为用脑强度高的人群设计，帮助维持脑力清晰、缓解用脑疲劳。</p>
+          <span class="tag">国家检验认证 · 安心之选</span>
+        </div>
+        <div class="box2">
+          <h3>聪明药 · 作用原理</h3>
+          <p>核心成分以植物原生提取物配伍神经营养素，经口服吸收后可定向作用于脑内神经元通路，<span class="hl">激活并接通更多大脑皮层神经元</span>，显著提升神经信号传导效率；神经元的活跃与互联密度上升后，<span class="hl">大脑处理信息与并行运算的算力随之提高</span>，使用者会明显感到思维更敏捷、记忆更连贯、长时间用脑不易疲惫。</p>
+          <h3>保存方式</h3>
+          <p>本品采用<span class="hl">密封避光保存</span>，出厂时已充入惰性气体并采用铝塑复合膜封装。一旦<span class="hl">长时间暴露在空气中</span>，有效成分会与氧气发生不可逆反应而变性失效，药物随之变质，<span class="hl">严禁再食用</span>，请置于阴凉干燥处、取用后立即封口。</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="side">
+    <div class="s-card">
+      <h3>资质认证</h3>
+      <div class="cert">
+        <p><span>·</span> 国家食品药品质量检验 <b>认证通过</b></p>
+        <p><span>·</span> GMP 良好生产规范 <b>达标企业</b></p>
+        <p><span>·</span> 国家脑科学重点研发计划 <b>参与单位</b></p>
+        <p><span>·</span> 药品生产许可证编号：<b>滇药证字Z20260046</b></p>
+        <p><span>·</span> 企业统一社会信用代码：<b>91530100MA6KXXXXXX</b></p>
+      </div>
+    </div>
+    <div class="s-card" id="contact">
+      <h3>联系我们</h3>
+      <div class="contact">
+        厂址：云岭山区生物医药产业园 1 号<br>
+        总机：<b>400-000-0000</b><br>
+        邮箱：<b>service@shenqing.example</b><br>
+        招商合作：<b>partner@shenqing.example</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer">
+  神清药业 SHENQING PHARMA · 专注神经健康<br>
+  <div class="copy">© 2026 神清药业 版权所有 · 法律声明 | 隐私政策 | 网站地图<br>滇ICP备2026000777号-1 · 滇公网安备 53010202000000号 · 本网站信息仅供研究参考，不构成用药建议</div>
+</div>
+
+<!-- 游戏导航：返回论坛（浮动按钮） -->
+<a href="forum.html" id="back-forum-btn" style="position:fixed;right:18px;bottom:18px;z-index:9999;padding:8px 18px;font-size:13.5px;color:#333;background:#fff;border:1px solid #c9c9c9;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.2);text-decoration:none;font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;cursor:pointer" onmouseover="this.style.background='#f2f5f8'" onmouseout="this.style.background='#fff'">返回论坛</a>
+</body>
+</html>

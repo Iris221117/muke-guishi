@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>神奇海螺 - 搜索</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+body{font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;background:#fff;color:#222;min-height:100vh}
+a{text-decoration:none}
+
+/* ===== 顶栏 ===== */
+#top{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:90;padding:14px 20px 12px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+#top .brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+#top .bname{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:24px;font-weight:900;letter-spacing:2px}
+#top .bname .b{color:#3B82F6}#top .bname .o{color:#FF9D2E}
+#sform{display:flex;flex:1;max-width:560px;border:2px solid #3B82F6;border-radius:999px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(59,130,246,.12)}
+#sform input{flex:1;border:0;outline:none;padding:10px 18px;font-size:15px;min-width:120px}
+#sform button{border:0;background:#3B82F6;color:#fff;padding:0 26px;font-size:14.5px;cursor:pointer;letter-spacing:2px}
+#sform button:hover{background:#2f6fe0}
+#top .back{margin-left:auto;font-size:13px;color:#888}
+
+/* ===== 主体 ===== */
+#wrap{max-width:720px;margin:0 auto;padding:22px 16px 60px}
+#result-meta{font-size:12.5px;color:#999;margin-bottom:14px}
+.result{margin-bottom:26px}
+.result .r-title{font-size:17.5px;color:#1a4fd0;line-height:1.5;cursor:pointer}
+.result .r-title:hover{text-decoration:underline}
+.result .r-url{font-size:12.5px;color:#0e7a3c;margin:3px 0 4px}
+.result .r-desc{font-size:14px;color:#444;line-height:1.75}
+.result .r-desc b{color:#c0392b}
+
+/* 海螺神谕卡 */
+#oracle{background:linear-gradient(160deg,#eef4ff,#fdf3e7);border:1px solid #dbe6f7;border-radius:14px;padding:20px 22px;margin-bottom:26px}
+#oracle .o-head{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:#3B82F6}
+#oracle .o-text{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:16px;color:#5a4a2f;line-height:2;margin-top:10px}
+#oracle .o-sub{font-size:12px;color:#a08c60;margin-top:8px}
+
+/* 广告位 */
+.adcard{border:1px solid #e5e5e5;border-radius:8px;padding:14px 16px;margin-bottom:26px;position:relative}
+.adcard .atag{position:absolute;top:-9px;right:12px;background:#ffd479;font-size:10.5px;color:#7a5b12;padding:1px 8px;border-radius:3px}
+.adcard .r-title{font-size:16px;color:#1a4fd0;cursor:pointer}
+.adcard .r-title:hover{text-decoration:underline}
+.adcard .r-desc{font-size:13.5px;color:#555;line-height:1.7;margin-top:5px}
+
+#footer{max-width:720px;margin:0 auto;padding:0 16px 40px;font-size:12px;color:#bbb;text-align:center}
+</style>
+</head>
+<body>
+
+<div id="top">
+  <div class="brand" onclick="location.href='search.html'">
+    <span id="mini-logo"></span>
+    <span class="bname"><span class="b">神奇</span><span class="o">海螺</span></span>
+  </div>
+  <form id="sform" onsubmit="var v=this.querySelector('input').value.trim();location.href='search.html?q='+encodeURIComponent(v);return false">
+    <input id="sinput" placeholder="问问海螺吧…">
+    <button type="submit">海螺一下</button>
+  </form>
+  <span class="back"><a href="javascript:void(0)" id="back-link" style="color:#888">← 返回</a></span>
+</div>
+
+<div id="wrap">
+  <div id="oracle" style="display:none">
+    <div class="o-head">🐚 神奇海螺的神谕</div>
+    <div class="o-text" id="oracle-text"></div>
+    <div class="o-sub">—— 神谕仅供参考，信不信由你</div>
+  </div>
+  <div id="result-meta"></div>
+  <div id="results"></div>
+</div>
+<div id="footer">神奇海螺搜索引擎</div>
+
+<script>
+/* 顶栏小 logo（与广告位同款海螺图片） */
+document.getElementById('mini-logo').innerHTML =
+'<img src="assets/conch-logo.png" alt="神奇海螺" style="display:block;width:46px;height:38px;object-fit:contain">';
+
+/* ============ 【搜索结果 —— 待填充区】
+   玩家搜索词命中 keys 中任意关键词，就会显示对应结果。
+   之后想加线索就往这里加。 ============ */
+/* GAME_BASE：独立部署神奇海螺时，设为游戏主站地址（如 https://xxx/），
+   结果/返回链接会指向主站；游戏内联版保持空字符串（相对路径）。 */
+var GAME_BASE = '';
+
+var RESULTS = [
+  { keys:['新闻','晨光','头条'],
+    title:'晨光新闻网',
+    url:'news.html › 首页',
+    go:'news.html',
+    desc:'权威·真实·即时。海城本地新闻门户，今日头条：海城大学周正教授坠崖事件调查还原。' },
+  { keys:['协会','银星','银星学会','银星学会','silverstar'],
+    title:'银星学会（银星学会） · 官方网站',
+    url:'assoc.html',
+    go:'assoc.html',
+    desc:'Silver Star Society —— 致力于神秘现象的科学考察。协会简介、资助计划与当前考察项目一览。' },
+  { keys:['周正','教授','木客村','日志','周正的博客'],
+    title:'周正的博客',
+    url:'blog-prof.html',
+    go:'blog-prof.html',
+    desc:'一位教授的个人博客，共 12 篇，内容涉及木客村考察与银星学会。' },
+  { keys:['悬赏','教授死亡','清白','故意的'],
+    title:'海城大学校园论坛 · 悬赏贴',
+    url:'forum.html › 深夜树洞',
+    go:'forum.html',
+    desc:'任何找到有关教授死亡线索、还我清白的人，给十万块钱。（可私信帖主了解更多）' },
+  { keys:['神清药厂','神清','聪明药','药厂'],
+    title:'神清药业 · 官方网站',
+    url:'shenqing.html',
+    go:'shenqing.html',
+    desc:'SHENQING PHARMA —— 专注神经健康。公司简介（股东：袁放、袁永、袁天）、新闻动态与核心产品"聪明药"。企业由木客村村委会及村长一家投资成立。' },
+  { keys:['王xx','王XX','坠崖','木客崖','妻子','聪明药','神清','李希','王笙'],
+    title:'晨光新闻网 · 坠崖者妻子哭诉：孩子因"聪明药"病逝，丈夫生前疑药厂原料有问题',
+    url:'news.html › 社会',
+    go:'news.html#news-wife',
+    desc:'死者李希的妻子王笙称孩子生前服神清药厂"聪明药"病逝；李希生前疑该药厂原料有问题、要去调查，结果在木客崖出事。报道曾留下王笙的联系方式。' },
+  { keys:['周正','教授','教授死亡','死因','调查还原'],
+    title:'晨光新闻网 · 海城大学周正教授坠崖事件调查还原：最后行程与警方结论',
+    url:'news.html › 社会',
+    go:'news.html#news-death',
+    desc:'同行学生午饭后外出写生，晚上联系不上教授报警。警方次日在木客崖崖底发现遗体；手机数据显示死前最后联系的人是出租车司机方勇。超市监控显示出租车右侧车门始终没有打开……' }
+];
+
+var ORACLES = [
+  '答案早已写下，只是你还没有翻开那一页。',
+  '你想知道的东西，就在你每天经过却从不抬头看的地方。',
+  '木客的斧头落在哪棵树上，哪棵树就替他保守秘密。',
+  '当灯在无人之处亮起，不要问为什么，去问是谁。',
+  '坠崖的人带走了他的问题，崖底的风至今还在替他念。'
+];
+
+var q = '';
+try { q = decodeURIComponent(location.search.match(/[?&]q=([^&]*)/)[1] || '').trim(); } catch(e){ q=''; }
+document.getElementById('sinput').value = q;
+document.title = q + ' - 神奇海螺搜索';
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function hl(text){
+  var safe = esc(text);
+  if (!q) return safe;
+  q.split(/\s+/).forEach(function(w){
+    if (!w) return;
+    safe = safe.replace(new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'), '<b>'+esc(w)+'</b>');
+  });
+  return safe;
+}
+
+var box = document.getElementById('results');
+var meta = document.getElementById('result-meta');
+var hits = [];
+
+if (q){
+  RESULTS.forEach(function(r){
+    var hay = r.keys.join('|') + r.title;
+    if (r.keys.some(function(k){ return q.indexOf(k) >= 0 || k.indexOf(q) >= 0 }) || q.length>=2 && hay.indexOf(q)>=0) hits.push(r);
+  });
+}
+
+if (q && hits.length === 0){
+  /* 没搜到 → 海螺神谕 + 泛结果 */
+  document.getElementById('oracle').style.display='block';
+  document.getElementById('oracle-text').textContent = '「' + ORACLES[Math.floor(Math.random()*ORACLES.length)] + '」';
+  hits = RESULTS.slice(0,3);
+  meta.textContent = '未找到与 "'+esc(q)+'" 完全匹配的结果，神奇海螺为你展现了命运的碎片 · 约 '+hits.length+' 条';
+} else {
+  meta.textContent = (q?'"'+esc(q)+'"':'')+' 的搜索结果 · 约 '+hits.length+' 条（耗时 0.06 海螺秒）';
+}
+
+box.innerHTML = hits.map(function(r){
+  return '<div class="result">' +
+    '<div class="r-title" data-go="'+r.go+'">'+hl(r.title)+'</div>' +
+    '<div class="r-url">'+esc(r.url)+'</div>' +
+    '<div class="r-desc">'+hl(r.desc)+'</div></div>';
+}).join('') +
+'<div class="adcard"><span class="atag">广告</span>' +
+  '<div class="r-title" data-go="search.html">你为什么不问问神奇海螺呢？</div>' +
+  '<div class="r-desc">神奇海螺 · 你身边最懂提问的搜索引擎。问它，它就回答。</div></div>';
+
+document.querySelectorAll('[data-go]').forEach(function(el){
+  el.addEventListener('click', function(){
+    var go = (window.GAME_BASE||'') + el.getAttribute('data-go');
+    /* 所有结果均在新窗口打开，方便玩家保留搜索页来回切换收集信息 */
+    window.open(go, '_blank');
+  });
+});
+document.getElementById('back-link').addEventListener('click', function(){ location.href = (window.GAME_BASE||'') + 'index.html'; });
+
+</script>
+</body>
+</html>

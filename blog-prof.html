@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>周正的博客</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+body{font-family:'Source Han Sans SC','Noto Sans SC','Source Han Sans CN','思源黑体',system-ui,-apple-system,'Segoe UI',sans-serif;color:#333;
+  background:linear-gradient(180deg,#9d93f0 0%,#7f9cf3 34%,#79b6f0 64%,#93c9f2 100%);min-height:100vh}
+
+/* ===== 顶栏（深色） ===== */
+#topbar{background:rgba(24,26,32,.93);backdrop-filter:blur(6px);position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.2)}
+#topbar .inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:10px 18px}
+#topbar .me{width:32px;height:32px;border-radius:50%;overflow:hidden;flex:none;background:#3a3f4a}
+#topbar .me img{width:100%;height:100%;object-fit:cover}
+#topbar nav{display:flex;gap:4px}
+#topbar nav a{color:#d6d9e0;text-decoration:none;font-size:14px;padding:6px 12px;border-radius:6px}
+#topbar nav a:hover,#topbar nav a.on{color:#fff;background:rgba(255,255,255,.12)}
+#topbar .sp{flex:1}
+#topbar .sico{color:#d6d9e0;font-size:14px;background:none;border:0;cursor:pointer;padding:6px 10px;border-radius:6px;font-family:inherit}
+#topbar .sico:hover{color:#fff;background:rgba(255,255,255,.12)}
+#topsearch input{border:0;border-radius:6px;padding:6px 10px;font-size:13px;outline:none;width:170px}
+
+/* ===== 主体 ===== */
+#main{max-width:1100px;margin:26px auto 44px;display:flex;gap:22px;padding:0 16px;align-items:flex-start}
+@media(max-width:900px){#main{flex-direction:column}}
+#side{width:280px;flex:none;position:sticky;top:76px}
+@media(max-width:900px){#side{position:static;width:100%}}
+.aside-card{background:#fff;border-radius:18px;box-shadow:0 6px 22px rgba(60,70,140,.16);padding:24px 22px;margin-bottom:18px}
+.aside-card h3{font-size:14px;color:#5a6474;border-left:4px solid #5b8ff0;padding-left:9px;margin-bottom:12px}
+.profile-card{text-align:center}
+.profile-card .avatar{width:104px;height:104px;border-radius:14px;margin:0 auto 12px;background:#cdd6e2;overflow:hidden;
+  border:3px solid #fff;box-shadow:0 4px 14px rgba(70,90,160,.22)}
+.profile-card .avatar img{width:100%;height:100%;object-fit:cover}
+.profile-card h2{font-size:19px;color:#23283a}
+.profile-card .loc{font-size:12.5px;color:#98a0b0;margin-top:6px}
+.profile-card .motto{font-size:12px;color:#7a6a3a;margin-top:4px;font-style:italic;letter-spacing:.5px}
+.profile-card .stats{display:flex;justify-content:space-around;margin-top:16px;padding-top:14px;border-top:1px dashed #e8ebf2}
+.profile-card .stats div{font-size:11.5px;color:#98a0b0}
+.profile-card .stats b{display:block;font-size:21px;color:#23283a;font-weight:700}
+.profile-card .stats b em{font-style:normal;font-size:11.5px;color:#98a0b0;font-weight:400;margin-left:3px}
+.follow-btn{display:block;width:100%;margin-top:16px;border:0;background:#5b8ff0;color:#fff;font-size:14px;border-radius:999px;
+  padding:9px 0;cursor:pointer;font-family:inherit;transition:.2s}
+.follow-btn:hover{background:#4a7fe6}
+.follow-btn.done{background:#eef2fb;color:#5b8ff0;cursor:default}
+.aside-card ul{list-style:none;color:#5a6474;font-size:13px;line-height:2.1}
+.aside-card ul a{color:#5b8ff0;text-decoration:none;cursor:pointer}
+.aside-card ul a:hover{text-decoration:underline}
+
+#content{flex:1;min-width:0}
+
+/* ===== 文章卡 ===== */
+.blog-card{background:#fff;border-radius:18px;box-shadow:0 6px 22px rgba(60,70,140,.14);padding:28px 32px 24px;margin-bottom:24px}
+.blog-card h1{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;font-size:23px;color:#1d2333;line-height:1.5}
+.blog-card h1 .pp{color:#5b8ff0;margin-right:10px;font-weight:700}
+.blog-card .meta{font-size:12.5px;color:#9aa2b2;margin-top:10px;padding-bottom:16px;border-bottom:1px solid #f1f3f8}
+.article{font-size:15px;line-height:2.05;color:#3a3f4c;margin-top:18px}
+.article p{margin-bottom:14px}
+.article .sign{color:#9aa2b2;font-size:13px;text-align:right}
+.article .quote{font-size:15px;line-height:2;color:#3a3f4c;margin:14px 0;padding:0;border:0;background:none}
+.article h2{font-size:18px;color:#1d2333;border-left:4px solid #5b8ff0;padding-left:12px;margin:20px 0 12px;line-height:1.5}
+
+/* ===== 上一篇/下一篇 ===== */
+.next-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px dashed #eef1f6}
+.next-ch,.prev-ch{border:1px solid #cfdcf6;background:#f4f8ff;color:#4a7fe0;border-radius:999px;padding:8px 22px;font-size:13.5px;
+  cursor:pointer;font-family:inherit;transition:.2s}
+.next-ch:hover,.prev-ch:hover{background:#5b8ff0;color:#fff;border-color:#5b8ff0;box-shadow:0 4px 12px rgba(91,143,240,.35)}
+.next-ch:disabled,.prev-ch:disabled{opacity:.35;cursor:default;background:#f4f8ff;color:#4a7fe0;border-color:#cfdcf6;box-shadow:none}
+.blog-card.flash,#lock-box.flash{animation:cardFlash 1.2s ease}
+@keyframes cardFlash{0%{box-shadow:0 0 0 3px rgba(91,143,240,.55)}100%{box-shadow:0 6px 22px rgba(60,70,140,.14)}}
+
+.ops{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #f0f0f0}
+.ops button{border:1px solid #d0dbe4;background:#f7fafc;color:#4a7a99;border-radius:4px;padding:7px 18px;font-size:13px;cursor:pointer;font-family:inherit}
+.ops button:hover{background:#eef4f9}
+.ops button.liked{background:#fdf0f0;border-color:#f0b9b9;color:#e05a5a}
+
+/* 收藏素材按钮 / 可点文字 */
+.clue-spot{font-weight:400;border-radius:2px;padding:0 1px}
+.clue-spot.nob{font-weight:400}
+.photo{margin:16px 0;border:1px solid #e5e5e5;border-radius:4px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08);position:relative;background:#fff}
+.photo img{display:block;width:100%;height:auto}
+.photo figcaption{font-size:12px;color:#999;padding:8px;background:#fafafa;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.photo figcaption .cap-txt{flex:1}
+.save-btn{border:1px solid #2579ad;background:#eaf4fb;color:#2579ad;border-radius:4px;padding:5px 12px;font-size:12px;
+  cursor:pointer;white-space:nowrap;font-family:inherit}
+.save-btn:hover{background:#d7ebf8}
+.save-btn.saved{background:#e8f7ec;border-color:#5aa57a;color:#3f8c5a}
+
+/* 评论区 */
+#comments{margin-top:22px}
+#comments h3{font-size:15px;color:#555;margin-bottom:14px}
+.comment{display:flex;gap:12px;padding:14px 0;border-top:1px solid #f5f5f5}
+.comment .cavatar{width:38px;height:38px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;overflow:hidden}
+.comment .cavatar img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.comment .cbody{flex:1}
+.comment .cn{font-size:13px;color:#2579ad;font-weight:500}
+.comment .cn span{color:#aaa;font-weight:400;margin-left:8px;font-size:11.5px}
+.comment .ct{font-size:14px;color:#333;margin-top:5px;line-height:1.7}
+.comment .cops{margin-top:6px;font-size:12px;color:#aaa}
+.comment .cops a{color:#aaa;text-decoration:none;margin-right:14px;cursor:pointer}
+.comment .cops a:hover{color:#2579ad}
+.cbox{display:flex;gap:12px;margin-top:16px;padding:14px;background:#f7f9fb;border-radius:6px;align-items:flex-end}
+.cbox .cavatar{width:38px;height:38px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;overflow:hidden}
+.cbox .cavatar img{width:100%;height:100%;object-fit:cover}
+.ctext{flex:1;border:1px solid #dde5ec;border-radius:4px;padding:9px 12px;font-size:14px;outline:none;resize:none;height:64px;font-family:inherit;line-height:1.6}
+.ctext:focus{border-color:#a8cfe8}
+.cbtn{align-self:flex-end;border:0;background:#f0ad4e;color:#fff;border-radius:4px;padding:9px 22px;font-size:14px;cursor:pointer;font-family:inherit;flex:none}
+.cbtn:hover{background:#e29c3d}
+
+/* ===== 密码锁 ===== */
+#lock-box{background:#fff;border-radius:18px;box-shadow:0 6px 22px rgba(60,70,140,.14);padding:40px 30px;text-align:center;margin-bottom:24px}
+#lock-box h3{font-size:17px;color:#23283a;margin-bottom:8px}
+#lock-box p{font-size:13.5px;color:#8a93a4;margin-bottom:20px;line-height:1.8}
+#lock-form{display:flex;gap:10px;justify-content:center;max-width:340px;margin:0 auto}
+#lock-input{flex:1;border:1px solid #d4dcea;border-radius:8px;padding:10px 14px;font-size:15px;outline:none;font-family:inherit;text-align:center;letter-spacing:4px}
+#lock-input:focus{border-color:#5b8ff0;box-shadow:0 0 0 3px rgba(91,143,240,.15)}
+#lock-submit{border:0;background:#5b8ff0;color:#fff;border-radius:8px;padding:10px 26px;font-size:14px;cursor:pointer;font-family:inherit}
+#lock-submit:hover{background:#4a7fe6}
+#lock-msg{font-size:13px;margin-top:14px;min-height:20px}
+#lock-msg.err{color:#d4380d}
+#lock-msg.ok{color:#3f8c5a}
+/* R52：密码锁右侧灰色小字提示（两步确认后给出答案） */
+#lock-hint{max-width:340px;margin:10px auto 0;text-align:right;font-size:12.5px;line-height:1.9}
+#lock-hint span{cursor:pointer;color:#9aa3b5}
+#lock-hint span:hover{color:#5b8ff0}
+#lock-hint .hp{cursor:default;color:#d4dcea;margin:0 8px}
+#lock-hint .hp:hover{color:#d4dcea}
+#hint-ans{cursor:default;color:#7c8aa5;letter-spacing:2px}
+#hint-ans:hover{color:#7c8aa5}
+/* R53：斯巴达密码框右侧灰色小字提示（同款两步交互，答案为死前留言全文） */
+#cipher-hint{max-width:460px;margin:12px auto 0;text-align:right;font-size:12.5px;line-height:1.9}
+#cipher-hint span{cursor:pointer;color:#9aa3b5}
+#cipher-hint span:hover{color:#5b8ff0}
+#cipher-hint .hp{cursor:default;color:#d4dcea;margin:0 8px}
+#cipher-hint .hp:hover{color:#d4dcea}
+#cipher-hint-ans{cursor:default;color:#7c8aa5}
+#cipher-hint-ans:hover{color:#7c8aa5}
+
+.unlocked-note{background:#e8f7ec;border:1px solid #b8e0c6;border-radius:12px;padding:10px 14px;font-size:13px;color:#3f8c5a;margin-bottom:24px;text-align:center}
+
+.locked{display:none}
+#content>.blog-card{display:none}
+
+#footer{max-width:1000px;margin:10px auto 30px;text-align:center;color:#b3bfca;font-size:12px}
+#footer a{color:#b3bfca}
+
+/* ===== 斯巴达密码解密框（后6） ===== */
+.cipher-box{margin:18px 0;padding:0;border:0;background:transparent}
+.cipher-box .cipher-img{text-align:center}
+.cipher-box .cipher-img img{display:inline-block;max-width:100%;max-height:340px;border:1px solid #e0d4ba;border-radius:4px;background:#fff;box-shadow:0 2px 8px rgba(100,90,60,.15)}
+.cipher-box .cipher-tip{font-size:14px;line-height:1.9;color:#5a5440;margin:12px 0}
+.cipher-box .cipher-tip:first-child{font-family:'Source Han Serif SC','Noto Serif SC','Source Han Serif CN','思源宋体',serif;}
+.cipher-box .cipher-form{display:flex;gap:10px;justify-content:center;max-width:420px;margin:6px auto 0}
+.cipher-box #cipher-input{flex:1;border:1px solid #c9b48a;border-radius:4px;padding:10px 12px;font-size:15px;outline:none;font-family:inherit;text-align:center;letter-spacing:3px}
+.cipher-box #cipher-input:focus{border-color:#2579ad;box-shadow:0 0 0 3px rgba(37,121,173,.12)}
+.cipher-box #cipher-submit{border:0;background:#a8651f;color:#fff;border-radius:4px;padding:10px 24px;font-size:14px;cursor:pointer;font-family:inherit}
+.cipher-box #cipher-submit:hover{background:#8f5517}
+.cipher-box #cipher-msg{font-size:13px;margin-top:12px;min-height:18px;text-align:center}
+.cipher-box #cipher-msg.err{color:#d4380d}
+.cipher-box #cipher-msg.ok{color:#3f8c5a}
+
+/* ===== 密码锁（斯巴达，解开后7~后10） ===== */
+.locked2{display:none}
+
+/* ===== 突脸预警（后9） ===== */
+.jumpscare-warn{background:#2a1416;border:1px solid #6e2a2a;border-radius:6px;padding:10px 14px;font-size:13px;color:#f1b9b9;margin:6px 0 18px;text-align:center;line-height:1.7}
+.scary{animation:scaryFlicker 5.5s ease-in-out infinite}
+@keyframes scaryFlicker{0%,100%{box-shadow:0 1px 3px rgba(0,0,0,.08)}46%{box-shadow:0 1px 3px rgba(0,0,0,.08)}48%{box-shadow:0 0 0 2px rgba(150,20,20,.5)}50%{box-shadow:0 1px 3px rgba(0,0,0,.08)}52%{box-shadow:0 0 14px 2px rgba(150,20,20,.35)}54%{box-shadow:0 1px 3px rgba(0,0,0,.08)}}
+
+/* ===== 幻觉章节：点一下出现一行（文字居中无标点，中途闪现抽象惊悚图） ===== */
+.halo-box{margin:14px -32px -24px;background:#08080d;min-height:480px;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;padding:38px 26px 64px;cursor:pointer;user-select:none}
+.halo-box .halo-line{color:#fff;text-shadow:0 0 18px rgba(255,255,255,.35),0 2px 10px rgba(0,0,0,.9);
+  font-size:15px;line-height:2.15;text-align:center;letter-spacing:2.5px;
+  opacity:0;transform:translateY(7px);transition:.55s ease}
+.halo-box .halo-line.on{opacity:1;transform:none}
+.halo-hint{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:rgba(255,255,255,.4);
+  font-size:11.5px;letter-spacing:3px;animation:haloPulse 2s infinite;pointer-events:none}
+@keyframes haloPulse{0%,100%{opacity:.35}50%{opacity:.95}}
+/* 图片层：全屏固定背景，交叉淡入淡出 */
+.halo-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.halo-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;
+  opacity:0;transform:scale(1.04);transition:opacity .9s ease,transform 2.4s ease;filter:contrast(1.08) saturate(.95)}
+.halo-bg img.on{opacity:.5;transform:scale(1)}
+.halo-box.halo-full .halo-bg{background:
+  radial-gradient(ellipse at 50% 42%,rgba(20,20,28,.55),rgba(4,4,7,.94) 78%)}
+/* 点开第一句后：文字区背景扩大到全屏 */
+/* 全屏：固定单屏，文字与图片同屏，禁止上下滚动 */
+.halo-box.halo-full{position:fixed;top:0;left:0;right:0;bottom:0;margin:0;height:100vh;min-height:0;
+  z-index:900;background:#08080d;overflow:hidden;justify-content:center;padding:0 4vw;
+  animation:haloExpand .75s cubic-bezier(.2,.7,.3,1)}
+@keyframes haloExpand{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:none}}
+/* 文字栈：全部行以最新一行为中心向上堆叠，越旧越淡（永不滚动） */
+.halo-box.halo-full .halo-line{position:absolute;left:50%;top:50%;width:min(92vw,1100px);margin:0;
+  font-size:clamp(13px,1.55vw,19px);line-height:1.5;letter-spacing:3px;white-space:normal;
+  transform:translate(-50%,-50%) translateY(calc(var(--d,0) * -2.05em));
+  opacity:0;transition:opacity .6s ease,transform .6s ease;pointer-events:none}
+/* R54：不再做越旧越淡的虚化 —— 所有行与最后一行同色同亮度 */
+.halo-box.halo-full .halo-line.on{opacity:1;transform:translate(-50%,-50%) translateY(calc(var(--d,0) * -2.05em))}
+.halo-box.halo-full .halo-line.last{color:#fff;text-shadow:0 0 18px rgba(255,255,255,.35),0 2px 10px rgba(0,0,0,.9)}
+html.halo-locked,html.halo-locked body{overflow:hidden !important}
+.halo-exit{position:fixed;top:12px;right:16px;z-index:950;color:rgba(255,255,255,.6);font-size:16px;
+  letter-spacing:2px;cursor:pointer;user-select:none;padding:6px 10px}
+.halo-exit:hover{color:#fff}
+.halo-exit.halo-mute{right:112px;padding:9px 18px;border-radius:999px;background:rgba(20,26,44,.6)}
+/* R56：图片点击放大 */
+#img-zoom{position:fixed;inset:0;z-index:2000;background:rgba(4,6,10,.94);cursor:zoom-out;
+  display:none;align-items:center;justify-content:center;padding:24px}
+#img-zoom.on{display:flex}
+#img-zoom img{max-width:94vw;max-height:92vh;object-fit:contain;border-radius:4px;
+  box-shadow:0 30px 80px rgba(0,0,0,.8);animation:zoomIn .22s ease-out}
+@keyframes zoomIn{from{opacity:.2;transform:scale(.94)}to{opacity:1;transform:none}}
+body.zom{overflow:hidden}
+.zomable{cursor:zoom-in}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="inner">
+    <div class="me"><img src="assets/avatar-player.png" alt="我"></div>
+    <nav>
+      <a class="on" href="blog-prof.html">主页</a><a href="#">分类</a><a href="#">归档</a><a href="#">关于</a><a href="forum.html">论坛</a>
+    </nav>
+    <span class="sp"></span>
+    <form id="topsearch" style="display:none" onsubmit="var i=this.querySelector('input');location.href='search.html?q='+encodeURIComponent(i.value.trim()||'周正');return false">
+      <input placeholder="搜点什么…" aria-label="搜索">
+      <button class="sico" type="submit">搜索</button>
+    </form>
+    <button class="sico" id="search-toggle" type="button">🔍 搜索</button>
+  </div>
+</div>
+
+<div id="main">
+  <div id="side">
+    <div class="aside-card profile-card">
+      <div class="avatar" id="prof-avatar"></div>
+      <h2>周正</h2>
+      <div class="loc">🏫 海城大学 · 中国海城</div>
+      <div class="motto">活到老，学到老！</div>
+      <div class="stats">
+        <div>12<em>文章</em></div>
+        <div>3<em>分类</em></div>
+        <div>8<em>标签</em></div>
+      </div>
+      <button class="follow-btn" id="follow-btn">＋ 关注</button>
+    </div>
+    <div class="aside-card">
+      <h3>公告</h3>
+      <ul>
+        <li>外出田野调查，更新随缘，</li>
+        <li>留言都会看，闲聊勿扰。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- ========== 日志一：圣诞（2025.12.25） ========== -->
+    <div class="blog-card" id="post1">
+      <div class="meta">📅 2025-12-25 </div>
+      <div class="article">
+        <p>大家圣诞节快乐！没想到都到了<span class="clue-spot nob" data-clue="clue_birthday">知命之年</span>，还洋气了一把，跟学生们一起在学校过了个热闹的圣诞节！</p>
+      </div>
+      <div class="ops">
+        <button class="like-btn">👍 赞 (<span class="lc">21</span>)</button>
+        <button>⭐ 收藏</button>
+      </div>
+      <div id="comments">
+        <h3>最新评论（1）</h3>
+        <div id="c1-list">
+          <div class="comment">
+            <div class="cavatar" style="background:#5aa57a">🎓</div>
+            <div class="cbody"><div class="cn">哈哈哈</div>
+            <div class="ct">教授生日快乐！（迟到了几天的生日祝福嘿嘿嘿）</div>
+            <div class="cops"><a>回复</a><a>举报</a></div></div>
+          </div>
+          <div class="comment" style="margin-left:50px">
+            <div class="cavatar"><img src="assets/prof-avatar.jpg" alt="周正"></div>
+            <div class="cbody"><div class="cn">周正</div>
+            <div class="ct">谢谢你，你也快乐！</div>
+            <div class="cops"><a>回复</a><a>举报</a></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 日志二：银星协会（2026.7.21） ========== -->
+    <div class="blog-card" id="post2">
+      <div class="meta">📅 2026-08-15 </div>
+      <div class="article">
+        <p>如今这个年代很多地方都没有故事了，这对我们研究民俗的学者来说不是个好事，没有好的素材，怎么发顶刊？</p>
+        <p>还好我前阵子从图书馆翻出一些老资料，发现了<span class="clue-spot" data-clue="clue_muke">木客村</span>这个古老的村庄。</p>
+        <p>它位于边境地区一个非常偏远的地方。我在网上简单搜了一下，据说今年特别火的"<span class="clue-spot" data-clue="clue_pharma"><strong>神清药厂</strong></span>"里的一种原料，就是从那边的一种蘑菇提取的。</p>
+        <p>虽然神清药厂辟谣了，但网友们认为药厂这是怕自己的独家成分被窃取。</p>
+        <p>我对这个劳什子<span class="clue-spot nob">聪明药</span>不感兴趣，平时也劝学生们别吃，学业上的"捷径"只会成为人生道路上最长的弯路。</p>
+        <p>我感兴趣的是这个村子里的一种特殊民俗仪式。</p>
+        <p>资料显示，木客村一直都有拜鬼的习俗。</p>
+        <p>木客村全村的人都信奉<span class="clue-spot nob">鬼</span>的力量，认为鬼的力量足够强大，能满足他们所有的愿望。</p>
+        <p>这在连"4"都是忌讳的中国是非常罕见的。</p>
+        <p>我有一种预感，如果能去木客村进行田野调查，一定能写出一篇不错的论文。</p>
+        <p>就在我苦于缺乏经费时，一个叫<strong>银星学会</strong>的民间机构联系到我，表示愿意赞助我的田野调查。</p>
+        <p>当然是有条件的。</p>
+        <p>据说木客村的村长收藏了一个<span class="clue-spot nob">陨石</span>，而银星学会热衷于研究世界各地的陨石，因此它希望我去木客村时，顺便搜集这块陨石的详细情况。</p>
+        <p>我搜了一下，发现是在有关部门注册过的正规机构，我怕过了这个村就没这个店了，于是果断应下来了。</p>
+        <p>银星学会还送了我一个笔记本，封面印着<span class="clue-spot nob" data-clue="clue_notebook">摩羯座</span>，这个学会太细心了，还知道我的星座。</p>
+        <p>据说木客村严禁拍照，看来我需要招募一个会<span class="clue-spot nob" data-clue="clue_sketch">速写</span>的学生充当照相机，最好是美院的学生，够专业。</p>
+      </div>
+      <div class="ops">
+        <button class="like-btn">👍 赞 (<span class="lc">9</span>)</button>
+        <button>⭐ 收藏</button>
+      </div>
+    </div>
+
+    <!-- ========== 密码锁（日志三起） ========== -->
+    <div id="lock-box">
+      <h3>请输入教授8位数的出生日期</h3>
+      <form id="lock-form">
+        <input id="lock-input" type="text" inputmode="numeric" placeholder="请输入教授8位数的出生日期" autocomplete="off">
+        <button id="lock-submit" type="submit">解 锁</button>
+      </form>
+      <div id="lock-msg"></div>
+      <div id="lock-hint">
+        <span id="hint-ask">我需要提示</span>
+        <span id="hint-opts" style="display:none"><span id="hint-sure">你确定吗，点击后我将给你答案。</span><span class="hp">｜</span><span id="hint-no">我再想想</span></span>
+        <span id="hint-ans" style="display:none">19751222</span>
+      </div>
+    </div>
+    <div class="unlocked-note" id="unlocked-note" style="display:none">✅ 已解锁 —— 欢迎继续阅读周正的博客。</div>
+
+    <!-- ========== 下一页 · 第一篇：出发（解锁后可见，含手绘地图） ========== -->
+    <div class="blog-card locked" id="post3">
+      <div class="meta">📅 2026-09-01 </div>
+      <div class="article">
+        <p>我很快就招到了一个<span class="clue-spot nob" data-clue="clue_partner">美院的男学生</span>跟我一起去木客村。</p>
+        <p>我看过他的画，写实风格非常写实，有他在，不能拍照我也放心了。</p>
+        <p>飞机落地那个省会城市，高铁坐到边境那个市，大巴坐到乡镇附近，最后打车到了木客镇唯一一家宾馆。</p>
+        <p>而木客村还要走一个小时的下坡路才能到。</p>
+        <p>所以我们打算今天先在<span class="clue-spot nob">芳芳宾馆</span>歇脚，明天再战。</p>
+      </div>
+      <div class="ops">
+        <button class="like-btn">👍 赞 (<span class="lc">4</span>)</button>
+        <button>⭐ 收藏</button>
+      </div>
+    </div>
+
+    <!-- ========== 下一页 · 第二篇：信号消失（2026-09-02） ========== -->
+    <div class="blog-card locked" id="post4">
+      <div class="meta">📅 2026-09-02 </div>
+      <div class="article">
+        <p>就算休息了一晚上，舟车劳顿的疲惫也还是没能消失，不服老不行啊。</p>
+        <p>离开小镇的路上，信号渐渐消失。</p>
+        <p>看来每天只能等回到宾馆再发布博客了。</p>
+        <p>随着离木客镇越来越远。我看向附近郁郁葱葱的山林，深感大自然的神秘。</p>
+        <p>我让小顾同学帮我拍了一张背影照，当作我的博客头像，算是纪念吧。</p>
+        <figure class="photo">
+          <img src="assets/prof-avatar.jpg" alt="小顾同学拍的背影照">
+        </figure>
+      </div>
+    </div>
+
+    <!-- ========== 下一页 · 第三篇：木客村那天·上（2026-09-02） ========== -->
+    <div class="blog-card locked" id="post5">
+      <div class="meta">📅 2026-09-02 </div>
+      <div class="article">
+        <p>终于回到宾馆了。</p>
+        <p>今天发生了很多事。</p>
+        <p>在去<span class="clue-spot">木客村</span>的路上，我们途经了一个小型的<span class="clue-spot">木材加工厂</span>，附近地上散落了很多<span class="clue-spot">木棍</span>。</p>
+        <p>我捡起一根，木棍直径大概一公分粗，当拐棍还挺趁手。</p>
+        <p>没有任何一个男人能抵抗这么直的棍子。</p>
+        <p>我捡起另一根塞到小顾同学手里，他嘴角起码上扬了三个像素点，我就说吧，没有任何一个男人能抵抗这么直的棍子。</p>
+        <p>走了一个小时的路，终于来到这条很缓的下坡路的尽头，抵达了木客村。</p>
+        <p>小顾同学方向感真强，我把他画的地图拍下来了，有了地图，这几天肯定不会迷路了</p>
+        <figure class="photo" id="map-figure">
+          <img src="assets/map.jpg" alt="小顾同学手绘的木客村地图">
+        </figure>
+        <p>村子不大，只有几十户人家，有一种再过几年就会消亡的苍凉。</p>
+        <p>村长<span class="clue-spot">方田</span>招待的我们。方村长看着有六十岁了，身子骨还算硬朗。</p>
+        <p>他跟我们强调了一些村子的规矩。不准拍照，不准带走任何东西，不准留下任何东西。我一一答应下来。</p>
+        <p>村长介绍的村子民俗跟我在资料里看到的一样，木客村全村都信奉<span class="clue-spot nob">鬼</span>的力量，家家户户都会拜鬼，求鬼保佑。</p>
+        <p>我跟小顾同学走访了几家村民，发现他们挨家挨户堂屋中间都供奉着一个竖眼睛的<span class="clue-spot">泥塑</span>。</p>
+        <p>村长说这个眼睛寓意是<span class="clue-spot" data-clue="clue_eye">阴阳眼</span>，是人鬼沟通的渠道。</p>
+        <p>我提出想近距离观察，被村长严肃地拒绝。他说泥塑落地后，严禁任何人触碰，最好连靠近都不要靠近，否则会惊扰到鬼。</p>
+        <p>"去年冬天有个游客偷拿它，想带回家。这就相当于把那户人家供奉的鬼带在了身旁。结果那个人因此被鬼缠身，都没能回到家，在回家的路上就从木客崖掉下去摔死了。"</p>
+        <p>我不太相信这些怪力乱神，村长似乎看出了我的怀疑，有点生气地说，"不信可以去查<span class="clue-spot">新闻</span>，那个人名字叫<strong>李希</strong>！"</p>
+        <p>我向村长保证会遵守规定，村长脸色才缓和过来。</p>
+        <p>村长看到我跟小顾同学手里的木棍，主动向我们介绍。原来这边种了不少<span class="clue-spot">榉树</span>，去镇子的路上有一个小型的木材加工厂，那里会把榉木加工成一公分粗的木棍，运到城里售卖。这些木棍在网上销量挺不错的，所以村民都爱种榉树谋生。</p>
+      </div>
+    </div>
+
+    <!-- ========== 下一页 · 第三篇：木客村那天·中（2026-09-02） ========== -->
+    <div class="blog-card locked" id="post6">
+      <div class="meta">📅 2026-09-02 </div>
+      <div class="article">
+        <p>我们在村子里参观了很久。</p>
+        <p>村子虽然不大，但我要求小顾同学尽可能详细地描绘这个村子的情况，因此每到一个新的地方，我们就会耽搁一段时间。</p>
+        <p>经过了一户村民家，村长说这家人叫<span class="clue-spot">方勇</span>，在镇上开<span class="clue-spot">出租车</span>的，有需要可以联系他。</p>
+        <p>另一户村民叫<span class="clue-spot">方芳</span>，就是我们住的<span class="clue-spot nob">芳芳宾馆</span>的老板，平时住在宾馆不回村。</p>
+        <p>院子是用榉木做的围栏围起来的，门也是木头的，看起来完全不防盗。</p>
+        <p>这种家家户户都认识的小村子，完全可以做到夜不闭户。</p>
+        <p>时间很快来到中午，村长邀请我们吃午饭，却之不恭。</p>
+        <p>在堂屋吃饭时，供台上的<span class="clue-spot">阴阳眼</span>就这样俯视着我们，看得我心里发怵。</p>
+      </div>
+    </div>
+
+    <!-- ========== 下一页 · 第三篇：木客村那天·下（王笙 / 纸条 / 斯巴达密码） ========== -->
+    <div class="blog-card locked" id="post7">
+      <div class="meta">📅 2026-09-02 </div>
+      <div class="article">
+        <p>回到宾馆后，我搜了去年关于<span class="clue-spot">李希</span>的<span class="clue-spot">新闻</span>。</p>
+        <p>又是神清药厂的<span class="clue-spot nob">聪明药</span>……难道这个药真的有问题？</p>
+        <p>我在其中一篇新闻中找到了李希妻子的联系方式。那篇新闻发布时警方还没找到李希尸体，所以留下李希的妻子王笙的联系方式，希望找到线索的人联系她。</p>
+        <p>我搜这个手机号添加了微信，果然是王笙。</p>
+        <p>我告诉她我现在在木客镇，听说了去年李希坠崖的事，觉得事情有蹊跷，所以想了解一下那件事的详情。</p>
+        <p>王笙简述了那件事，跟新闻没太多出入，但她提到一个警方没有公开的事。</p>
+        <p>王笙说，李希在缝在衣服内侧的袋子里藏了一张纸条，但上面写的东西完全读不通。</p>
+        <p>警方搜查到后，以为是用她能看懂的方式写的遗书，就交给了她。但她也看不懂。</p>
+        <p>再加上警方认定他是失足坠落悬崖，她就没有再思考纸条的内容。</p>
+        <p>她发来这张纸条的图片，然后就去休息了。</p>
+        <figure class="photo" id="cipher-figure">
+          <img src="assets/note-long.jpg" alt="李希死前留下的加密纸条">
+        </figure>
+        <div class="cipher-box">
+          <p class="cipher-tip" style="white-space:pre-wrap;font-weight:700;letter-spacing:1px">我验已这村要。遭个的拿你遇事人阴看不。！阳到测小尤眼这，心其去个替木是城说我客村里明完村长化我成全！</p>
+          <p class="cipher-tip">我看着这条纸条陷入沉思。</p>
+          <p class="cipher-tip">白天当作拐棍的<span class="clue-spot nob">木棍</span>被我攥紧一下一下戳着地面。</p>
+          <p class="cipher-tip">我心情一紧张就容易有这种小动作。</p>
+          <p class="cipher-tip">突然间，我一下子明白了如何看懂了这张纸条上的内容。</p>
+          <div class="cipher-form">
+            <input id="cipher-input" type="text" placeholder="在此输入你读懂的死前留言…" autocomplete="off">
+            <button id="cipher-submit" type="button">解 读</button>
+          </div>
+          <div id="cipher-msg"></div>
+          <!-- R53：「我需要提示」两步提示，给出死前留言答案 -->
+          <div id="cipher-hint">
+            <span id="cipher-hint-ask">我需要提示</span>
+            <span id="cipher-hint-opts" style="display:none"><span id="cipher-hint-sure">你确定吗，点击后我将给你答案。</span><span class="hp">｜</span><span id="cipher-hint-no">我再想想</span></span>
+            <span id="cipher-hint-ans" style="display:none">我要拿阴阳眼去城里化验。你看到这个说明我已遭遇不测，替我完成这个事。小心木客村全村的人！尤其是村长！</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== 揭示篇：看懂死前留言的那一刻 ========== -->
+    <div class="blog-card locked locked2" id="post8">
+      <div class="meta">📅 2026-09-02 深夜 </div>
+      <div class="article">
+        <figure class="photo">
+          <img src="assets/stick-cipher.jpg" alt="缠着纸条的木棍（斯巴达密码）">
+          <figcaption><span class="cap-txt">▲ 把纸条一圈圈缠在木棍上，再一行一行竖着读</span></figcaption>
+        </figure>
+        <p>看懂他死前留言的那一刻，我汗毛倒竖。</p>
+        <p>白天在村子里感受到的异常果然不是我多想，木客村藏了大阴谋！</p>
+        <p>李希是为了查证聪明药才去的木客村，而他偷走阴阳眼泥塑去化验，就说明这个泥塑跟聪明药有大关系。</p>
+        <p>要是这药真有问题，这得害了多少学生啊！</p>
+        <p>我必须得管这个事！</p>
+      </div>
+    </div>
+
+    <!-- ========== 第二篇：偷拿泥塑（2026-09-03） ========== -->
+    <div class="blog-card locked locked2" id="post9">
+      <div class="meta">📅 2026-09-03 </div>
+      <div class="article">
+        <p>我决定偷偷拿走一个<span class="clue-spot nob">阴阳眼泥塑</span>一探究竟。</p>
+        <p>今天我又带上小顾同学去了木客村。</p>
+        <p>这次是询问<span class="clue-spot nob">陨石</span>的事。</p>
+        <p>村长说他家里确实收藏了一小块陨石。</p>
+        <p>之前文旅局还来采访过，得到文旅局的允许后，陨石就继续放他家收藏了。</p>
+        <p>我让小顾同学把它临摹下来，等回去之后也好给银星学会一个交代。</p>
+        <p>我特地让小顾临摹得仔细一点，而不只是画个草图。</p>
+        <p>中途我借口去厕所离开了，留小顾同学和村长在放陨石的房间待着。</p>
+        <p>我从村长家出来后赶紧来到昨天经过的<span class="clue-spot nob">方芳</span>家。</p>
+        <p>我今天离开宾馆时，确定她留在了宾馆，此刻她肯定不在家。</p>
+        <p>村子里人烟稀少，此刻快到饭点了，路上没什么人。</p>
+        <p>我从后院栅栏翻过去，发现堂屋的窗户虚掩着。</p>
+        <p>我翻进堂屋，看到中间供奉的<span class="clue-spot nob">阴阳眼泥塑</span>。我悄悄把它拿下来塞进背包里，原路返回。</p>
+        <p>回到村长家，小顾同学还在画陨石。我打断了他，说画到这个程度就够了。</p>
+        <p>我尽量不动声色地打听<span class="clue-spot nob">李希</span>坠崖的事。</p>
+        <p>村长再次强调说李希偷拿了村子里供奉的阴阳眼，受到了鬼的惩罚。</p>
+        <p>我想到此刻包里的泥塑，有点尴尬。</p>
+        <p>村长又留下我们吃饭，而我只想跟小顾赶紧回宾馆。</p>
+        <p>村长继续劝我们留下来，“<span class="clue-spot nob">方勇</span>你们知道吧？当年就是他载李希去的木客崖。他昨晚跟我说了今天会来吃午饭，你可以问他当时那个事的细节。”</p>
+        <p>我听到这话，决定留下来吃午饭。</p>
+        <p>村长说去年那个叫李希的人非常没礼貌，在村子里东瞧瞧西看看，好奇心特别重。</p>
+        <p>“我提醒他好几次，不要带走木客村的任何东西，否则会把灾祸引上身。他满口答应，我也不能一直盯着他，就随他去了。</p>
+        <p>“后来的事你们能搜到，第二天他就从木客崖上摔下去了。</p>
+        <p>“警察在他的背包里找到一个阴阳眼泥塑，我才知道原来他那天偷拿了一个我们供奉在路边的泥塑，搞得我们后来都不敢把泥塑放屋外头了。”</p>
+      </div>
+      <div class="ops">
+        <button class="like-btn">👍 赞 (<span class="lc">9</span>)</button>
+        <button>⭐ 收藏</button>
+      </div>
+    </div>
+
+    <!-- ========== 第二篇：方勇 / 端详泥塑（2026-09-03） ========== -->
+    <div class="blog-card locked locked2" id="post10">
+      <div class="meta">📅 2026-09-03 </div>
+      <div class="article">
+        <p>他跟我们寒暄了一通，说有需要用车的地方尽管跟他联系。</p>
+        <p>我感谢了他，把方勇的联系方式记在了手机备忘录上，还好备忘录没网也能用。</p>
+        <p>吃完饭后，我们聊了聊去年发生的事。</p>
+        <p>“他原本让我带他去城里的，结果在车上跟我聊了他家的事，说孩子没了，心情很低落，让我带他去木客崖，他要散散心，我把他放到那边就走了。</p>
+        <p>“后来听说他媳妇儿一直没联系上他，急得报警了。警察来这边寻人，我一看这不就是那天要去木客崖的人吗？就跟警察说了。</p>
+        <p>“警察从木客村那边绕过去走到崖底，发现了那个人的尸体，摔得老惨了……”</p>
+        <p>聊得差不多了，他开出租车去城里，顺便把我跟小顾同学也捎上了。</p>
+        <p>一个小时的脚程，油门一踩就花了不到二十分钟。</p>
+        <p>我想跟他约个明天的时间，拜托他送我进城，今天再去城里找<span class="clue-spot nob">化验所</span>有点晚了。</p>
+        <p>但是我不想把小顾同学卷进去，于是在车上就没提。</p>
+        <p>回到宾馆后不久，我用手机搜索到了城里一个化验所的地址。</p>
+        <p>我给方勇发了短信，约了明天上午十点，让他送我去城里的化验所。</p>
+        <p>我告诉小顾，让他明天不要乱跑，我去城里忙点事，等我回来我们就返校。</p>
+        <p>吃完晚饭，我把阴阳眼的泥塑拿出来，仔细端详。</p>
+        <p>泥塑的表面非常粗糙，村民制作它的时候看起来非常不用心。</p>
+        <p>他们不是非常信奉鬼的力量吗？为什么这个泥塑做得这么粗糙？</p>
+        <p>我一边摩挲一边仔细观察这个泥塑，想找到更多奥秘。</p>
+        <p>我是不是应该先把它剖开，提前检查一下比较好？</p>
+        <p>村长看着挺老实，他有什么秘密隐瞒着大家？</p>
+        <p>其他村民也有秘密吗？</p>
+        <p>正当我仔细观察这个泥塑时，我的余光瞥到靠在一旁的<span class="clue-spot nob">木棍</span>似乎动了一下。</p>
+        <p>我定睛看去，发现了诡异的一幕。</p>
+      </div>
+      <div class="ops">
+        <button class="like-btn">👍 赞 (<span class="lc">9</span>)</button>
+        <button>⭐ 收藏</button>
+      </div>
+    </div>
+
+    <!-- ========== 幻觉章节（点一下出现一行） ========== -->
+    <div class="jumpscare-warn">⚠️ 前方高能：本章含有突脸 / 惊吓描写，心理承受力弱的同学请谨慎阅读。</div>
+    <div class="blog-card locked locked2 scary" id="post11">
+      <div class="meta">📅 2026-09-03（夜） </div>
+      <div id="halo-box" class="halo-box">
+        <div class="halo-bg"><img id="halo-img-a" alt=""><img id="halo-img-b" alt=""></div>
+        <div class="halo-hint">点击继续</div>
+      </div>
+    </div>
+
+    <!-- ========== Day 3（2026-09-04） ========== -->
+    <div class="blog-card locked locked2" id="post12">
+      <div class="meta">📅 2026-09-04 </div>
+      <div class="article">
+        <p>一觉醒来，昨晚看到的东西全部都不见了。</p>
+        <p>我躺在地上，渐渐明白了事情的真相。我挣扎着爬起来，发现已经九点多了。</p>
+        <p>我赶紧洗漱，将泥塑包好放进背包。隔壁小顾的房间很安静，他可能还没起床，于是我没跟他打招呼。</p>
+        <p>估计今天没时间再发博客了，所以今天的博客就先写到这里吧，明天有了新的进展再更新。</p>
+        <p>转眼间快到十点了，我要去一楼大堂等<span class="clue-spot">方勇</span>带我去城里的<span class="clue-spot">化验所</span>。</p>
+        <p>等明天结果出来，一切都会真相大白。</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="footer">© 2019-2026 周正 · 由 Hexo 强力驱动 · 主题 NexT · 访问量 28,341 · <a href="forum.html">返回校园论坛</a> · <a href="search.html">神奇海螺</a></div>
+
+<script>
+/* ---------- 头像（默认） ---------- */
+var DEFAULT_AVATAR='<svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" rx="8" fill="#cdd6e2"/><circle cx="32" cy="25" r="12" fill="#fff"/><path d="M11 55 C11 43 53 43 53 55 Z" fill="#fff"/></svg>';
+document.getElementById('prof-avatar').innerHTML='<img src="assets/prof-avatar.jpg" alt="周正">';
+
+/* 记录：玩家已打开过博客（私信里才出现「直接告诉我答案吧」的求助选项） */
+try{ localStorage.setItem('prof_blog_visited','1'); }catch(_){}
+
+
+
+/* ---------- 密码解锁 ---------- */
+var PASSWORD='19751222';
+function setMsg(t,cls){ var m=document.getElementById('lock-msg'); m.textContent=t; m.className=cls||''; }
+function unlock(quiet){
+  document.querySelectorAll('.blog-card.locked').forEach(function(c){ c.classList.remove('locked'); });
+  try{ localStorage.setItem('prof_blog_unlocked','1'); }catch(_){}
+  /* 若此前已解开斯巴达密码，则同步解开后7~后10 */
+  var cipherDone=false;
+  try{ cipherDone = localStorage.getItem('prof_cipher_solved')==='1'; }catch(_){}
+  if(cipherDone){ revealCipher(true); }
+  if(window.__blogRender) window.__blogRender();
+  /* 解密成功后自动前进到刚刚被锁住的下一篇 */
+  if(!quiet && window.__blogAdvance) window.__blogAdvance();
+  if(!quiet && window.__blogShowNote) window.__blogShowNote();
+}
+document.getElementById('lock-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var v=document.getElementById('lock-input').value.trim();
+  if(!v){ setMsg('请输入密码','err'); return; }
+  if(v===PASSWORD){ setMsg('密码正确，正在解锁…','ok'); setTimeout(unlock,500); }
+  else setMsg('密码错误，请再想想。','err');
+});
+
+/* ---------- R52：密码锁「我需要提示」两步提示 ----------
+   我需要提示 → 两个选项：①你确定吗，点击后我将给你答案。（点击出答案 19751222）
+                            ②我再想想（回到「我需要提示」） */
+(function(){
+  var ask=document.getElementById('hint-ask'),opts=document.getElementById('hint-opts'),
+      sure=document.getElementById('hint-sure'),no=document.getElementById('hint-no'),
+      ans=document.getElementById('hint-ans');
+  if(!ask||!opts||!sure||!no||!ans) return;
+  ask.addEventListener('click',function(){
+    ask.style.display='none'; ans.style.display='none'; opts.style.display='inline';
+  });
+  sure.addEventListener('click',function(){
+    opts.style.display='none'; ans.style.display='inline';
+  });
+  no.addEventListener('click',function(){
+    opts.style.display='none'; ans.style.display='none'; ask.style.display='inline';
+  });
+})();
+
+/* ---------- R53：斯巴达密码「我需要提示」两步提示（死前留言答案） ----------
+   我需要提示 → ①你确定吗，点击后我将给你答案。（给出留言全文）
+                 ②我再想想（回到「我需要提示」） */
+(function(){
+  var ask=document.getElementById('cipher-hint-ask'),opts=document.getElementById('cipher-hint-opts'),
+      sure=document.getElementById('cipher-hint-sure'),no=document.getElementById('cipher-hint-no'),
+      ans=document.getElementById('cipher-hint-ans');
+  if(!ask||!opts||!sure||!no||!ans) return;
+  ask.addEventListener('click',function(){
+    ask.style.display='none'; ans.style.display='none'; opts.style.display='inline';
+  });
+  sure.addEventListener('click',function(){
+    opts.style.display='none'; ans.style.display='inline-block';
+  });
+  no.addEventListener('click',function(){
+    opts.style.display='none'; ans.style.display='none'; ask.style.display='inline';
+  });
+})();
+
+
+/* ---------- 斯巴达密码解锁（解开后：揭示篇 + 偷拿泥塑 + 幻觉章节 + Day3） ---------- */
+var CIPHER_ANSWER='我要拿阴阳眼去城里化验。你看到这个说明我已遭遇不测，替我完成这个事。小心木客村全村的人！尤其是村长！';
+var CIPHER_ANSWER_ALT=[                      /* 兼容早期答案（部分玩家可能已按旧提示填过） */
+  '阴阳眼有问题。我要拿它去城里做化验。看到这的人，如果我遭遇不测，替我完成这个事。小心木客村全村的人！尤其是村长！',
+  '阴城人完全阳里'
+];
+function normCipher(s){ return (s||'').toLowerCase().replace(/[\s\p{P}]/gu,''); }
+function revealCipher(quiet){
+  document.querySelectorAll('.blog-card.locked2').forEach(function(c){ c.classList.remove('locked2'); });
+  try{ localStorage.setItem('prof_cipher_solved','1'); }catch(_){}
+  if(window.__blogRender) window.__blogRender();
+  /* 解码成功后自动前进到刚刚被锁住的下一篇 */
+  if(!quiet && window.__blogAdvance) window.__blogAdvance();
+  if(!quiet && window.__blogShowNote) window.__blogShowNote();
+}
+function checkCipher(){
+  var input=document.getElementById('cipher-input');
+  var msg=document.getElementById('cipher-msg');
+  if(!input.value.trim()){ msg.textContent='请输入你读懂的密码文字'; msg.className='err'; return; }
+  var v=normCipher(input.value);
+  if(v===normCipher(CIPHER_ANSWER) || CIPHER_ANSWER_ALT.some(function(a){ return v===normCipher(a); })){
+    msg.textContent='密码正确——下一页解开了。'; msg.className='ok'; revealCipher();
+  } else {
+    msg.textContent='读出来的字不对，再仔细看看。'; msg.className='err';
+  }
+}
+var cipherSubmit=document.getElementById('cipher-submit');
+if(cipherSubmit){
+  cipherSubmit.addEventListener('click',checkCipher);
+  document.getElementById('cipher-input').addEventListener('keydown',function(e){ if(e.key==='Enter') checkCipher(); });
+}
+
+/* ---------- 点赞 ---------- */
+document.querySelectorAll('.like-btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    var s=b.querySelector('.lc'); var n=parseInt(s.textContent)||0; s.textContent=n+1; b.classList.add('liked');
+  });
+});
+
+/* ---------- 日志二评论区互动 ---------- */
+(function(){
+  var btn = document.getElementById('c2-btn');
+  if(!btn) return;
+  var text = document.getElementById('c2-text');
+  var list = document.getElementById('c2-list');
+  var head = document.querySelector('#comments2 h3');
+  var avaHTML = '<img src="assets/avatar-player.png" alt="头像">';
+  btn.addEventListener('click', function(){
+    var v = text.value.trim();
+    if(!v){ text.focus(); return; }
+    var d = document.createElement('div');
+    d.className = 'comment';
+    d.innerHTML = '<div class="cavatar" style="background:#4a7bd0">' + avaHTML + '</div>' +
+                  '<div class="cbody"><div class="cn">万家灯火</div>' +
+                  '<div class="ct"></div><div class="cops"><a>回复</a><a>删除</a></div></div>';
+    d.querySelector('.ct').textContent = v;
+    list.appendChild(d);
+    text.value = '';
+    // 评论数 +1
+    var m = head.textContent.match(/\d+/);
+    if(m) head.textContent = '最新评论（' + (parseInt(m[0]) + 1) + '）';
+    // 自己的评论可删除
+    d.querySelector('.cops a:last-child').addEventListener('click', function(){
+      d.remove();
+      var m2 = head.textContent.match(/\d+/);
+      if(m2) head.textContent = '最新评论（' + (parseInt(m2[0]) - 1) + '）';
+    });
+    d.querySelector('.cops a:first-child').addEventListener('click', function(){ text.focus(); });
+  });
+  // Ctrl/Cmd + Enter 快速发表
+  text.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && (e.ctrlKey || e.metaKey)) btn.click();
+  });
+})();
+
+/* ---------- 评论回复占位（日志一） ---------- */
+document.querySelectorAll('#comments .cops a:first-child').forEach(function(a){
+  a.addEventListener('click',function(){ setMsg('这里暂不支持回复评论 :)','err'); });
+});
+
+/* ---------- 顶栏搜索开关 / 关注按钮 ---------- */
+document.getElementById('search-toggle').addEventListener('click',function(){
+  var f=document.getElementById('topsearch');
+  var show=f.style.display==='none';
+  f.style.display=show?'flex':'none';
+  if(show) f.querySelector('input').focus();
+});
+document.getElementById('follow-btn').addEventListener('click',function(){
+  var b=this;
+  if(!b.classList.contains('done')){ b.classList.add('done'); b.textContent='✓ 已关注'; }
+});
+
+/* ---------- 一篇一页控制器：点"上一篇/下一篇"翻页 ---------- */
+(function(){
+  var cards=[].slice.call(document.querySelectorAll('#content .blog-card'));
+  var lockBox=document.getElementById('lock-box'),
+      uNote=document.getElementById('unlocked-note'),
+      warn12=document.querySelector('.jumpscare-warn');
+
+  function f1(){ try{ return localStorage.getItem('prof_blog_unlocked')==='1'; }catch(_){ return false; } }
+  function f2(){ try{ return localStorage.getItem('prof_cipher_solved')==='1'; }catch(_){ return false; } }
+  function need1(j){ return j>=2; }   /* 日志三起需博客密码 */
+  function need2(j){ return j>=7; }   /* 揭示篇起需斯巴达密码 */
+  function visible(j){ if(need2(j)) return f2(); if(need1(j)) return f1(); return true; }
+
+  var cur=0;
+  try{ var sv=parseInt(localStorage.getItem('prof_post_idx')); if(sv>=0 && sv<cards.length) cur=sv; }catch(_){}
+  if(!visible(cur)){ for(var j=cards.length-1;j>=0;j--){ if(visible(j)){ cur=j; break; } } }
+
+  function placeAfter(el, ref){ ref.parentNode.insertBefore(el, ref.nextSibling); }
+  function saveIdx(){ try{ localStorage.setItem('prof_post_idx', String(cur)); }catch(_){} }
+  function flash(el){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
+
+  window.__blogRender = function(){
+    cards.forEach(function(c,ci){ c.style.display = ci===cur ? 'block' : ''; });
+    if(warn12) warn12.style.display = (cur===10) ? 'block' : 'none';
+    lockBox.style.display='none'; uNote.style.display='none';
+    var n=cur+1;
+    if(n<cards.length && !visible(n) && !f1() && need1(n)){
+      placeAfter(lockBox, cards[cur]); lockBox.style.display='block';
+    }
+    /* 停在最后一篇 → 论坛私信里「故意的」会来追问进展 */
+    if(cur===cards.length-1){ try{ localStorage.setItem('sg_blog_done','1'); }catch(_){} }
+    window.scrollTo(0,0);
+  };
+  function go(j){ cur=j; saveIdx(); window.__blogRender(); }
+  /* 当前是否停在最后一篇（供后续剧情判断） */
+  window.__blogAtLast = function(){ return cur === cards.length-1; };
+
+  /* 解密/解码成功后，自动前进到刚刚被锁住的下一篇 */
+  window.__blogAdvance = function(){
+    var n = cur+1;
+    if(n<cards.length && visible(n)) go(n);
+  };
+
+  cards.forEach(function(card,i){
+    var row=document.createElement('div'); row.className='next-row';
+    /* 上一篇 */
+    var prev=document.createElement('button'); prev.className='prev-ch';
+    prev.innerHTML='<span style="margin-right:4px">«</span> 上一篇';
+    prev.disabled = (i===0);
+    prev.addEventListener('click',function(){
+      if(i!==cur || cur<=0) return;
+      go(cur-1);
+    });
+    /* 下一篇 */
+    var btn=document.createElement('button'); btn.className='next-ch';
+    btn.innerHTML='下一篇 <span style="margin-left:4px">»</span>';
+    btn.addEventListener('click',function(){
+      if(i!==cur) return;
+      var n=cur+1;
+      if(n>=cards.length){ btn.textContent='已经是最新一章了'; btn.disabled=true; btn.style.opacity=.55; btn.style.cursor='default'; return; }
+      if(visible(n)){ go(n); }
+      else if(!f1() && need1(n)){
+        placeAfter(lockBox, cards[cur]); lockBox.style.display='block'; flash(lockBox);
+      }
+      /* 斯巴达密码未解开时：不显示任何提示，直接不翻页 */
+    });
+    row.appendChild(prev); row.appendChild(btn); card.appendChild(row);
+  });
+
+  /* 展示解锁提示条（仅当下） */
+  window.__blogShowNote = function(){
+    placeAfter(uNote, cards[cur]); uNote.style.display='block';
+    setTimeout(function(){ uNote.style.display='none'; }, 4000);
+  };
+
+  window.__blogInit = function(){ window.__blogRender(); };
+})();
+
+/* ---------- 幻觉章节：点一下出现一行（居中无标点，中途闪现抽象惊悚图） ---------- */
+(function(){
+  var box=document.getElementById('halo-box');
+  if(!box) return;
+  var hint=box.querySelector('.halo-hint');
+
+  /* 幻觉正文：逐行呈现（无标点，居中） */
+var LINES=[
+    '我眼睁睁看着木棍扭动着',
+    '被加工过的死木突然渗出点点绿意',
+    '枝条从手指粗的木棍中抽出',
+    '越来越长形成藤蔓在地上无限延伸',
+    '连木质的床架也冒出新的枝丫',
+    '窗外的树木也在疯狂生长',
+    '树枝从窗户伸进来跟木棍和床板长出的藤蔓交握',
+    '全世界的植物都涌现在我面前',
+    '它们疯狂抽芽又迅速开花结果',
+    '果实落到地上又是新一轮的枯荣',
+    '房间里的金属制品迅速锈蚀',
+    '墙壁上的涂层剥落露出砖石',
+    '我看到我的双手迅速变得苍老',
+    '直至腐烂干枯变成枯骨',
+    '我抬头看向卫生间的镜子',
+    '只看到一副骷髅',
+    '黑洞洞的眼眶涌现出一堆蛆虫',
+    '',
+    '我的眼睛呢？',
+    '我的眼睛呢？我的眼睛呢？',
+    '我的眼睛呢？我的眼睛呢？我的眼睛呢？',
+    '没有眼睛我是怎么看到这一切的？',
+    '哦我看到我的眼睛了 它们在地上骨碌碌滚着',
+    '它们迅速失去眼球的样子',
+    '退化成一堆血肉',
+    '又迅速扭动繁殖',
+    '我开始好奇这些细胞的涌现会带来怎样的结果',
+    '答案很快就出来了',
+    '',
+    '这堆血肉很快就分化成一个婴儿',
+    '婴儿在我面前迅速长大',
+    '他的第一声啼哭还没诞生他便长大成人',
+    '是这世界上的另一个我',
+    '但是他更加高大强壮',
+    '像是平行世界的另一个我',
+    '是我全身基因表达的另一个可能性',
+    '他挣扎着站起来走到我的面前',
+    '我还没来得及感慨他的高大健壮',
+    '他就在我面前变成了一个耄耋老人',
+    '很快也变成跟我一样的枯骨',
+    '最后变成一堆齑粉',
+    '此时房间的墙壁和天花板已经破败成尘土',
+    '',
+    '我抬头看向星空',
+    '日升月落在瞬息间交替',
+    '目光所及之处人类建造的东西已所剩无几',
+    '这个世界被无数植物占领',
+    '我没有了眼睛',
+    '全世界都是我的眼睛',
+    '远处有一些陨石降落',
+    '偶尔还有流星雨降临',
+    '时间不知道被加速了多少倍',
+    '耗时千百年才能看到的宇宙异象',
+    '就这样变成了眼前随处可见的风景',
+    '偶尔会有重复的天文现象出现',
+    '好像宇宙在重复计算这些天体可能运行的轨迹',
+    '无数的星轨铺在天上',
+    '仿佛一幅巨大的写实风格的梵高的《星空》',
+    '眼前的一切开始像《星空》一样扭曲流动',
+    '色块粘稠无比但仍执着地四处流淌',
+    '意识越来越沉',
+    '我逐渐陷入昏迷'
+  ];
+
+  /* 图片序列：进入全屏先显示第 1 张，出现指定行后切换 */
+  var IMG_FIRST='assets/halo-1.jpg';
+  var IMG_AT={};   /* 按句子定位：出现该行后切图（新文本行号已变） */
+  [['黑洞洞的眼眶涌现出一堆蛆虫','assets/halo-2.jpg'],
+   ['答案很快就出来了','assets/halo-3.jpg'],
+   ['此时房间的墙壁和天花板已经破败成尘土','assets/halo-4.jpg']].forEach(function(p){
+    var k=LINES.indexOf(p[0]); if(k>=0) IMG_AT[k+1]=p[1];
+  });
+  var imgCur='';
+  function showImage(src){
+    if(!src || src===imgCur) return;
+    imgCur=src;
+    var a=box.querySelector('#halo-img-a'), b=box.querySelector('#halo-img-b');
+    var front=a.classList.contains("on") ? b : a;
+    var back=front===a ? b : a;
+    back.classList.remove('on');
+    front.src=src;
+    void front.offsetWidth;
+    front.classList.add('on');
+  }
+  /* 预生成行元素（去标点：中文标点/书名号/空白一律剔除，只留文字） */
+  LINES.forEach(function(t){
+    var d=document.createElement('div');
+    d.className='halo-line';
+    d.textContent=String(t).replace(/[，。？！、；：…—·~《》"'"'（）()《》\s]/g,'');
+    box.insertBefore(d, hint);
+  });
+  var lines=box.querySelectorAll('.halo-line');
+  var i=0;
+
+  /* R55：幻觉章节 BGM（第一句出现并全屏后播放，退出全屏即停） */
+  var haloAudio = document.getElementById('halo-audio');
+  if(!haloAudio){
+    haloAudio = document.createElement('audio');
+    haloAudio.id = 'halo-audio';
+    haloAudio.src = 'assets/nb-halluc.wav';
+    haloAudio.preload = 'auto';
+    haloAudio.style.display = 'none';
+    document.body.appendChild(haloAudio);
+  }
+  function haloPlay(){
+    if(!haloAudio) return;
+    try{ haloAudio.currentTime = 0; var pr = haloAudio.play(); if(pr && pr.catch) pr.catch(function(){}); }catch(e){}
+  }
+  function haloStop(){ if(!haloAudio) return; try{ haloAudio.pause(); }catch(e){} }
+
+  /* 退出全屏（读完后点一下即可回到文章卡片） */
+  var exitEl=null;
+  var muteEl = null;
+  function exitFull(){
+    if(!box.classList.contains('halo-full')) return;
+    haloStop();
+    if(muteEl && muteEl.parentNode) muteEl.parentNode.removeChild(muteEl);
+    muteEl = null;
+    box.classList.remove('halo-full');
+    document.documentElement.classList.remove('halo-locked');
+    if(exitEl && exitEl.parentNode) exitEl.parentNode.removeChild(exitEl);
+    exitEl=null;
+  }
+  function enterFull(){
+    box.classList.add('halo-full');
+    document.documentElement.classList.add('halo-locked');   /* 全屏期间锁定页面滚动 */
+    exitEl=document.createElement('div');
+    exitEl.className='halo-exit';
+    exitEl.textContent='✕ 返回';
+    exitEl.addEventListener('click', function(e){ e.stopPropagation(); exitFull(); });
+    document.body.appendChild(exitEl);
+    /* R60-1：幻觉章节音乐开关 */
+    var mEl=document.createElement('div');
+    mEl.className='halo-exit halo-mute';
+    mEl.textContent='🔊 音乐开';
+    mEl.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(!haloAudio || haloAudio.paused){ haloPlay(); mEl.textContent='🔊 音乐开'; }
+      else { haloStop(); mEl.textContent='🔇 音乐关'; }
+    });
+    document.body.appendChild(mEl);
+    muteEl = mEl;
+  }
+
+  function revealLine(){
+    lines[i].classList.add('on');
+    i++;
+    if(IMG_AT[i]) showImage(IMG_AT[i]);
+  }
+  function step(){
+    /* 已读完：再点一下退出全屏，回到文章卡片 */
+    if(i>=LINES.length){ exitFull(); return; }
+    revealLine();
+    /* 段落空行不占一次点击，自动带过 */
+    while(i<LINES.length && LINES[i]===''){ revealLine(); }
+    /* 点开第一句后，文字区背景扩大到全屏；R55：同时在用户手势内启动幻觉 BGM */
+    if(i===1){
+      haloPlay();
+      setTimeout(function(){ enterFull(); showImage(IMG_FIRST); }, 300);
+    }
+    /* 指定行出现后切换配图 */
+    if(IMG_AT[i]) showImage(IMG_AT[i]);
+    /* 文字栈：以最新一行为中心向上排列，越旧越淡（固定单屏，不滚动） */
+    for(var k=0;k<i;k++){
+      var d=i-1-k;
+      lines[k].style.setProperty('--d', d);
+      lines[k].style.setProperty('--o', d===0 ? 1 : (d<=3 ? 0.72-d*0.08 : (d<=8 ? 0.34 : 0.08)));
+      if(d===0) lines[k].classList.add('last'); else lines[k].classList.remove('last');
+    }
+    if(i>=LINES.length){
+      hint.textContent='';  /* R51: 去掉返回提示 */
+      hint.style.animation='none';
+      hint.style.opacity='.6';
+      var sign=document.createElement('div');
+      sign.style.cssText='color:#8a8f9e;font-size:12.5px;letter-spacing:2px;margin-top:18px';
+      sign.textContent='——2026年9月3日 深夜';
+      box.appendChild(sign);
+    }else{
+      hint.textContent='点击继续';
+    }
+  }
+  /* 全屏期间彻底禁止上下滑动（wheel / 触摸 / 滚动按键） */
+  function blockScroll(e){ if(box.classList.contains('halo-full') && e.cancelable) e.preventDefault(); }
+  box.addEventListener('wheel', blockScroll, {passive:false});
+  box.addEventListener('touchmove', blockScroll, {passive:false});
+  document.addEventListener('keydown', function(e){
+    if(!box.classList.contains('halo-full')) return;
+    if(['PageDown','PageUp',' ','ArrowDown','ArrowUp','Home','End'].indexOf(e.key) >= 0 && e.cancelable) e.preventDefault();
+  });
+
+  box.addEventListener('click', step);
+  /* 第一次进入该章时先显示第一行 */
+  hint.textContent='点击继续';
+})();
+
+/* ---------- 故意的 私信剧情已移至论坛私信（读到坠崖新闻后在私信中继续） ---------- */
+
+/* ---------- 统一初始化（控制器就绪后执行） ---------- */
+(function(){
+  var restored=false;
+  try{ restored = localStorage.getItem('prof_blog_unlocked')==='1'; }catch(_){}
+  if(restored){ unlock(true); } else if(window.__blogInit){ window.__blogInit(); }
+})();
+</script>
+
+<!-- R56：图片放大层 -->
+<div id="img-zoom"><img id="img-zoom-img" alt=""></div>
+<script>
+/* R56-5：所有内容图片点击放大，点击任意处关闭（头像类小图不放大） */
+(function(){
+  var box = document.getElementById('img-zoom'), big = document.getElementById('img-zoom-img');
+  if(!box || !big) return;
+  function close(){ box.classList.remove('on'); document.body.classList.remove('zom'); big.src=''; }
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    if(t === box || t === big){ close(); return; }
+    if(t && t.tagName === 'IMG'){
+      if(t.closest('#img-zoom')) return;
+      if(t.closest('[class*="avatar"],[class*="ava"],[class*="logo"],[class*="ad-"]')) return;  /* 头像/广告不放大 */
+      if(t.closest('#unlock-img,#book-cover,#bottom-stage')) return;   /* 封面/解锁图有自身点击行为，不放大 */
+      big.src = t.currentSrc || t.src;
+      big.alt = t.alt || '';
+      box.classList.add('on');
+      document.body.classList.add('zom');
+    }else if(box.classList.contains('on')){
+      close();
+    }
+  }, true);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+})();
+</script>
+</body>
+</html>
